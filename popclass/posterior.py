@@ -54,14 +54,14 @@ def convert_emcee(emcee_posterior_object) -> Posterior:
     pass
 
 
-def convert_from_dynesty(dynesty_posterior_object) -> Posterior:
+def convert_dynesty(dynesty_posterior_object) -> Posterior:
     """
     function should covert dynesty posterior object to our definition of Posterior.
     """
     pass
 
 
-def convert_from_pymulitnest(pymultinest_posterior_object) -> Posterior:
+def convert_pymulitnest(pymultinest_posterior_object) -> Posterior:
     """
     function should covert pymulitnest posterior object to our definition of Posterior.
     """
