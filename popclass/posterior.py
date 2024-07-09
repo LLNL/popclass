@@ -41,7 +41,7 @@ def paramters():
     pass
 
 
-def convert_arviz(ariz_posterior_object) -> Posterior:
+def convert_arviz(arviz_posterior_object) -> Posterior:
     """
     function should covert arviz posterior object to our definition of Posterior.
     """
