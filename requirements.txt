@@ -1,1 +1,3 @@
-s
+numpy
+scipy
+hdf5py
