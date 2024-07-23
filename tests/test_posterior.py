@@ -1,5 +1,6 @@
 from popclass.posterior import Posterior
 import numpy as np 
+import pytest
 
 def test_posterior_init_parameters():
     """
@@ -36,3 +37,14 @@ def test_marginal():
 
 
     assert(post.marginal(['A','B']).samples == test_samples[:1,:])
+
+def test_nan_in_samples_exception():
+    """
+    Test that there is a check for NaNs in posterior samples when Posterior is constructed
+    """
+
+    with pytest.raises(ValueError):
+        test_samples = np.random.rand(3,1000)
+        test_samples[0,1] = np.nan
+        test_params = ['A', 'B', 'C']
+        post = Posterior(samples=test_samples, parameter_labels=test_params)
