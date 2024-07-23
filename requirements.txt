@@ -1,4 +1,3 @@
 numpy
 scipy
-hdf5py
-arviz
+pytest
