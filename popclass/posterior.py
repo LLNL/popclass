@@ -5,40 +5,40 @@ Utils for converting and handling posterior distributions.
 
 class Posterior:
 
-"""
-Our set internal posterior object.
-"""
-
-def __init__(posterior_samples, parameter_labels):
     """
-    Target usage.
-
-    post = Posterior(posterior_samples=np.array(ndim,nsamples), parameter_labels=['tE','piE', 'uO'])
-
+    Our set internal posterior object.
     """
-    pass
+
+    def __init__(self, samples, parameter_labels):
+        """
+        Target usage.
+
+        post = Posterior(posterior_samples=np.array(ndim,nsamples), parameter_labels=['tE','piE', 'uO'])
+
+        """
+        pass
 
 
-def marignal(parameter_list) -> Posterior:
-    """
-    We probably only want to classify using a slice of the full posterior in a couple of paramters
+    def marginal(self, parameter_list):
+        """
+        We probably only want to classify using a slice of the full posterior in a couple of paramters
 
-    target usage.
+        target usage.
 
-    marginal = Posterior.marginal(['tE', 'PiE']) should return the tE, Pi marginal posterior distribution object. 
+        marginal = Posterior.marginal(['tE', 'PiE']) should return the tE, Pi marginal posterior distribution object. 
 
-    we also want support to take the log transform of the posterior (common use case, this might be hard to do 
-    genreally.)
+        we also want support to take the log transform of the posterior (common use case, this might be hard to do 
+        genreally.)
 
-    """
-    pass
+        """
+        pass
 
-@param
-def paramters():
-    """
-    return ordered list of parameters
-    """
-    pass
+
+    def paramters():
+        """
+        return ordered list of parameters
+        """
+        pass
 
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
