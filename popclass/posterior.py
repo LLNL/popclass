@@ -16,7 +16,8 @@ class Posterior:
         post = Posterior(posterior_samples=np.array(ndim,nsamples), parameter_labels=['tE','piE', 'uO'])
 
         """
-        pass
+        self.parameter_labels=parameter_labels
+        self.samples=samples
 
 
     def marginal(self, parameter_list):

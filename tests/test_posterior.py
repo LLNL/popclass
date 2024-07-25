@@ -20,7 +20,7 @@ def test_posterior_init_samples():
     test_samples = np.random.rand(3,1000)
     test_params = ['A', 'B', 'C']
     post = Posterior(samples=test_samples, parameter_labels=test_params)
-    assert(post.samples == test_samples)
+    assert(np.array_equal(post.samples, test_samples))
 
 def test_marginal():
     """
