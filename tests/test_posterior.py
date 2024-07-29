@@ -1,6 +1,7 @@
 from popclass.posterior import Posterior
 import numpy as np 
 import pytest
+import arviz as az
 
 def test_posterior_init_parameters():
     """
@@ -31,12 +32,13 @@ def test_marginal():
     test_params = ['A', 'B', 'C']
     post = Posterior(samples=test_samples, parameter_labels=test_params)
 
-    assert(post.marginal(['A']).samples == test_samples[0,:])
-    assert(post.marginal(['B']).samples == test_samples[1,:])
-    assert(post.marginal(['C']).samples == test_samples[2,:])
+    #print(post.marginal(['A']).samples, test_samples[0,:])
 
+    assert(np.allclose(post.marginal(['A']).samples, test_samples[0,:]))
+    assert(np.allclose(post.marginal(['B']).samples, test_samples[1,:]))
+    assert(np.allclose(post.marginal(['C']).samples, test_samples[2,:]))
 
-    assert(post.marginal(['A','B']).samples == test_samples[:1,:])
+    assert(np.allclose(post.marginal(['A','B']).samples, test_samples[:2,:]))
 
 def test_nan_in_samples_exception():
     """

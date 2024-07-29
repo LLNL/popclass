@@ -1,7 +1,9 @@
 """
 Utils for converting and handling posterior distributions.
 """
-
+import numpy as np
+import copy
+import arviz as az
 
 class Posterior:
 
@@ -16,8 +18,15 @@ class Posterior:
         post = Posterior(posterior_samples=np.array(ndim,nsamples), parameter_labels=['tE','piE', 'uO'])
 
         """
+        testnan = np.isnan(samples)
+        if True in testnan:
+            raise ValueError("Posterior samples cannot be NaN")
+        
+
         self.parameter_labels=parameter_labels
         self.samples=samples
+
+        
 
 
     def marginal(self, parameter_list):
@@ -32,14 +41,21 @@ class Posterior:
         genreally.)
 
         """
-        pass
+
+        _, idx, _ = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
+        
+        marginal = copy.deepcopy(self)
+        marginal.parameter_labels = parameter_list
+        marginal.samples = self.samples[idx]
+        return marginal
 
 
-    def paramters():
+
+    def paramters(self):
         """
         return ordered list of parameters
         """
-        pass
+        return self.parameter_labels
 
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
