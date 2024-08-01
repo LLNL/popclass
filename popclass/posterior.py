@@ -46,7 +46,8 @@ class Posterior:
         
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = parameter_list
-        marginal.samples = self.samples[idx]
+        marginal.samples = self.samples[idx, :]
+        print(marginal.samples.shape)
         return marginal
 
 
@@ -65,21 +66,16 @@ def convert_arviz(arviz_posterior_object) -> Posterior:
     labels = list(arviz_posterior_object.posterior.data_vars.keys())
     samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
     
-    return Posterior(np.array(samples), labels)
+    return Posterior(np.array(samples).swapaxes(0,1), labels)
 
-def convert_emcee(emcee_posterior_object) -> Posterior:
-    """
-    function should covert emcee posterior object to our definition of Posterior.
-    """
-    pass
-
-
-def convert_dynesty(dynesty_posterior_object) -> Posterior:
+def convert_dynesty(dynesty_posterior_object, parameter_labels_dict) -> Posterior:
     """
     function should covert dynesty posterior object to our definition of Posterior.
     """
-    labels = dynesty_posterior_object.results('sample')
+    labels = list(parameter_labels_dict.keys())
+    samples = dynesty_posterior_object.results('samples')
 
+    return Posterior(samples, labels)
 
 def convert_pymulitnest(pymultinest_posterior_object) -> Posterior:
     """

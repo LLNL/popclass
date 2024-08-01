@@ -1,4 +1,4 @@
-from popclass.posterior import Posterior, convert_arviz, convert_dynesty, convert_emcee, convert_pymulitnest
+from popclass.posterior import Posterior, convert_arviz, convert_dynesty, convert_pymulitnest
 from dynesty.results import Results
 import numpy as np 
 import pytest
@@ -53,9 +53,9 @@ def test_nan_in_samples_exception():
         test_params = ['A', 'B', 'C']
         post = Posterior(samples=test_samples, parameter_labels=test_params)
 
-def test_conversion():
+def test_convert_arviz():
     """
-    Test that conversion from different formats works.
+    Test that conversion from Arviz works.
     """
     test_samples = np.random.rand(3,1000)
     test_params = ['A', 'B', 'C']
@@ -67,9 +67,21 @@ def test_conversion():
     }
 
     az_post = az.convert_to_inference_data(post)
-    dynesty_post = Results(post)
+    
 
     popclass_from_az_post = convert_arviz(az_post)
-    popclass_from_dynesty_post = convert_dynesty(dynesty_post)
 
     assert(np.allclose(test_samples, popclass_from_az_post.samples))
+
+def test_convert_dynesty():
+    """
+    Test that conversion from dynesty works
+    """
+    test_samples = np.random.rand(3,1000)
+    test_params_dict = {'A': 1, 'B': 2, 'C': 3}
+
+    dynesty_post = Results([('samples_id', list(test_params_dict.values())), ('samples',test_samples)])
+    
+    popclass_from_dynesty_post = convert_dynesty(dynesty_post, test_params_dict)
+
+    assert(np.allclose(popclass_from_dynesty_post.samples, test_samples))
