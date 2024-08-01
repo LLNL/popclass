@@ -62,7 +62,10 @@ def convert_arviz(arviz_posterior_object) -> Posterior:
     """
     function should covert arviz posterior object to our definition of Posterior.
     """
-    pass
+    labels = list(arviz_posterior_object.posterior.data_vars.keys())
+    samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
+    
+    return Posterior(np.array(samples), labels)
 
 def convert_emcee(emcee_posterior_object) -> Posterior:
     """
@@ -75,7 +78,7 @@ def convert_dynesty(dynesty_posterior_object) -> Posterior:
     """
     function should covert dynesty posterior object to our definition of Posterior.
     """
-    pass
+    labels = dynesty_posterior_object.results('sample')
 
 
 def convert_pymulitnest(pymultinest_posterior_object) -> Posterior:
