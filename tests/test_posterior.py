@@ -80,7 +80,7 @@ def test_convert_dynesty():
     test_samples = np.random.rand(3,1000)
     test_params_dict = {'A': 1, 'B': 2, 'C': 3}
 
-    dynesty_post = Results([('samples_id', list(test_params_dict.values())), ('samples',test_samples)])
+    dynesty_post = Results([('samples_id', list(test_params_dict.values())), ('samples',test_samples), ('logwt', weights)])
     
     popclass_from_dynesty_post = convert_dynesty(dynesty_post, test_params_dict)
 

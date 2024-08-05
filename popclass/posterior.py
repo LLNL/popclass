@@ -74,6 +74,7 @@ def convert_dynesty(dynesty_posterior_object, parameter_labels_dict) -> Posterio
     """
     labels = list(parameter_labels_dict.keys())
     samples = dynesty_posterior_object.results('samples')
+    #call the function to weight the samples also (importance_weights) resample equal
 
     return Posterior(samples, labels)
 
