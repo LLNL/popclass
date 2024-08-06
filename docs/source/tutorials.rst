@@ -14,3 +14,7 @@ This Python implementation of the ASDF Standard can be found `here <https://asdf
 and more information on the ASDF Standard itself can be found 
 `here <https://asdf-standard.readthedocs.io/en/1.1.1/>`_  
 and in :cite:`Greenfield2015`.
+
+Here is an example schema of popclass model file 'popsycle_singles_raithel18.asd'
+
+.. code::
