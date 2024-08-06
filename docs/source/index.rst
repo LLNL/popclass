@@ -18,7 +18,7 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
    installation
    gettingstarted
    background
-   examples
+   tutorials
    acknowledgements
    contributing
    references
