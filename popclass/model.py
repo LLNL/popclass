@@ -35,9 +35,3 @@ class PopulationModel:
     def evaluate_denisty(class_name, point):
         pass
 
-
-def load_population_model(model):
-
-    pth = f'data/popsycle_singles_{model}.asdf'
-
-    f = 
