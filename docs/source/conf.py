@@ -7,14 +7,17 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'popclass'
-copyright = '2024, Greg Sallaberry, Peter McGill, Scott E. Perkins, William Dawson'
-author = 'Greg Sallaberry, Peter McGill, Scott E. Perkins, William Dawson'
+copyright = '2024, Lawrence Livermore National Laboratory.'
+author = 'Lawrence Livermore National Laboratory'
 release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx_rtd_theme']
+extensions = ['sphinx_rtd_theme','sphinx.ext.mathjax', 'sphinxcontrib.bibtex']
+bibtex_bibfiles = ['refs.bib']
+
+bibtex_reference_style = 'author_year'
 
 templates_path = ['_templates']
 exclude_patterns = []

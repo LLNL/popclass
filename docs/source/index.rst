@@ -3,16 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-popclass documentation
-======================
-Hello World
+popclass
+========
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+popclass is a lightweight python package that allows the probabalistic
+classification of  the lens of a microlensing event given the event's 
+posterior distribution and a Galactic simulation. popclass is being actively 
+developed on `GitHub <https://github.com/LLNL/popclass>`_.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 0
+
+
+   installation
+   gettingstarted
+   background
+   examples
+   acknowledgements
+   contributing
+   references
 
