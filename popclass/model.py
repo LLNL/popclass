@@ -86,7 +86,7 @@ class PopulationModel:
 
         Returns
         -------
-            classes list[str]: list of all classes available.
+            classes (list[str]): list of all classes available.
         """
 
         return self._population_samples.keys()
