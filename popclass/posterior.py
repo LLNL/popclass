@@ -51,7 +51,6 @@ class Posterior:
         return marginal
 
 
-
     def paramters(self):
         """
         return ordered list of parameters
