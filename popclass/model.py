@@ -118,3 +118,23 @@ class PopulationModel:
         kernel = stats.gaussian_kde(self.samples(class_name, parameters))
         return kernal.evaluate(points)
 
+
+    def to_asdf(path, model_name):
+        """
+        Save population model to asdf file.
+
+        Args:
+            path (str): path to save the asdf file
+            model_name (str): Name of the model to be saving in the asdf file. 
+        """
+        tree = {
+            "class_data": self._population_samples
+            "parameters": self._parameters
+            "class_weights": self._class_weights
+            "model_name": model_name
+        }
+        af = asdf.AsdfFile(tree)
+        af.write_to(path)
+
+
+
