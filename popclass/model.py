@@ -115,7 +115,7 @@ class PopulationModel:
             density_evaluation (np.ndarray): Density evaluations with shape
                 (num_data_points)
         """
-        kernel = stats.gaussian_kde(self.samples(class_name, parameters))
+        kernel = self._density_estimator(self.samples(class_name, parameters))
         return kernal.evaluate(points)
 
 
