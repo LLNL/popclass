@@ -2,6 +2,12 @@
 Tutorials
 =========
 
+Converting common posterior objects
+-----------------------------------
+
+
+
+
 Population model data format
 ----------------------------
 
@@ -12,12 +18,84 @@ own population model and contributing it to popclass.
 popclass models can be saved in the ASDF (Advanced Scientific Data Format). 
 This Python implementation of the ASDF Standard can be found 
 `here <https://asdf.readthedocs.io/en/latest/>`_ and more information 
-on the ASDF Standard itself can be found 
-`here <https://asdf-standard.readthedocs.io/en/1.1.1/>`_  
-and in :cite:`Greenfield2015`.
+on the ASDF Standard itself can be found in :cite:`Greenfield2015`.
 
-Here is an example schema of a popclass model file 
-'popsycle_singles_raithel18.asdf'
+Here is an example schema of a popclass population model file 
+:code:`popsycle_singles_raithel18.asdf`.
 
-.. code::
+.. code-block:: python
+
+    import asdf
+
+    f = asdf.open('popsycle_singles_sukhboldn20.asdf')
+>>> f.info(max_rows=None)
+root (AsdfObject)
+├─asdf_library (Software)
+│ ├─author (str): The ASDF Developers
+│ ├─homepage (str): http://github.com/asdf-format/asdf
+│ ├─name (str): asdf
+│ └─version (str): 3.3.0
+├─history (dict)
+│ └─extensions (list)
+│   └─[0] (ExtensionMetadata)
+│     ├─extension_class (str): asdf.extension._manifest.ManifestExtension
+│     ├─extension_uri (str): asdf://asdf-format.org/core/extensions/core-1.5.0
+│     ├─manifest_software (Software)
+│     │ ├─name (str): asdf_standard
+│     │ └─version (str): 1.1.1
+│     └─software (Software)
+│       ├─name (str): asdf
+│       └─version (str): 3.3.0
+├─class_data (dict)
+│ ├─black_hole (NDArrayType): shape=(17, 4), dtype=float64
+│ ├─neutron_star (NDArrayType): shape=(21, 4), dtype=float64
+│ ├─star (NDArrayType): shape=(1255, 4), dtype=float64
+│ └─white_dwarf (NDArrayType): shape=(178, 4), dtype=float64
+├─class_weights (dict)
+│ ├─black_hole (float): 0.011556764106050306
+│ ├─neutron_star (float): 0.014276002719238613
+│ ├─star (float): 0.8531611148878314
+│ └─white_dwarf (float): 0.12100611828687967
+├─model_name (str): popsycle_singles_sukhboldn20
+└─parameters (list)
+  ├─[0] (str): log10tE
+  ├─[1] (str): log10piE
+  ├─[2] (str): log10thetaE
+  └─[3] (str): f_blend_I
+
+Here is an example of how to create a popclass population model file
+from a nested python dictionary with the same structure but with random
+mock class data.
+
+.. code-block:: python
+
+    import asdf
+    import numpy as np
+
+
+    parameters = ['log10tE', 'log10PiE', 'log10thetaE', 'f_blend_I']
+    class_data = {"black_hole": np.random.randn(17, 4),
+                  "neutron_star": np.random.randn(21,4),
+                  "star": np.random.randn(1255,4)
+                  "white dwarf": np.random.randn(178,4)}
+                  
+    model_name = 'popsycle_singles_sukhboldn20'
+    class_weights = {
+                    "black_hole": 0.011556764106050306,
+                    "neutron_star": 0.014276002719238613,
+                    "star": 0.8531611148878314,
+                    "white_dwarf": 0.12100611828687967
+                     }
+
+    tree = {
+        "class_data": class_data,
+        "parameters": paramters,
+        "class_weights": class_weights
+        "model_name": "popsycle_singles_imfr_sukhboldn20"
+    }
+
+    af = asdf.AsdfFile(tree)
+    af.write_to("example.asdf")
+
+
 

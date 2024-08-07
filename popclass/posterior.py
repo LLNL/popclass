@@ -53,7 +53,6 @@ class Posterior:
         return marginal
 
 
-
     def paramters(self):
         """
         Returns
