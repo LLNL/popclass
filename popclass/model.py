@@ -5,6 +5,12 @@ import asdf
 import numpy as np
 from scipy.stats import gaussian_kde
 
+AVAILABLE_MODELS = [
+    "popsycle_singles_raithel18", 
+    "popsycle_singles_spera15",
+    "popsycle_singles_sukhboldn20"
+    ]
+
 class PopulationModel:
     """
     PopulationModel use to repesent simulation data and compute class
@@ -51,6 +57,25 @@ class PopulationModel:
         return cls(population_samples=tree['class_data'], 
                     parameters=tree['parameters'],
                     class_weights=tree['class_weights'])
+
+    @classmethod
+    def from_model_library(cls, model_name):
+        """
+        Build population model from available models.
+
+        Args:
+            model_name (str): Name of the model.
+        
+        Returns
+        -------
+            PopulationModel from libarary
+        """
+
+        if name not in AVAILABLE_MODELS:
+            raise ValueError(f"{name} not available. Available models are: {AVAILABLE_MODELS}")
+        
+        return self.from_asdf(f'data/{name}.asdf')
+
 
     def samples(self, class_name, parameters):
         """

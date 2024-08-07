@@ -11,7 +11,7 @@ import os
 sys.path.insert(0, os.path.abspath('../popclass'))
 
 project = 'popclass'
-copyright = '2024, Lawrence Livermore National Laboratory.'
+copyright = '2024, Lawrence Livermore National Laboratory'
 author = 'Lawrence Livermore National Laboratory'
 release = '0.1'
 
