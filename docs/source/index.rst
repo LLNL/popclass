@@ -6,6 +6,8 @@
 popclass
 ========
 
+.. image:: ../images/lens_class.gif
+
 popclass is a lightweight python package that allows the probabalistic
 classification of  the lens of a microlensing event given the event's 
 posterior distribution and a Galactic simulation. popclass is being actively 
