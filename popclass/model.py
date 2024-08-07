@@ -48,7 +48,9 @@ class PopulationModel:
         """
 
         tree = asdf.open(path)
-        return cls(population_samples=tree['class_data'], class_weights=tree['class_weights'])
+        return cls(population_samples=tree['class_data'], 
+                    parameters=tree['parameters'],
+                    class_weights=tree['class_weights'])
 
     def samples(self, class_name, parameters):
         """
