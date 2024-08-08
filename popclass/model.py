@@ -14,7 +14,7 @@ AVAILABLE_MODELS = [
 class PopulationModel:
     """
     PopulationModel use to repesent simulation data and compute class
-    kernal density estimates of the simulation data.
+    kernel density estimates of the simulation data.
     """
 
     def __init__(self, population_samples, class_weights, parameters, density_estimator=gaussian_kde):
@@ -30,7 +30,7 @@ class PopulationModel:
             parameters (list(str)):
                 list of parameter names sets the order for the second dimension
                 in population_samples.
-            denisty_esimator: (scipy.stats.gaussian_kde like):
+            density_esimator: (scipy.stats.gaussian_kde like):
                 Kernal density estimator used to compute density from
                 population data. 
         """
@@ -90,8 +90,8 @@ class PopulationModel:
             samples (np.ndarray): samples of shape (num_samples, len(parameters)) with
             the order of the second dimension being set by the order of parameters.
         """
-        _, indicies, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
-        return self._population_samples[class_name][:, indicies]
+        _, indices, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
+        return self._population_samples[class_name][:, indices]
 
     @property
     def parameters():
@@ -100,7 +100,7 @@ class PopulationModel:
 
         Returns
         -------
-            paramters (list[str]): list of all parameters.
+            parameters (list[str]): list of all parameters.
         """
         return self._parameters
 
@@ -124,9 +124,9 @@ class PopulationModel:
         return self._class_weights[class_name]
 
 
-    def evaluate_denisty(class_name, parameters, parameters, points):
+    def evaluate_density(class_name, parameters, points):
         """
-        Evaulate the kernal density estimate of a point
+        Evaulate the kernel density estimate of a point
         for a class.
 
         Args:
@@ -134,14 +134,14 @@ class PopulationModel:
             parameters (list[str]): parameters to evaluate
                 population model density over. Order sets the order
                 of the second dimension of points.
-            points: (np.ndarray): data to evalute desnity on has shape
+            points: (np.ndarray): data to evalute density on has shape
                 (num_data_points, len(parameters)).
         Returns:
             density_evaluation (np.ndarray): Density evaluations with shape
                 (num_data_points)
         """
         kernel = self._density_estimator(self.samples(class_name, parameters))
-        return kernal.evaluate(points)
+        return kernel.evaluate(points)
 
 
     def to_asdf(path, model_name):
