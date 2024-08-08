@@ -44,7 +44,7 @@ with the sukhbold :cite:p:`Sukhbold2016` initial final mass relation.
 
     popsycle = pc.build_named_model('popsycle_singles_sukhnoldn20')
 
-We will now combine all of this information to probabilitically classify the lens,
+We will now combine all of this information to classify the lens,
 given the popsycle model and the event log10tE-log10piE posterior.
 
 .. code-block:: python
@@ -59,6 +59,6 @@ classification is a dictionary of len class probabilities.
     {"star": 0.4, "white dwarf": 0.3, "neutron star": 0.1, "black hole": 0.2}
 
 For more advance usage and a deeper dive into the details, please see 
-the documentation examples pages.
+the documentation tutorials.
 
     
