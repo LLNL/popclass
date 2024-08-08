@@ -3,12 +3,11 @@ Utils for converting and handling posterior distributions.
 """
 import numpy as np
 import copy
-import arviz as az
 
 class Posterior:
 
     """
-    Our set internal posterior object.
+    popclass internal posterior object.
     """
 
     def __init__(self, samples, parameter_labels):
@@ -31,15 +30,18 @@ class Posterior:
 
     def marginal(self, parameter_list):
         """
-        We probably only want to classify using a slice of the full posterior in a couple of paramters
+        Get marginal distribution for some ordered subset of parameters in `Posterior()`
 
-        target usage.
+        Parameters
+        ----------
+        parameter_list : list
+            List of parameters for generating marginal.
+            Should be a subset of `Posterior.parameter_labels()`
 
-        marginal = Posterior.marginal(['tE', 'PiE']) should return the tE, Pi marginal posterior distribution object. 
-
-        we also want support to take the log transform of the posterior (common use case, this might be hard to do 
-        genreally.)
-
+        Returns
+        -------
+            New instance of `Posterior` object containing samples
+            determined and ordered by `parameter_list`.
         """
 
         _, idx, _ = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
@@ -54,32 +56,45 @@ class Posterior:
 
     def paramters(self):
         """
-        return ordered list of parameters
+        Returns
+        -------
+            Ordered list of parameters in `Posterior` object.
         """
         return self.parameter_labels
 
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
     """
-    function should covert arviz posterior object to our definition of Posterior.
+    Utility to convert an ArViz posterior object directly to popclass posterior object
+
+    Parameters
+    ----------
+    arviz_posterior_object : arviz.InferenceData
+        InferenceData from an ArViz
+
+    Returns
+    -------
+        popclass `Posterior object`
     """
     labels = list(arviz_posterior_object.posterior.data_vars.keys())
     samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
     
     return Posterior(np.array(samples).swapaxes(0,1), labels)
 
-def convert_dynesty(dynesty_posterior_object, parameter_labels_dict) -> Posterior:
+def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
     """
     function should covert dynesty posterior object to our definition of Posterior.
     """
-    labels = list(parameter_labels_dict.keys())
-    samples = dynesty_posterior_object.results('samples')
-    #call the function to weight the samples also (importance_weights) resample equal
+    # samples = dynesty_posterior_object.results('samples')
+    # weights = dynesty_posterior_object.results('logwt')
+    samples = dynesty_posterior_object.sample_equal()
 
-    return Posterior(samples, labels)
+    return Posterior(samples, parameter_labels)
 
-def convert_pymulitnest(pymultinest_posterior_object) -> Posterior:
+def convert_pymulitnest(pymultinest_posterior_object, parameter_labels) -> Posterior:
     """
     function should covert pymulitnest posterior object to our definition of Posterior.
     """
-    pass
+    samples = pymultinest_posterior_object['samples']
+
+    return Posterior(samples, parameter_labels)
