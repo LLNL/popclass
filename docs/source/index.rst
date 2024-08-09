@@ -38,6 +38,7 @@ Contents
    gettingstarted
    background
    tutorials
+   library
    acknowledgements
    contributing
    changelog
