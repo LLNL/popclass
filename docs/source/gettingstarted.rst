@@ -45,7 +45,7 @@ with the sukhbold :cite:p:`Sukhbold2016` initial final mass relation.
     popsycle = pc.build_named_model('popsycle_singles_sukhnoldn20')
 
 We will now combine all of this information to classify the lens,
-given the popsycle model and the event log10tE-log10piE posterior.
+given the popsycle model and the event :math:`\log t_{E}-\log\pi_{E}` posterior.
 
 .. code-block:: python
 
