@@ -23,11 +23,11 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
 .. toctree::
    :maxdepth: 0
 
-
    installation
    gettingstarted
    background
    tutorials
+   library
    acknowledgements
    contributing
    references
