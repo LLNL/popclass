@@ -59,7 +59,7 @@ class PopulationModel:
                     class_weights=tree['class_weights'])
 
     @classmethod
-    def from_model_library(cls, model_name):
+    def from_library(cls, model_name):
         """
         Build population model from available models.
 
