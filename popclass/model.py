@@ -40,6 +40,9 @@ class PopulationModel:
         self._density_estimator = density_estimator
         self._parameters = parameters
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
     @classmethod
     def from_asdf(cls, path):
         """
@@ -71,10 +74,10 @@ class PopulationModel:
             PopulationModel from libarary
         """
 
-        if name not in AVAILABLE_MODELS:
-            raise ValueError(f"{name} not available. Available models are: {AVAILABLE_MODELS}")
+        if model_name not in AVAILABLE_MODELS:
+            raise ValueError(f"{model_name} not available. Available models are: {AVAILABLE_MODELS}")
         
-        return self.from_asdf(f'data/{name}.asdf')
+        return cls.from_asdf(f'popclass/data/{model_name}.asdf')
 
 
     def samples(self, class_name, parameters):
@@ -94,7 +97,7 @@ class PopulationModel:
         return self._population_samples[class_name][:, indicies]
 
     @property
-    def parameters():
+    def parameters(self):
         """
         Return all parameters available in the population model.
 
@@ -105,7 +108,7 @@ class PopulationModel:
         return self._parameters
 
     @property
-    def classes():
+    def classes(self):
         """
         Return all classes available in the population model.
 
@@ -124,7 +127,7 @@ class PopulationModel:
         return self._class_weights[class_name]
 
 
-    def evaluate_denisty(class_name, parameters, parameters, points):
+    def evaluate_denisty(self, class_name, parameters, points):
         """
         Evaulate the kernal density estimate of a point
         for a class.
@@ -140,11 +143,11 @@ class PopulationModel:
             density_evaluation (np.ndarray): Density evaluations with shape
                 (num_data_points)
         """
-        kernel = self._density_estimator(self.samples(class_name, parameters))
+        kernal = self._density_estimator(self.samples(class_name, parameters))
         return kernal.evaluate(points)
 
 
-    def to_asdf(path, model_name):
+    def to_asdf(self, path, model_name):
         """
         Save population model to asdf file.
 
@@ -153,10 +156,10 @@ class PopulationModel:
             model_name (str): Name of the model to be saving in the asdf file. 
         """
         tree = {
-            "class_data": self._population_samples
-            "parameters": self._parameters
-            "class_weights": self._class_weights
-            "model_name": model_name
+            "class_data": self._population_samples,
+            "parameters": self._parameters,
+            "class_weights": self._class_weights,
+            "model_name": model_name,
         }
         af = asdf.AsdfFile(tree)
         af.write_to(path)

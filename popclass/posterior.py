@@ -80,6 +80,10 @@ def convert_arviz(arviz_posterior_object) -> Posterior:
     
     return Posterior(np.array(samples).swapaxes(0,1), labels)
 
+"""
+The following have not been tested. May fail
+"""
+
 def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
     """
     function should covert dynesty posterior object to our definition of Posterior.
