@@ -42,14 +42,16 @@ with the sukhbold :cite:p:`Sukhbold2016` initial final mass relation.
 
 .. code-block:: python
 
-    popsycle = pc.build_named_model('popsycle_singles_sukhnoldn20')
+    popsycle = pc.PopulationModel.from_library('popsycle_singles_sukhnoldn20')
 
 We will now combine all of this information to classify the lens,
-given the popsycle model and the event log10tE-log10piE posterior.
+given the popsycle model and the event :math:`\logt_{E}-\log\pi_{E}` posterior.
 
 .. code-block:: python
 
-    classification = pc.classify(population_model=popsycle, inference_data=inference_data)
+    classification = pc.classify(population_model=popsycle, 
+                                inference_data=inference_data,
+                                paramters=['log10tE', 'log10PiE'])
     print(classification)
 
 classification is a dictionary of len class probabilities.
