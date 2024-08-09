@@ -22,8 +22,12 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
 
 .. note:: Finding your way around
 
-   A good place to get started is with the Installation Guide, getting started page and
+   A good place to get started is with the installation guide, getting started page and
    the the tutorial examples. 
+
+   If you are here to develop on popclass, please head over to the contributing guide.
+
+   
 
 .. toctree::
    :titlesonly:
