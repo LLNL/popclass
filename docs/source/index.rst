@@ -43,4 +43,4 @@ Contents
    contributing
    changelog
    references
-
+   api

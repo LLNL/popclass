@@ -8,7 +8,9 @@
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath('../popclass'))
+sys.path.insert(0, os.path.abspath('../..'))
+
+
 
 project = 'popclass'
 copyright = '2024, Lawrence Livermore National Laboratory'
@@ -30,8 +32,6 @@ bibtex_reference_style = 'author_year'
 
 templates_path = ['_templates']
 exclude_patterns = []
-
-
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
