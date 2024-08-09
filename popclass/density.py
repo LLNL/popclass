@@ -1,6 +1,6 @@
 class DensityEstimator:
     """
-    Internal interface for for Kernal Density estimator.
+    Internal interface for Kernel Density estimator.
     """
 
     def __init__(dataset):
