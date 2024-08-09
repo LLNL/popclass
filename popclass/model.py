@@ -1,5 +1,5 @@
 """
-Reading, saving, and  handling population models 
+Reading, saving, and handling population models 
 """
 import asdf
 import numpy as np
@@ -13,7 +13,7 @@ AVAILABLE_MODELS = [
 
 class PopulationModel:
     """
-    PopulationModel use to repesent simulation data and compute class
+    PopulationModel - use to represent simulation data and compute class
     kernel density estimates of the simulation data.
     """
 
@@ -26,12 +26,12 @@ class PopulationModel:
                 key is a class name and value is numpy array of parameter
                 samples with shape (n_samples, n_parameters).
             class_weights (dict):
-                key is a class name and value is a number beteen [0,1].
+                key is a class name and value is a number between [0,1].
             parameters (list(str)):
                 list of parameter names sets the order for the second dimension
                 in population_samples.
-            density_esimator: (scipy.stats.gaussian_kde like):
-                Kernal density estimator used to compute density from
+            density_estimator: (scipy.stats.gaussian_kde like):
+                Kernel density estimator used to compute density from
                 population data. 
         """
 
@@ -59,7 +59,7 @@ class PopulationModel:
                     class_weights=tree['class_weights'])
 
     @classmethod
-    def from_library(cls, model_name):
+    def from_model_library(cls, model_name):
         """
         Build population model from available models.
 
@@ -68,7 +68,7 @@ class PopulationModel:
         
         Returns
         -------
-            PopulationModel from libarary
+            PopulationModel from library
         """
 
         if name not in AVAILABLE_MODELS:
