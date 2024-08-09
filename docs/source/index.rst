@@ -20,8 +20,13 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
    from popclass which calculated by combining the event posterior
    information with the simulation.
 
+.. note:: Finding your way around
+
+   A good place to get started is with the Installation Guide, getting started page and
+   the the tutorial examples. 
+
 .. toctree::
-   :maxdepth: 0
+   :titlesonly:
 
    installation
    gettingstarted
