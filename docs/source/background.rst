@@ -50,7 +50,7 @@ drawn under some prior, :math:`\pi(\theta)`, with wide support :cite:p:`Hogg2010
 
 This allows us to we leverage previously calculated posterior samples to perform
 lens classification for a single event in the context of a Galactic model. The term,
-:math:`p(\theta_{c} |\text{class}_L, \mathcal{G})` can be calculated by using kernal
+:math:`p(\theta_{c} |\text{class}_L, \mathcal{G})` can be calculated by using kernel
 density esimtation over the single event observable space (e.g., :math:`t_{E}-\pi_{E}`) 
 using a simulated catalog of microlensing events from :math:`\mathcal{G}`. 
 :math:`p(\text{class}_L | \mathcal{G})` is the prior probability that a event belongs

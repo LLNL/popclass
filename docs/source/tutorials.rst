@@ -89,7 +89,7 @@ mock class data.
 
     tree = {
         "class_data": class_data,
-        "parameters": paramters,
+        "parameters": parameters,
         "class_weights": class_weights
         "model_name": "popsycle_singles_imfr_sukhboldn20"
     }

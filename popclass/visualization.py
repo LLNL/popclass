@@ -1,3 +1,3 @@
 """
-Light vizulization libaray.
+Light visualization library.
 """

@@ -31,14 +31,14 @@ class Posterior:
 
     def marginal(self, parameter_list):
         """
-        We probably only want to classify using a slice of the full posterior in a couple of paramters
+        We probably only want to classify using a slice of the full posterior in a couple of parameters
 
         target usage.
 
-        marginal = Posterior.marginal(['tE', 'PiE']) should return the tE, Pi marginal posterior distribution object. 
+        marginal = Posterior.marginal(['tE', 'PiE']) should return the tE, PiE marginal posterior distribution object. 
 
         we also want support to take the log transform of the posterior (common use case, this might be hard to do 
-        genreally.)
+        generally.)
 
         """
 
@@ -51,7 +51,7 @@ class Posterior:
         return marginal
 
 
-    def paramters(self):
+    def parameters(self):
         """
         return ordered list of parameters
         """
@@ -60,7 +60,7 @@ class Posterior:
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
     """
-    function should covert arviz posterior object to our definition of Posterior.
+    function should convert arviz posterior object to our definition of Posterior.
     """
     labels = list(arviz_posterior_object.posterior.data_vars.keys())
     samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
@@ -69,7 +69,7 @@ def convert_arviz(arviz_posterior_object) -> Posterior:
 
 def convert_dynesty(dynesty_posterior_object, parameter_labels_dict) -> Posterior:
     """
-    function should covert dynesty posterior object to our definition of Posterior.
+    function should convert dynesty posterior object to our definition of Posterior.
     """
     labels = list(parameter_labels_dict.keys())
     samples = dynesty_posterior_object.results('samples')
@@ -77,8 +77,8 @@ def convert_dynesty(dynesty_posterior_object, parameter_labels_dict) -> Posterio
 
     return Posterior(samples, labels)
 
-def convert_pymulitnest(pymultinest_posterior_object) -> Posterior:
+def convert_pymultinest(pymultinest_posterior_object) -> Posterior:
     """
-    function should covert pymulitnest posterior object to our definition of Posterior.
+    function should convert pymultinest posterior object to our definition of Posterior.
     """
     pass
