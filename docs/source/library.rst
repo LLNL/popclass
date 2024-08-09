@@ -30,7 +30,7 @@ and paper :cite:`Lam2020`. The input parameters to the simulation were:
     multiplicity: None
     binning: True
 
-The Galaxia "v3" model parameters were used:
+The Galaxia "v3" model parameters that were used:
 
 .. code::
 
@@ -71,7 +71,7 @@ and paper :cite:`Lam2020`. The input parameters to the simulation were:
     multiplicity: None
     binning: True
 
-The Galaxia "v3" galactic model parameters were used:
+The Galaxia "v3" galactic model parameters that were used:
 
 .. code::
 
@@ -112,7 +112,7 @@ and paper :cite:`Lam2020`. The input parameters to the simulation were:
     multiplicity: None
     binning: True
 
-The Galaxia "v3" galactic model parameters were used:
+The Galaxia "v3" galactic model parameters that were used:
 
 .. code::
 
