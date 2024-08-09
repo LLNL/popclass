@@ -27,7 +27,7 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
 
    If you are here to develop on popclass, please head over to the contributing guide.
 
-   
+
 
 .. toctree::
    :titlesonly:
@@ -39,5 +39,6 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
    library
    acknowledgements
    contributing
+   changelog
    references
 
