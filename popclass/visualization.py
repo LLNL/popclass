@@ -51,7 +51,7 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
 	# get boundaries for evaluating kde
 	if bounds is None:
 		bounds = np.array([[0,0] for i in range(ndim)])
-		for counter, param in enumerate(samples[parameters])
+		for counter, param in enumerate(samples[parameters]):
 			param_min, param_max = np.min(samples[param]), np.max(samples[param])
 			param_lower, param_upper = param_min - (param_max - param_min)/10, param_max + (param_max - param_min)/10
 			bounds[counter] = [param_lower, param_upper]
