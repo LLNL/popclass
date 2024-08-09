@@ -9,9 +9,9 @@ details on these avaible models.
 popsycle_singles_sukhboldn20
 ----------------------------
 
-This population model was generated using the P 
-See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
-and paper :cite:`Lam2020`.
+This population model was generated using the Population Synthesis for Compact-object Lensing Events
+or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+and paper :cite:`Lam2020`. The input parameters to the simulation were:
 
 .. code::
 
@@ -50,6 +50,10 @@ The Galaxia "v3" model parameters were used:
 popsycle_singles_raithel18
 --------------------------
 
+This population model was generated using the Population Synthesis for Compact-object Lensing Events
+or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+and paper :cite:`Lam2020`. The input parameters to the simulation were:
+
 .. code::
 
     BH_kick_speed_mean: 100 
@@ -86,6 +90,10 @@ The Galaxia "v3" galactic model parameters were used:
 
 popsycle_singles_spera15
 ------------------------
+
+This population model was generated using the Population Synthesis for Compact-object Lensing Events
+or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+and paper :cite:`Lam2020`. The input parameters to the simulation were:
 
 .. code::
 
