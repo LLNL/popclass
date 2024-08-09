@@ -28,13 +28,13 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
 
             kdes (bool, optional) - flag for plotting the simulated population KDEs (according to the evaluate_density method specified in PopulationModel) constructed from samples. Default: True.
 
-			bounds (array-like or None, optional) - pairs of upper and lower bounds for each parameter or None. If provided, should have a shape (N_dim, 2) where N_dim is equal to the number of parameters and has the same order. If bounds are not provided, they are automatically constructed to be 10% of the extent in samples beyond the minimum and maximum value found in samples for each parameter. Default: None.
+            bounds (array-like or None, optional) - pairs of upper and lower bounds for each parameter or None. If provided, should have a shape (N_dim, 2) where N_dim is equal to the number of parameters and has the same order. If bounds are not provided, they are automatically constructed to be 10% of the extent in samples beyond the minimum and maximum value found in samples for each parameter. Default: None.
 
-			N_bins (int, optional) - Resolution of the grid to evaluate the KDEs on (if kdes=True). Default: 200.
+            N_bins (int, optional) - Resolution of the grid to evaluate the KDEs on (if kdes=True). Default: 200.
 
-			levels (int or array-like, optional) - Number and/or positions of contour lines. Corresponds to the 'levels' argument in plt.contour. Default: 5.
+            levels (int or array-like, optional) - Number and/or positions of contour lines. Corresponds to the 'levels' argument in plt.contour. Default: 5.
 
-			legend (bool) - flag for including plot legend. Default: False.
+            legend (bool) - flag for including plot legend. Default: False.
 
         Returns
         -------
@@ -47,8 +47,6 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
 
 	fig, ax = plt.subplots()
 
-	# create bounds for 1/2 D:
-	# get boundaries for evaluating kde
 	if bounds is None:
 		bounds = np.array([[0,0] for i in range(ndim)])
 		for counter, param in enumerate(samples[parameters]):
@@ -59,7 +57,6 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
 	bins = np.linspace(bounds.T[:][0], bounds.T[:][1], N_bins+1).T
 	bin_centers = (bins[:,1:]+bins[:,:-1])/2
 
-	# make grid to evaluate
 	if(ndim==1):
 		coords_eval = bin_centers
 	elif(ndim==2):
@@ -68,10 +65,8 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
 	else:
 		raise ValueError('Only plotting 1D and 2D distributions is currently supported.')
 
-	# evaluate each class
 	for counter, class_name in enumerate(classes):
 
-		# get samples from the class
 		samples = PopulationModel.samples(class_name=class_name, parameters=parameters)
 
 		if samples:
