@@ -9,6 +9,10 @@ details on these avaible models.
 popsycle_singles_sukhboldn20
 ----------------------------
 
+This population model was generated using the P 
+See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+and paper :cite:`Lam2020`.
+
 .. code::
 
     BH_kick_speed_mean: 100 
