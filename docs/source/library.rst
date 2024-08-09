@@ -4,7 +4,7 @@ Model Library
 
 popclass contains pre-loaded models that can be acceses by 
 :code:`PopulationModel.from_library`. This page contains 
-details on these avaible models.
+details on these available models.
 
 popsycle_singles_sukhboldn20
 ----------------------------
