@@ -153,16 +153,16 @@ class PopulationModel:
             model_name (str): Name of the model to be saving in the asdf file. 
         """
         tree = {
-            "class_data": self._population_samples
-            "parameters": self._parameters
-            "class_weights": self._class_weights
+            "class_data": self._population_samples,
+            "parameters": self._parameters,
+            "class_weights": self._class_weights,
             "model_name": model_name
         }
         af = asdf.AsdfFile(tree)
         af.write_to(path)
 
 
-        
+
 
 
 

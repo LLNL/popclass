@@ -5,12 +5,12 @@ Light visualization library.
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import scienceplots
+
 
 # plotting settings
-plt.style.use('science')
-plt.rc('text', usetex=plt.rcParamsDefault['text.usetex'])
-mpl.rcParams['font.size'] = 24
+#plt.style.use('science')
+#plt.rc('text', usetex=plt.rcParamsDefault['text.usetex'])
+#mpl.rcParams['font.size'] = 24
 
 # default color palette - Paul Tol's colorblind-friendly 'vibrant' palette
 color_cycler = ['#EE7733', '#33BBEE', '#EE3377', '#009988', '#CC3311', '#0077BB', "BBBBBB"]

@@ -23,7 +23,9 @@ release = '0.1'
 extensions = ['sphinx_rtd_theme',
               'sphinx.ext.mathjax', 
               'sphinxcontrib.bibtex', 
-              'sphinx.ext.autodoc']
+              'sphinx.ext.autodoc',
+              "sphinx.ext.napoleon",
+              "sphinx.ext.viewcode"]
 
 
 bibtex_bibfiles = ['refs.bib']

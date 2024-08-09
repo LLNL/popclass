@@ -3,7 +3,7 @@ Utils for converting and handling posterior distributions.
 """
 import numpy as np
 import copy
-import arviz as az
+#import arviz as az
 
 class Posterior:
 
