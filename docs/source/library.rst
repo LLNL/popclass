@@ -86,7 +86,7 @@ popsycle_singles_spera15
 .. code::
 
     BH_kick_speed_mean: 100 
-    IFMR: Raithel18
+    IFMR: Spera15
     NS_kick_speed_mean: 350 
     bin_edges_number: None
     blend_rad: 0.65
