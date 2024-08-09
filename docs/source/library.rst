@@ -26,7 +26,7 @@ popsycle_singles_sukhboldn20
     multiplicity: None
     binning: True
 
-The Galaxia "v3" model parameters where used:
+The Galaxia "v3" model parameters were used:
 
 .. code::
 
@@ -63,7 +63,7 @@ popsycle_singles_raithel18
     multiplicity: None
     binning: True
 
-The Galaxia "v3" galactic model parameters where used:
+The Galaxia "v3" galactic model parameters were used:
 
 .. code::
 
@@ -100,7 +100,7 @@ popsycle_singles_spera15
     multiplicity: None
     binning: True
 
-The Galaxia "v3" galactic model parameters where used:
+The Galaxia "v3" galactic model parameters were used:
 
 .. code::
 
