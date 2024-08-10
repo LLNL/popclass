@@ -4,6 +4,27 @@ Utils for converting and handling posterior distributions.
 import numpy as np
 import copy
 
+class InferenceData:
+    """
+    popclass verion of an object containing the inference
+    data for classification.
+    """
+
+    def __init__(self, posterior, prior_density, parameter_labels):
+        """
+        Initialize the InferenceData object
+
+        Args:
+            posterior (popclass.Posterior): 
+                A posterior object in popclass formatting convention
+            prior_density (array-like):
+                
+        """
+        self.posterior=posterior
+        self.prior_density=prior_density
+        self.parameter_labels=parameter_labels
+
+
 class Posterior:
 
     """
@@ -24,8 +45,6 @@ class Posterior:
 
         self.parameter_labels=parameter_labels
         self.samples=samples
-
-        
 
 
     def marginal(self, parameter_list):
@@ -60,6 +79,9 @@ class Posterior:
             Ordered list of parameters in `Posterior` object.
         """
         return self.parameter_labels
+    
+    def to_InferenceData(self, prior_density):
+        
 
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
@@ -101,3 +123,4 @@ def convert_pymulitnest(pymultinest_posterior_object, parameter_labels) -> Poste
     samples = pymultinest_posterior_object['samples']
 
     return Posterior(samples, parameter_labels)
+

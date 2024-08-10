@@ -5,6 +5,7 @@ from popclass.model import PopulationModel
 import numpy as np
 
 
+
 def classify(posterior, model_name, prior_density, parameters=['log10tE', 'log10piE']):
     """
     main function, takes in a posterior, population model, prior density 
