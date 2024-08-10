@@ -40,6 +40,9 @@ class PopulationModel:
         self._density_estimator = density_estimator
         self._parameters = parameters
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
     @classmethod
     def from_asdf(cls, path):
         """
@@ -68,13 +71,13 @@ class PopulationModel:
         
         Returns
         -------
-            PopulationModel from library
+            PopulationModel from libarary
         """
 
-        if name not in AVAILABLE_MODELS:
-            raise ValueError(f"{name} not available. Available models are: {AVAILABLE_MODELS}")
+        if model_name not in AVAILABLE_MODELS:
+            raise ValueError(f"{model_name} not available. Available models are: {AVAILABLE_MODELS}")
         
-        return self.from_asdf(f'data/{name}.asdf')
+        return cls.from_asdf(f'popclass/data/{model_name}.asdf')
 
 
     def samples(self, class_name, parameters):
@@ -90,22 +93,22 @@ class PopulationModel:
             samples (np.ndarray): samples of shape (num_samples, len(parameters)) with
             the order of the second dimension being set by the order of parameters.
         """
-        _, indices, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
-        return self._population_samples[class_name][:, indices]
+        _, indicies, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
+        return self._population_samples[class_name][:, indicies]
 
     @property
-    def parameters():
+    def parameters(self):
         """
         Return all parameters available in the population model.
 
         Returns
         -------
-            parameters (list[str]): list of all parameters.
+            paramters (list[str]): list of all parameters.
         """
         return self._parameters
 
     @property
-    def classes():
+    def classes(self):
         """
         Return all classes available in the population model.
 
@@ -124,9 +127,9 @@ class PopulationModel:
         return self._class_weights[class_name]
 
 
-    def evaluate_density(class_name, parameters, points):
+    def evaluate_denisty(self, class_name, parameters, points):
         """
-        Evaulate the kernel density estimate of a point
+        Evaulate the kernal density estimate of a point
         for a class.
 
         Args:
@@ -134,17 +137,17 @@ class PopulationModel:
             parameters (list[str]): parameters to evaluate
                 population model density over. Order sets the order
                 of the second dimension of points.
-            points: (np.ndarray): data to evalute density on has shape
+            points: (np.ndarray): data to evalute desnity on has shape
                 (num_data_points, len(parameters)).
         Returns:
             density_evaluation (np.ndarray): Density evaluations with shape
                 (num_data_points)
         """
-        kernel = self._density_estimator(self.samples(class_name, parameters))
-        return kernel.evaluate(points)
+        kernal = self._density_estimator(self.samples(class_name, parameters))
+        return kernal.evaluate(points)
 
 
-    def to_asdf(path, model_name):
+    def to_asdf(self, path, model_name):
         """
         Save population model to asdf file.
 
@@ -156,13 +159,10 @@ class PopulationModel:
             "class_data": self._population_samples,
             "parameters": self._parameters,
             "class_weights": self._class_weights,
-            "model_name": model_name
+            "model_name": model_name,
         }
         af = asdf.AsdfFile(tree)
         af.write_to(path)
-
-
-
 
 
 
