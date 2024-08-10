@@ -16,7 +16,7 @@ popclass calulates,
 
     p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.
 
-Using Bayes therom we can write,
+Using Bayes' theorem we can write,
 
 .. math::
 
@@ -50,9 +50,9 @@ drawn under some prior, :math:`\pi(\theta)`, with wide support :cite:p:`Hogg2010
 
 This allows us to we leverage previously calculated posterior samples to perform
 lens classification for a single event in the context of a Galactic model. The term,
-:math:`p(\theta_{c} |\text{class}_L, \mathcal{G})` can be calculated by using kernal
-density esimtation over the single event observable space (e.g., :math:`t_{E}-\pi_{E}`) 
+:math:`p(\theta_{c} |\text{class}_L, \mathcal{G})` can be calculated by using kernel
+density estimation over the single event observable space (e.g., :math:`t_{E}-\pi_{E}`) 
 using a simulated catalog of microlensing events from :math:`\mathcal{G}`. 
 :math:`p(\text{class}_L | \mathcal{G})` is the prior probability that a event belongs
-to each class before any data is seen, which is just set by reletive number of expected
+to each class before any data is seen, which is just set by relative number of expected
 events predicted by the Galactic model :math:`\mathcal{G}`.

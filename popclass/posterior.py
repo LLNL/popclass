@@ -126,7 +126,7 @@ The following have not been tested. May fail
 
 def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
     """
-    function should covert dynesty posterior object to our definition of Posterior.
+    function should convert dynesty posterior object to our definition of Posterior.
     """
     # samples = dynesty_posterior_object.results('samples')
     # weights = dynesty_posterior_object.results('logwt')
@@ -136,7 +136,7 @@ def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
 
 def convert_pymulitnest(pymultinest_posterior_object, parameter_labels) -> Posterior:
     """
-    function should covert pymulitnest posterior object to our definition of Posterior.
+    function should convert pymultinest posterior object to our definition of Posterior.
     """
     samples = pymultinest_posterior_object['samples']
 

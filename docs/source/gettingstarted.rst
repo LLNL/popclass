@@ -4,7 +4,7 @@ Getting Started
 
 To demostrate basic usage of popclass we will mock some input microlensing 
 event data and use a pre-loaded population model to classify the lens of the 
-event. For a primer on microlensing see the microlening source
+event. For a primer on microlensing see the microlensing source
 `website <https://www.microlensing-source.org/>`_ .
 
 The inputs to popclass are samples from a single event posterior distribution
@@ -12,9 +12,9 @@ and their associated prior density. Let's assume the posterior distribution is
 10,000 from an uncorrelated gaussian in :math:`\log t_{E}- \log\pi_{E}` centered on 2, and -1, with
 standard deviations of 0.1 and 0.5, respectively. 
 
-For simplicity, let's also assume that an independant uniform prior with range [-3,3] 
-in each paramter was used in the modeling so the prior desnity of each 
-posterior sample identical and :math:`1/6 \times 1/6 \approx 0.028`.
+For simplicity, let's also assume that an independent uniform prior with range [-3,3] 
+in each parameter was used in the modeling so the prior density of each 
+posterior sample is identical and equal to :math:`1/6 \times 1/6 \approx 0.028`.
 
 .. code-block:: python
 
@@ -44,8 +44,8 @@ with the sukhbold :cite:p:`Sukhbold2016` initial final mass relation.
 
     popsycle = pc.build_named_model('popsycle_singles_sukhnoldn20')
 
-We will now combine all of this information to probabilitically classify the lens,
-given the popsycle model and the event log10tE-log10piE posterior.
+We will now combine all of this information to classify the lens,
+given the popsycle model and the event :math:`\log t_{E}-\log\pi_{E}` posterior.
 
 .. code-block:: python
 
@@ -58,7 +58,7 @@ classification is a dictionary of len class probabilities.
 
     {"star": 0.4, "white dwarf": 0.3, "neutron star": 0.1, "black hole": 0.2}
 
-For more advance usage and a deeper dive into the details, please see 
-the documentation examples pages.
+For more advanced usage and a deeper dive into the details, please see 
+the documentation tutorials.
 
     

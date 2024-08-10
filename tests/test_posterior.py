@@ -1,4 +1,4 @@
-from popclass.posterior import Posterior, convert_arviz, convert_dynesty, convert_pymulitnest
+from popclass.posterior import Posterior, convert_arviz, convert_dynesty, convert_pymultinest
 from dynesty.results import Results
 import numpy as np 
 import pytest
