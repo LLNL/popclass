@@ -117,7 +117,7 @@ class PopulationModel:
             classes (list[str]): list of all classes available.
         """
 
-        return self._population_samples.keys()
+        return list(self._population_samples.keys())
 
 
     def class_weight(self, class_name):
