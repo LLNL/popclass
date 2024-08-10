@@ -80,9 +80,27 @@ class Posterior:
         """
         return self.parameter_labels
     
-    def to_InferenceData(self, prior_density):
-        
+    def to_InferenceData(self, posterior_object, prior_density):
+        """
+        Go from Posterior object to a new InferenceData object.
 
+        Args:
+            posterior_object (popclass.Posterior)
+                Either a popclass Posterior or Posterior.marginal
+            prior_density (array-like)
+                Prior density corresponding to samples in posterior_object
+
+        Returns:
+            An InferenceData object that contains all information needed
+            to pass to classifier
+        """
+        inference_data = InferenceData(
+            posterior=posterior_object.posterior,
+            prior_density=prior_density,
+            parameter_labels=posterior_object.parameter_labels
+        )
+
+        return inference_data
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
     """
