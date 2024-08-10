@@ -71,7 +71,7 @@ class PopulationModel:
         
         Returns
         -------
-            PopulationModel from libarary
+            PopulationModel from library of avaible models.
         """
 
         if model_name not in AVAILABLE_MODELS:
