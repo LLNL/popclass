@@ -50,7 +50,8 @@ given the popsycle model and the event :math:`\log t_{E}-\log\pi_{E}` posterior.
 
 .. code-block:: python
 
-    classification = pc.classify(population_model=popsycle, inference_data=inference_data)
+    classification = pc.classify(population_model=popsycle, inference_data=inference_data,
+        parameters =['log10tE', 'log10piE'])
     print(classification)
 
 classification is a dictionary of len class probabilities.

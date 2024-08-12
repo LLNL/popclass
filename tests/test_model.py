@@ -2,7 +2,7 @@
 Tests to make sure model.py works
 """
 from popclass.posterior import Posterior
-from popclass.model import PopulationModel, validate_asdf_population_model
+from popclass.model import PopulationModel, validate_asdf_population_model, AVAILABLE_MODELS
 import numpy as np 
 import pytest
 import asdf
@@ -88,3 +88,17 @@ def test_valid_asdf_file():
 
     assert(validate_asdf_population_model(valid_file) is True)
     assert(validate_asdf_population_model(invalid_file) is False)
+
+def test_all_population_model_files_are_valid():
+    """
+    Test all library population model files are valid
+    """
+    for model in AVAILABLE_MODELS:
+        with asdf.open(f'popclass/data/{model}.asdf') as tree:
+            assert(validate_asdf_population_model(tree) is True)
+
+    
+
+
+        
+
