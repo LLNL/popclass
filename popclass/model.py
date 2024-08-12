@@ -1,5 +1,8 @@
 """
-Reading, saving, and handling population models 
+In order to make object classification probabilities, 
+we must define a galactic model.
+``popclass`` allows the user to either specify one of the models included with
+the library or supply their own, given that it is in ASDF file format.
 """
 import asdf
 import numpy as np
@@ -13,8 +16,7 @@ AVAILABLE_MODELS = [
 
 class PopulationModel:
     """
-    PopulationModel - use to represent simulation data and compute class
-    kernel density estimates of the simulation data.
+    Used to store information on simulation data necessary for classification.
     """
 
     def __init__(self, population_samples, class_weights, parameters, density_estimator=gaussian_kde):
@@ -48,8 +50,7 @@ class PopulationModel:
         Args:
             path (str): path to the asdf file
 
-        Returns
-        -------
+        Returns:
             PopulationModel populated with the data from the asdf file.
         """
 
@@ -67,12 +68,17 @@ class PopulationModel:
         """
         Build population model from available models.
 
+        Available models include
+
+        * ``popsycle_singles_raithel18``
+        * ``popsycle_singles_spera15``
+        * ``popsycle_singles_sukhboldn20``
+
         Args:
             model_name (str): Name of the model.
             library_path (str): Path to library of models.
         
-        Returns
-        -------
+        Returns:
             PopulationModel from library of avaible models.
         """
 
@@ -87,12 +93,13 @@ class PopulationModel:
         Return simulation samples for a given class and given list of parameters.
 
         Args:
-            class_name: (str): name of class to get population samples for.
-            parameters: (list[str]): List of parameters to get samples for.
+            class_name: (str): 
+                name of class to get population samples for.
+            parameters: (list[str]): 
+                List of parameters to get samples for.
         
-        Returns
-        -------
-            samples (np.ndarray): samples of shape (num_samples, len(parameters)) with
+        Returns:
+            samples of shape (`num_samples, len(parameters)`) with
             the order of the second dimension being set by the order of parameters.
         """
         _, indicies, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
@@ -103,9 +110,8 @@ class PopulationModel:
         """
         Return all parameters available in the population model.
 
-        Returns
-        -------
-            paramters (list[str]): list of all parameters.
+        Returns:
+            List of all parameters.
         """
         return self._parameters
 
@@ -114,9 +120,8 @@ class PopulationModel:
         """
         Return all classes available in the population model.
 
-        Returns
-        -------
-            classes (list[str]): list of all classes available.
+        Returns:
+            List of all classes available.
         """
 
         return list(self._population_samples.keys())
@@ -125,6 +130,9 @@ class PopulationModel:
     def class_weight(self, class_name):
         """
         Return the class weight for a given class.
+
+        Returns:
+            Class Weight for the specified class.
         """
         return self._class_weights[class_name]
 
@@ -135,15 +143,17 @@ class PopulationModel:
         for a class.
 
         Args:
-            class_name: (str): name of class to evaluate density.
-            parameters (list[str]): parameters to evaluate
+            class_name (str): 
+                name of class to evaluate density.
+            parameters (list[str]): 
+                parameters to evaluate
                 population model density over. Order sets the order
                 of the second dimension of points.
-            points: (np.ndarray): data to evalute desnity on has shape
+            points (np.ndarray): 
+                data to evalute desnity on has shape
                 (num_data_points, len(parameters)).
         Returns:
-            density_evaluation (np.ndarray): Density evaluations with shape
-                (num_data_points)
+            density_evaluation (np.ndarray)
         """
         class_samples = self.samples(class_name, parameters)
         print(f'class sample shape f{class_samples.T.shape}')
@@ -178,8 +188,7 @@ def validate_asdf_population_model(asdf_object):
         asdf_object (asdf): asdf file to validate against a
             Population model required format.
     
-    Returns
-    -------
+    Returns:
         True if asdf is valid. False otherwise.
     """
     valid_key_set = ['model_name', 'class_weights', 'parameters', 'class_data']

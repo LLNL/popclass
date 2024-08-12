@@ -68,6 +68,22 @@ def test_convert_arviz():
 
     assert(np.allclose(test_samples, popclass_from_az_post.samples))
 
+def test_to_InferenceData():
+    """
+    Test that creating an InferenceData object from Posterior works
+    """
+    test_samples = np.random.rand(1000,3)
+    test_params = ['A', 'B', 'C']
+    test_prior = np.ones(len(test_samples[0]))
+    post = Posterior(samples=test_samples, parameter_labels=test_params)
+
+    inference_data = post.to_inference_data(test_prior)
+
+    assert(np.array_equal(inference_data.posterior.samples, test_samples))
+    assert(np.array_equal(inference_data.posterior.parameter_labels, test_params))
+    assert(np.array_equal(inference_data.prior_density, test_prior))
+
+
 #def test_convert_dynesty():
 #    """
 #    Test that conversion from dynesty works

@@ -1,13 +1,17 @@
 """
-Main classification utilities.
+Main function and usage case for ``popclass``.
+Will take an ``InferenceData`` and ``PopulationModel`` object and return 
+object class probabilities for classes in ``PopulationModel.classes()``.
+
 """
 import numpy as np
 
 
 def classify(inference_data, population_model, parameters):
     """
-    main function, takes in a posterior, population model, prior density 
-    of posterior samples and returns class probabilities.
+    ``popclass`` classification function. 
+    Takes in ``popclass.InferenceData`` and ``popclass.PopulationModel`` objects, 
+    then returns class probabilities.
 
     Args:
         inference_data (popclass.InferenceData):
@@ -16,6 +20,10 @@ def classify(inference_data, population_model, parameters):
             popclass PopulationModel object
         parameters (list):
             Parameters to use for classification.
+
+    Returns:
+        Dictionary of classes in ``PopulationModel.classes()`` and associated 
+        probability.
     """
     class_names = population_model.classes
     posterior = inference_data.posterior.marginal(parameters)
