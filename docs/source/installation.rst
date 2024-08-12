@@ -12,6 +12,6 @@ To install from source
 
 .. code-block:: console
 
-    git clone https://github.com/LLNL/popclass
+    git clone https://github.com/LLNL/popclass.git
     cd popclass
     pip install .
