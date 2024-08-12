@@ -145,8 +145,9 @@ class PopulationModel:
             density_evaluation (np.ndarray): Density evaluations with shape
                 (num_data_points)
         """
-        kernal = self._density_estimator(self.samples(class_name, parameters))
-        return kernal.evaluate(points)
+        class_samples = self.samples(class_name, parameters)
+        kernal = self._density_estimator(class_samples.T)
+        return kernal.evaluate(points[0,:,:].T.shape)
 
 
     def to_asdf(self, path, model_name):
