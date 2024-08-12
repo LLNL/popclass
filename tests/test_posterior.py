@@ -1,4 +1,4 @@
-from popclass.posterior import Posterior, convert_arviz
+from popclass.posterior import Posterior
 from dynesty.results import Results
 import numpy as np 
 import pytest
@@ -67,9 +67,7 @@ def test_convert_arviz():
     }
 
     az_post = az.convert_to_inference_data(post)
-    
-
-    popclass_from_az_post = convert_arviz(az_post)
+    popclass_from_az_post = Posterior.from_arviz(az_post)
 
     assert(np.allclose(test_samples, popclass_from_az_post.samples))
 

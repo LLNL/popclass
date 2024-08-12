@@ -24,7 +24,6 @@ class InferenceData:
         self.prior_density=prior_density
 
 
-
 class Posterior:
 
     """
@@ -42,7 +41,6 @@ class Posterior:
         if True in testnan:
             raise ValueError("Posterior samples cannot be NaN")
         
-
         self.parameter_labels=parameter_labels
         self.samples=samples
 
@@ -95,27 +93,24 @@ class Posterior:
         """
         return InferenceData(posterior=self, prior_density=prior_density)
 
-def convert_arviz(arviz_posterior_object) -> Posterior:
-    """
-    Utility to convert an ArViz posterior object directly to popclass posterior object
+    @classmethod
+    def from_arviz(cls, arviz_posterior_object):
+        """
+        Utility to convert an ArViz posterior object directly to popclass posterior object
 
-    Parameters
-    ----------
-    arviz_posterior_object : arviz.InferenceData
-        InferenceData from an ArViz
+        Parameters
+        ----------
+            arviz_posterior_object : arviz.InferenceData
+            InferenceData from an ArViz
 
-    Returns
-    -------
-        popclass `Posterior object`
-    """
-    labels = list(arviz_posterior_object.posterior.data_vars.keys())
-    samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
+        Returns
+        -------
+            popclass `Posterior object`
+        """
+        labels = list(arviz_posterior_object.posterior.data_vars.keys())
+        samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
     
-    return Posterior(np.array(samples).swapaxes(0,1), labels)
-
-"""
-The following have not been tested. May fail
-"""
+        return cls(np.array(samples).swapaxes(0,1), labels)
 
 #def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
 #    """
