@@ -6,4 +6,12 @@ The recommended way to install popclass is using `pip <https://pip.pypa.io/en/st
 
 .. code-block:: console
 
-    python -m pip install popclass
+    pip install popclass
+
+To install from source
+
+.. code-block:: console
+
+    git clone https://github.com/LLNL/popclass
+    cd popclass
+    pip install .
