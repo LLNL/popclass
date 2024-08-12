@@ -10,7 +10,7 @@ class InferenceData:
     data for classification.
     """
 
-    def __init__(self, posterior, prior_density, parameter_labels):
+    def __init__(self, posterior, prior_density):
         """
         Initialize the InferenceData object
 
@@ -22,7 +22,7 @@ class InferenceData:
         """
         self.posterior=posterior
         self.prior_density=prior_density
-        self.parameter_labels=parameter_labels
+
 
 
 class Posterior:
@@ -68,7 +68,6 @@ class Posterior:
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = parameter_list
         marginal.samples = self.samples[idx, :]
-        print(marginal.samples.shape)
         return marginal
 
 
@@ -80,7 +79,7 @@ class Posterior:
         """
         return self.parameter_labels
     
-    def to_InferenceData(self, posterior_object, prior_density):
+    def to_inference_data(self, prior_density):
         """
         Go from Posterior object to a new InferenceData object.
 
@@ -94,13 +93,7 @@ class Posterior:
             An InferenceData object that contains all information needed
             to pass to classifier
         """
-        inference_data = InferenceData(
-            posterior=posterior_object.posterior,
-            prior_density=prior_density,
-            parameter_labels=posterior_object.parameter_labels
-        )
-
-        return inference_data
+        return InferenceData(posterior=self, prior_density=prior_density)
 
 def convert_arviz(arviz_posterior_object) -> Posterior:
     """
@@ -124,21 +117,21 @@ def convert_arviz(arviz_posterior_object) -> Posterior:
 The following have not been tested. May fail
 """
 
-def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
-    """
-    function should convert dynesty posterior object to our definition of Posterior.
-    """
-    # samples = dynesty_posterior_object.results('samples')
-    # weights = dynesty_posterior_object.results('logwt')
-    samples = dynesty_posterior_object.sample_equal()
+#def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
+#    """
+#    function should convert dynesty posterior object to our definition of Posterior.
+#    """
+#    # samples = dynesty_posterior_object.results('samples')
+#    # weights = dynesty_posterior_object.results('logwt')
+#    samples = dynesty_posterior_object.sample_equal()
+#
+#    return Posterior(samples, parameter_labels)
 
-    return Posterior(samples, parameter_labels)
-
-def convert_pymulitnest(pymultinest_posterior_object, parameter_labels) -> Posterior:
-    """
-    function should convert pymultinest posterior object to our definition of Posterior.
-    """
-    samples = pymultinest_posterior_object['samples']
-
-    return Posterior(samples, parameter_labels)
+#def convert_pymultinest(pymultinest_posterior_object, parameter_labels) -> Posterior:
+#    """
+#    function should convert pymultinest posterior object to our definition of Posterior.
+#    """
+#    samples = pymultinest_posterior_object['samples']
+#
+#    return Posterior(samples, parameter_labels)
 

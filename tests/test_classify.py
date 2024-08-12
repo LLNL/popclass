@@ -1,3 +1,24 @@
 """
 Test to check that classify.py works *as intended*
 """
+import numpy as np
+from popclass.posterior import Posterior
+
+
+def test_full_example():
+    """
+    test full working example
+    """
+
+    NUM_POSTERIOR_SAMPLES = 10000
+
+    logtE_posterior_samples = np.random.normal(loc=2,scale=0.1, size=NUM_POSTERIOR_SAMPLES)
+    logpiE_posterior_samples = np.random.normal(loc=-1,scale=0.5, size=NUM_POSTERIOR_SAMPLES)
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
+
+    posterior_samples = np.dstack((logtE_posterior_samples,logpiE_posterior_samples))
+    posterior = Posterior(samples=posterior_samples, parameter_labels=['log10tE', 'log10PiE'])
+
+    inference_data = posterior.to_inference_data(prior_density)
+
+

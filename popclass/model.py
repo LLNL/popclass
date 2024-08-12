@@ -40,9 +40,6 @@ class PopulationModel:
         self._density_estimator = density_estimator
         self._parameters = parameters
 
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
     @classmethod
     def from_asdf(cls, path):
         """
@@ -62,12 +59,13 @@ class PopulationModel:
                     class_weights=tree['class_weights'])
 
     @classmethod
-    def from_model_library(cls, model_name):
+    def from_library(cls, model_name, library_path=None):
         """
         Build population model from available models.
 
         Args:
             model_name (str): Name of the model.
+            library_path (str): Path to library of models.
         
         Returns
         -------
@@ -77,7 +75,9 @@ class PopulationModel:
         if model_name not in AVAILABLE_MODELS:
             raise ValueError(f"{model_name} not available. Available models are: {AVAILABLE_MODELS}")
         
-        return cls.from_asdf(f'popclass/data/{model_name}.asdf')
+        path = "popclass/data/" if library_path is None else library_path
+
+        return cls.from_asdf(f'{path}{model_name}.asdf')
 
 
     def samples(self, class_name, parameters):

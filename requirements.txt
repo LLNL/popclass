@@ -1,5 +1,6 @@
 numpy
 scipy
+--no-binary=h5py h5py
 pytest
 asdf
 matplotlib
@@ -7,3 +8,4 @@ sphinx
 sphinx_rtd_theme
 sphinxcontrib-bibtex
 arviz
+dynesty
