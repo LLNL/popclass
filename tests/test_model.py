@@ -27,16 +27,26 @@ def test_load_model():
         model_from_library.samples(class_name,parameters)))
 
 
+def test_load_model_not_in_libaray():
+    """
+    Test model not in library raise value error 
+    """
+    with pytest.raises(ValueError):
+        model_from_library = PopulationModel.from_library(model_name="model_not_there")
+
+
 def test_props():
     """
     Test that the properties of the class match expectations
     """
+    models = ['popsycle_singles_sukhboldn20','popsycle_singles_spera15',
+             'popsycle_singles_raithel18']
 
     test_params = ['log10tE', 'log10piE', 'log10thetaE', 'f_blend_I']
     class_list = ['black_hole', 'neutron_star', 'star', 'white_dwarf']
 
-    model_name = 'popsycle_singles_sukhboldn20'
-    model_from_library = PopulationModel.from_library(model_name=model_name)
+    for model in models:
+        model_from_library = PopulationModel.from_library(model_name=model)
 
-    assert(list(model_from_library.classes) == class_list)
-    assert(list(model_from_library.parameters) == test_params)
+        assert(list(model_from_library.classes) == class_list)
+        assert(list(model_from_library.parameters) == test_params)
