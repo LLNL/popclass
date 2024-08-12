@@ -68,8 +68,8 @@ class Posterior:
         marginal.samples = self.samples[idx, :]
         return marginal
 
-
-    def paramters(self):
+    @property
+    def parameters(self):
         """
         Returns
         -------

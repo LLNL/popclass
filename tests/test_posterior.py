@@ -13,7 +13,7 @@ def test_posterior_init_parameters():
     test_samples = np.random.rand(3,1000)
     test_params = ['A', 'B', 'C']
     post = Posterior(samples=test_samples, parameter_labels=test_params)
-    assert(post.parameter_labels == test_params)
+    assert(post.parameters == test_params)
 
 def test_posterior_init_samples():
     """
