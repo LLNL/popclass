@@ -76,7 +76,7 @@ mock class data.
     parameters = ['log10tE', 'log10PiE', 'log10thetaE', 'f_blend_I']
     class_data = {"black_hole": np.random.randn(17, 4),
                   "neutron_star": np.random.randn(21,4),
-                  "star": np.random.randn(1255,4)
+                  "star": np.random.randn(1255,4),
                   "white dwarf": np.random.randn(178,4)}
                   
     model_name = 'popsycle_singles_sukhboldn20'
@@ -90,7 +90,7 @@ mock class data.
     tree = {
         "class_data": class_data,
         "parameters": parameters,
-        "class_weights": class_weights
+        "class_weights": class_weights,
         "model_name": "popsycle_singles_imfr_sukhboldn20"
     }
 
