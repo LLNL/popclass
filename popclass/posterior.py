@@ -65,7 +65,6 @@ class Posterior:
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = parameter_list
         marginal.samples = self.samples[:, idx]
-        print(marginal.samples.shape)
         return marginal
 
     @property
