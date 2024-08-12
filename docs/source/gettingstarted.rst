@@ -19,22 +19,23 @@ posterior sample is identical and equal to :math:`1/6 \times 1/6 \approx 0.028`.
 .. code-block:: python
 
     import numpy as np
-    import popclass as pc
+    from popclass.posterior import Posterior
+    from popclass.model import PopulationModel
 
     NUM_POSTERIOR_SAMPLES = 10000
 
-    logtE_posterior_samples = np.random.gaussian(loc=2,scale=0.1, size=NUM_POSTERIOR_SAMPLES)
-    logpiE_posterior_samples = np.random.gaussian(loc=-1,scale=0.5, size=NUM_POSTERIOR_SAMPLES)
-    
-    prior_density = 0.028 * np.one(NUM_POSTERIOR_SAMPLES)
+    logtE_posterior_samples = np.random.normal(loc=2,scale=0.1, size=NUM_POSTERIOR_SAMPLES)
+    logpiE_posterior_samples = np.random.normal(loc=-1,scale=0.5, size=NUM_POSTERIOR_SAMPLES)
+    posterior_samples = np.dstack((logtE_posterior_samples,logpiE_posterior_samples))
+
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
 
 Now let's load this data into a format popclass understands.
 
 .. code-block:: python
 
-    posterior = pc.Posterior(posterior_samples=posterior_samples,
-                             parameters=['log10tE', 'log10piE'])
-    inference_data = pc.InferenceData(posterior, prior_density=prior_density)
+    posterior = Posterior(samples=posterior_samples, parameter_labels=['log10tE', 'log10piE'])
+    inference_data = posterior.to_inference_data(prior_density)
 
 Now we will load in a readily-available (or named) population model. We will choose the 
 `PopSyCLE <https://github.com/jluastro/PopSyCLE>`_ :cite:p:`Lam2020` population model
@@ -42,7 +43,7 @@ with the sukhbold :cite:p:`Sukhbold2016` initial final mass relation.
 
 .. code-block:: python
 
-    popsycle = pc.build_named_model('popsycle_singles_sukhnoldn20')
+    popsycle = PopulationModel.from_libaray('popsycle_singles_sukhboldn20')
 
 We will now combine all of this information to classify the lens,
 given the popsycle model and the event :math:`\log t_{E}-\log\pi_{E}` posterior.

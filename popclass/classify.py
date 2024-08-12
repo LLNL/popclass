@@ -5,7 +5,7 @@ import numpy as np
 
 
 
-def classify(inference_data, population_model, parameters=['log10tE', 'log10piE']):
+def classify(inference_data, population_model, parameters):
     """
     main function, takes in a posterior, population model, prior density 
     of posterior samples and returns class probabilities.
@@ -22,7 +22,7 @@ def classify(inference_data, population_model, parameters=['log10tE', 'log10piE'
 
     # first load in the population model
     # right now just make it from library
-    class_names = population_model.classes()
+    class_names = population_model.classes
 
     prob_dict = {}
 
