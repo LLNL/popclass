@@ -25,7 +25,11 @@ def test_full_example():
     popsycle = PopulationModel.from_library('popsycle_singles_sukhboldn20')
 
     classification = classify(population_model=popsycle, inference_data=inference_data,
-                            parameters=parameters)
+                              parameters=parameters)
+
+    for class_name in popsycle.classes:
+        assert(class_name in classification)
+
     
 
 
