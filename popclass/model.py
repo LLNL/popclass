@@ -1,7 +1,7 @@
 """
 In order to make object classification probabilities, 
 we must define a galactic model.
-`popclass` allows the user to either specify one of the models included with
+``popclass`` allows the user to either specify one of the models included with
 the library or supply their own, given that it is in ASDF file format.
 """
 import asdf
@@ -68,12 +68,17 @@ class PopulationModel:
         """
         Build population model from available models.
 
+        Available models include
+
+        * ``popsycle_singles_raithel18``
+        * ``popsycle_singles_spera15``
+        * ``popsycle_singles_sukhboldn20``
+
         Args:
             model_name (str): Name of the model.
             library_path (str): Path to library of models.
         
-        Returns
-        -------
+        Returns:
             PopulationModel from library of avaible models.
         """
 
@@ -94,9 +99,8 @@ class PopulationModel:
                 List of parameters to get samples for.
         
         Returns:
-            samples: (np.ndarray): 
-                samples of shape (num_samples, len(parameters)) with
-                the order of the second dimension being set by the order of parameters.
+            samples of shape (`num_samples, len(parameters)`) with
+            the order of the second dimension being set by the order of parameters.
         """
         _, indicies, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
         return self._population_samples[class_name][:, indicies]
@@ -106,9 +110,8 @@ class PopulationModel:
         """
         Return all parameters available in the population model.
 
-        Returns
-        -------
-            paramters (list[str]): list of all parameters.
+        Returns:
+            List of all parameters.
         """
         return self._parameters
 
@@ -118,7 +121,7 @@ class PopulationModel:
         Return all classes available in the population model.
 
         Returns:
-            classes (list[str]): list of all classes available.
+            List of all classes available.
         """
 
         return list(self._population_samples.keys())
@@ -129,7 +132,7 @@ class PopulationModel:
         Return the class weight for a given class.
 
         Returns:
-            Class Weight (float)
+            Class Weight for the specified class.
         """
         return self._class_weights[class_name]
 
@@ -150,8 +153,7 @@ class PopulationModel:
                 data to evalute desnity on has shape
                 (num_data_points, len(parameters)).
         Returns:
-            density_evaluation (np.ndarray): 
-                Density evaluations with shape (num_data_points)
+            density_evaluation (np.ndarray)
         """
         class_samples = self.samples(class_name, parameters)
         kernal = self._density_estimator(class_samples.T)

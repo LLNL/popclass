@@ -1,5 +1,7 @@
 """
-Main function and usage case for `popclass`.
+Main function and usage case for ``popclass``.
+Will take an ``InferenceData`` and ``PopulationModel`` object and return 
+object class probabilities for classes in ``PopulationModel.classes()``.
 
 """
 import numpy as np
@@ -7,8 +9,8 @@ import numpy as np
 
 def classify(inference_data, population_model, parameters):
     """
-    `popclass` classification function. 
-    Takes in `popclass.InferenceData` and `popclass.PopulationModel` objects, 
+    ``popclass`` classification function. 
+    Takes in ``popclass.InferenceData`` and ``popclass.PopulationModel`` objects, 
     then returns class probabilities.
 
     Args:
