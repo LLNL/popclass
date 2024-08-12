@@ -33,7 +33,8 @@ class Posterior:
     ``popclass`` object containing the user's posterior information.
     This can be either from data arrays or an allowable format.
 
-    **Supported Formats**
+    **Supported Formats**:
+
     * ArViz
     """
 

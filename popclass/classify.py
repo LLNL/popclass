@@ -20,6 +20,10 @@ def classify(inference_data, population_model, parameters):
             popclass PopulationModel object
         parameters (list):
             Parameters to use for classification.
+
+    Returns:
+        Dictionary of classes in ``PopulationModel.classes()`` and associated 
+        probability.
     """
     class_names = population_model.classes
     posterior = inference_data.posterior.marginal(parameters)
