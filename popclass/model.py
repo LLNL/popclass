@@ -53,10 +53,14 @@ class PopulationModel:
             PopulationModel populated with the data from the asdf file.
         """
 
-        tree = asdf.open(path)
-        return cls(population_samples=tree['class_data'], 
-                    parameters=tree['parameters'],
-                    class_weights=tree['class_weights'])
+        with asdf.open(path, lazy_load=False, copy_arrays=True) as tree:
+            population_samples=tree['class_data'] 
+            parameters=tree['parameters']
+            class_weights=tree['class_weights']
+    
+        return cls(population_samples=population_samples, 
+                    parameters=parameters,
+                    class_weights=class_weights)
 
     @classmethod
     def from_library(cls, model_name, library_path=None):
@@ -74,10 +78,10 @@ class PopulationModel:
 
         if model_name not in AVAILABLE_MODELS:
             raise ValueError(f"{model_name} not available. Available models are: {AVAILABLE_MODELS}")
-        
         path = "popclass/data/" if library_path is None else library_path
 
         return cls.from_asdf(f'{path}{model_name}.asdf')
+    
 
 
     def samples(self, class_name, parameters):

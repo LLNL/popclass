@@ -22,7 +22,6 @@ def test_load_model():
     parameters = model_from_asdf.parameters
 
     for class_name in model_from_asdf.classes:
-        print(class_name)
         assert(np.allclose(model_from_asdf.samples(class_name,parameters),
         model_from_library.samples(class_name,parameters)))
 
@@ -47,6 +46,5 @@ def test_props():
 
     for model in models:
         model_from_library = PopulationModel.from_library(model_name=model)
-
         assert(list(model_from_library.classes) == class_list)
         assert(list(model_from_library.parameters) == test_params)

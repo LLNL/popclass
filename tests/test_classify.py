@@ -17,8 +17,8 @@ def test_full_example():
     prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
 
     posterior_samples = np.dstack((logtE_posterior_samples,logpiE_posterior_samples))
-    posterior = Posterior(samples=posterior_samples, parameter_labels=['log10tE', 'log10PiE'])
-
+    posterior = Posterior(samples=posterior_samples, parameter_labels=['log10tE', 'log10piE'])
     inference_data = posterior.to_inference_data(prior_density)
+
 
 
