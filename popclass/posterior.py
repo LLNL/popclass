@@ -1,13 +1,17 @@
 """
-Utils for converting and handling posterior distributions.
+Utilities for creating the posterior and inference data objects for interfacing 
+with `popclass`' classification function.
 """
 import numpy as np
 import copy
 
 class InferenceData:
     """
-    popclass verion of an object containing the inference
+    `popclass` verion of an object containing the inference
     data for classification.
+
+    Similar to `popclass.Posterior`, but is intended to include prior infrmation
+    to be passed to the classifier.
     """
 
     def __init__(self, posterior, prior_density):
@@ -26,7 +30,9 @@ class InferenceData:
 
 class Posterior:
     """
-    popclass internal posterior object.
+    `popclass` object containing the user's posterior information.
+    This can be either from arrays or an appropriate format that can be ingested
+    by one of the methods.
     """
 
     def __init__(self, samples, parameter_labels):
@@ -48,16 +54,15 @@ class Posterior:
         """
         Get marginal distribution for some ordered subset of parameters in `Posterior()`
 
-        Parameters
-        ----------
-        parameter_list : list
-            List of parameters for generating marginal.
-            Should be a subset of `Posterior.parameter_labels()`
+        Parameters:
+            parameter_list : list
+                List of parameters for generating marginal.
+                Should be a subset of `Posterior.parameter_labels()`
 
-        Returns
-        -------
-            New instance of `Posterior` object containing samples
-            determined and ordered by `parameter_list`.
+        Returns:
+            marginal: (cls)
+                New instance of `Posterior` object containing samples
+                determined and ordered by `parameter_list`.
         """
 
         _, idx, _ = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
@@ -70,8 +75,7 @@ class Posterior:
     @property
     def parameters(self):
         """
-        Returns
-        -------
+        Returns: list
             Ordered list of parameters in `Posterior` object.
         """
         return self.parameter_labels
@@ -97,14 +101,12 @@ class Posterior:
         """
         Utility to convert an ArViz posterior object directly to popclass posterior object
 
-        Parameters
-        ----------
+        Parameters:
             arviz_posterior_object : arviz.InferenceData
-            InferenceData from an ArViz
+                InferenceData from an ArViz
 
-        Returns
-        -------
-            popclass `Posterior object`
+        Returns:
+            `popclass` `Posterior` object
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
