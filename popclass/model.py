@@ -82,8 +82,6 @@ class PopulationModel:
 
         return cls.from_asdf(f'{path}{model_name}.asdf')
     
-
-
     def samples(self, class_name, parameters):
         """
         Return simulation samples for a given class and given list of parameters.
@@ -167,6 +165,25 @@ class PopulationModel:
         }
         af = asdf.AsdfFile(tree)
         af.write_to(path)
+
+
+def validate_asdf_population_model(asdf_object):
+    """
+    Chack if PopulationModel asdf file is valid.
+
+    Args:
+        asdf_object (asdf): asdf file to validate against a
+            Population model required format.
+    
+    Returns
+    -------
+        True if asdf is valid. False otherwise.
+    """
+    valid_key_set = ['model_name', 'class_weights', 'parameters', 'class_data']
+    keys_present = [name in asdf_object for name in valid_key_set]
+    return all(keys_present)
+    
+    
 
 
 

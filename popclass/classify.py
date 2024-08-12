@@ -4,7 +4,6 @@ Main classification utilities.
 import numpy as np
 
 
-
 def classify(inference_data, population_model, parameters):
     """
     main function, takes in a posterior, population model, prior density 
