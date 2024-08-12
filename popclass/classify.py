@@ -12,9 +12,9 @@ def classify(inference_data, population_model, parameters):
     then returns class probabilities.
 
     Args:
-        inference_data: (popclass.InferenceData)
+        inference_data (popclass.InferenceData):
             popclass InferenceData object
-        population_model: (popclass.PopulationModel)
+        population_model (popclass.PopulationModel):
             popclass PopulationModel object
         parameters (list):
             Parameters to use for classification.
