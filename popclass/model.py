@@ -146,8 +146,10 @@ class PopulationModel:
                 (num_data_points)
         """
         class_samples = self.samples(class_name, parameters)
+        print(f'class sample shape f{class_samples.T.shape}')
         kernal = self._density_estimator(class_samples.T)
-        return kernal.evaluate(points[0,:,:].T.shape)
+        print(f'kde shape f {kernal.evaluate(points[0,:,:]).shape}' )
+        return kernal.evaluate(points[0,:,:].T)
 
 
     def to_asdf(self, path, model_name):

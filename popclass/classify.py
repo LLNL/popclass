@@ -29,6 +29,12 @@ def classify(inference_data, population_model, parameters):
             parameters=parameters, 
             points=posterior_samples
         )
+
+        print(class_kde.shape)
+        print(inference_data.prior_density.shape)
+
+        raise ValueError
+
         class_prob = np.mean(class_kde/inference_data.prior_density)
         class_prob *= population_model.class_weight(class_name)
         prob_dict[class_name] = class_prob
