@@ -10,7 +10,7 @@ def test_posterior_init_parameters():
     Test that posterior parameter labels are initialized correctly.
     """
 
-    test_samples = np.random.rand(3,1000)
+    test_samples = np.random.rand(1000, 3)
     test_params = ['A', 'B', 'C']
     post = Posterior(samples=test_samples, parameter_labels=test_params)
     assert(post.parameters == test_params)
