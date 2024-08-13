@@ -120,6 +120,7 @@ class Posterior:
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
         return cls(np.array(samples).swapaxes(0,1), labels)
 
+
 #def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
 #    """
 #    function should convert dynesty posterior object to our definition of Posterior.

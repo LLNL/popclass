@@ -45,7 +45,9 @@ class PopulationModel:
     @classmethod
     def from_asdf(cls, path):
         """
-        Build population model from data in an asdf file
+        Build population model from data in an asdf file.
+        This file can be user-generated, but must adhere to the schema
+        of the files included in the library.
 
         Args:
             path (str): path to the asdf file
@@ -79,7 +81,7 @@ class PopulationModel:
             library_path (str): Path to library of models.
         
         Returns:
-            PopulationModel from library of avaible models.
+            PopulationModel from library of avaible models.t
         """
 
         if model_name not in AVAILABLE_MODELS:
