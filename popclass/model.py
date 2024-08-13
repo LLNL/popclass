@@ -193,7 +193,14 @@ def validate_asdf_population_model(asdf_object):
     """
     valid_key_set = ['model_name', 'class_weights', 'parameters', 'class_data']
     keys_present = [name in asdf_object for name in valid_key_set]
-    return all(keys_present)
+
+    number_of_classes = len(asdf_object['class_data'])
+    number_of_parameters = len(asdf_object['parmeters'])
+    
+    valid_class_data = [isinstance(data, np.ndarray) for _, data in asdf_object['class_data']]
+    valid_class_data_dim = [data.shape[1] == number_of_parameters for _, data in asdf_object['class_data']]
+
+    return all(keys_present) and all(valid_class_data) and all(valid_class_data_dim)
     
     
 
