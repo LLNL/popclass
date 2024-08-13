@@ -94,7 +94,9 @@ def test_all_population_model_files_are_valid():
     Test all library population model files are valid
     """
     for model in AVAILABLE_MODELS:
+        print(model)
         with asdf.open(f'popclass/data/{model}.asdf') as tree:
+            print(tree)
             assert(validate_asdf_population_model(tree) is True)
 
     
