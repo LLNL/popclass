@@ -13,7 +13,7 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
 
 .. figure:: ../images/lens_class.gif
 
-   Example of popclass classifying an microlensing event 
+   Example of popclass classifying a microlensing event 
    with a range of different posterior distributions. 
    Left panel shows a population simulation used to classify
    the event. Right panel shows the output lens classification
