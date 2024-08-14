@@ -5,6 +5,7 @@ import numpy as np
 from popclass.posterior import Posterior
 from popclass.model import PopulationModel
 from popclass.classify import classify
+from popclass.model import AVAILABLE_MODELS
 
 def test_full_example():
     """
@@ -94,5 +95,38 @@ def test_star_example():
 
     assert(abs(1.0 - classification['star']) < 0.0001)
     assert(classification['black_hole'] < 0.0001)
+
+def test_class_probs_sum_to_unity():
+    """
+    Test all class probabilities sum to unity for each library model.
+    """
+
+    NUM_POSTERIOR_SAMPLES = 10000
+
+    logtE_posterior_samples = np.random.normal(loc=1.5,scale=0.1, size=NUM_POSTERIOR_SAMPLES)
+    logpiE_posterior_samples = np.random.normal(loc=-1.0,scale=0.1, size=NUM_POSTERIOR_SAMPLES)
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
+    parameters =['log10tE', 'log10piE']
+
+    posterior_samples = np.vstack(
+        [
+            logtE_posterior_samples,
+            logpiE_posterior_samples
+        ]
+    ).swapaxes(0,1)
+    posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
+    inference_data = posterior.to_inference_data(prior_density)
+
+    for model_name in AVAILABLE_MODELS:
+        popsycle = PopulationModel.from_library(model_name)
+
+        classification = classify(population_model=popsycle, inference_data=inference_data,
+                              parameters=parameters)
+
+        assert(abs(sum(classification.values()) -1.0)< 0.00001)
+
+
+
+    
 
 
