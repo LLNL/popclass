@@ -139,7 +139,7 @@ class PopulationModel:
         return self._class_weights[class_name]
 
 
-    def evaluate_denisty(self, class_name, parameters, points):
+    def evaluate_density(self, class_name, parameters, points):
         """
         Evaulate the kernal density estimate of a point
         for a class.

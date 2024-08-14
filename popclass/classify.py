@@ -32,7 +32,7 @@ def classify(inference_data, population_model, parameters):
     unnormalized_prob = {}
 
     for class_name in class_names:
-        class_kde = population_model.evaluate_denisty(
+        class_kde = population_model.evaluate_density(
             class_name=class_name, 
             parameters=parameters, 
             points=posterior_samples

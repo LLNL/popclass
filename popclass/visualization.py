@@ -9,7 +9,7 @@ import matplotlib as mpl
 color_cycler = ['#EE7733', '#33BBEE', '#EE3377', '#009988', '#CC3311', '#0077BB', "BBBBBB"]
 marker_cycler = ['o', 's', '^', 'v', '*']
 
-def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None, N_bins=200, legend=False):
+def plot_population_model(PopulationModel, parameter_list, all_samples=False, kdes=True, bounds=None, N_bins=200, legend=False, levels=5):
 
 	"""
 	 Represent the population samples and/or their KDEs in the defined parameter space for each individual class in a figure.
@@ -17,7 +17,9 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
         Args:
             PopulationModel (class) - as defined in model.py, class containing the population samples, parameters, and a method for evaluating density
 
-            samples (bool, optional) - flag for plotting all simulated samples in a scatter plot. Default: False.
+			parameter_list (list[str]) - List that contains the parameters we are interested
+
+            all_samples (bool, optional) - flag for plotting all simulated samples in a scatter plot. Default: False.
 
             kdes (bool, optional) - flag for plotting the simulated population KDEs (according to the evaluate_density method specified in PopulationModel) constructed from samples. Default: True.
 
@@ -33,20 +35,24 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
         -------
             fig, ax (matplotlib objects) - figure visualising population distributions in the specified parameter space
 	"""
-
-	parameters = PopulationModel.parameters()
-	classes = PopulationModel.classes()
+	parameters = parameter_list
+	#parameters = PopulationModel.parameters
+	classes = PopulationModel.classes
 	ndim = len(parameters)
 
 	fig, ax = plt.subplots()
 
 	if bounds is None:
 		bounds = np.array([[0,0] for i in range(ndim)])
-		for counter, param in enumerate(samples[parameters]):
-			param_min, param_max = np.min(samples[param]), np.max(samples[param])
+		for counter, param in enumerate(parameters):
+			mins = []
+			maxes = []
+			for class_name in classes:
+				mins.append(np.min(PopulationModel.samples(class_name, param)))
+				maxes.append(np.max(PopulationModel.samples(class_name, param)))
+			param_min, param_max = np.min(mins), np.max(maxes)
 			param_lower, param_upper = param_min - (param_max - param_min)/10, param_max + (param_max - param_min)/10
 			bounds[counter] = [param_lower, param_upper]
-
 	bins = np.linspace(bounds.T[:][0], bounds.T[:][1], N_bins+1).T
 	bin_centers = (bins[:,1:]+bins[:,:-1])/2
 
@@ -62,16 +68,16 @@ def plot_population_model(PopulationModel, samples=False, kdes=True, bounds=None
 
 		samples = PopulationModel.samples(class_name=class_name, parameters=parameters)
 
-		if samples:
+		if all_samples:
 			if(ndim==1): ax.hist(samples[parameters[0]], color=color_cycler[counter%7], alpha=0.5, density=True, label=f'{class_name} samples')
 			else: ax.scatter(samples[parameters[0]], samples[parameters[1]], color=color_cycler[counter%7], marker=marker_cycler[counter%5], edgecolor='black', label=f'{class_name} samples')
 
-		if kde:
+		if kdes:
 			if(ndim==1):
-				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval)
+				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval.swapaxes(0,1)) 
 				ax.plot(coords_eval, eval_, color=color_cycler[counter%7], lw=2, label=f'{class_name} density estimate')
 			else:
-				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval)
+				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval.swapaxes(0,1)) 
 				ax.contour(X, Y, eval_.reshape(np.shape(X)), colors=color_cycler[counter%7], lw=2, levels=levels, label=f'{class_name} density estimate')
 
 
