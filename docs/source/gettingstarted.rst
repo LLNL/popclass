@@ -9,7 +9,7 @@ event. For a primer on microlensing see the microlensing source
 
 The inputs to popclass are samples from a single event posterior distribution
 and their associated prior density. Let's assume the posterior distribution is 
-10,000 from an uncorrelated gaussian in :math:`\log t_{E}- \log\pi_{E}` centered on 2, and -1, with
+10,000 samples from an uncorrelated gaussian in :math:`\log t_{E}- \log\pi_{E}` centered on 2, and -1, with
 standard deviations of 0.1 and 0.5, respectively. 
 
 For simplicity, let's also assume that an independent uniform prior with range [-3,3] 
