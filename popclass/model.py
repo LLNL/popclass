@@ -158,10 +158,7 @@ class PopulationModel:
             density_evaluation (np.ndarray)
         """
         class_samples = self.samples(class_name, parameters).swapaxes(0,1)
-        print(f'class sample shape f{class_samples.shape}')
-        print(f'points look like: {points.shape}')
         kernal = self._density_estimator(class_samples)
-        print(f'kde shape f {kernal.evaluate(points.swapaxes(0,1)).shape}')
         return kernal.evaluate(points.swapaxes(0,1))
 
 

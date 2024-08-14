@@ -29,9 +29,7 @@ def classify(inference_data, population_model, parameters):
     posterior = inference_data.posterior.marginal(parameters)
     posterior_samples = posterior.samples
 
-    print(posterior_samples.shape)
-
-    prob_dict = {}
+    unnormalized_prob = {}
 
     for class_name in class_names:
         class_kde = population_model.evaluate_denisty(
@@ -39,14 +37,10 @@ def classify(inference_data, population_model, parameters):
             parameters=parameters, 
             points=posterior_samples
         )
+        integrated_posterior = np.mean(class_kde/inference_data.prior_density)
+        weighted_integrated_posterior = integrated_posterior * population_model.class_weight(class_name)
+        unnormalized_prob[class_name] = weighted_integrated_posterior
 
-        print(class_kde.shape)
-        print(inference_data.prior_density.shape)
-
-        #raise ValueError
-
-        class_prob = np.mean(class_kde/inference_data.prior_density)
-        class_prob *= population_model.class_weight(class_name)
-        prob_dict[class_name] = class_prob
-
-    return prob_dict
+    normalization = sum(unnormalized_prob.values())
+    class_prob = {class_name: float(value / normalization) for class_name, value in unnormalized_prob.items()}
+    return class_prob

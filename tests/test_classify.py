@@ -24,10 +24,8 @@ def test_full_example():
             logpiE_posterior_samples
         ]
     ).swapaxes(0,1)
-    print(f'posterior samples shape =', posterior_samples.shape)
     posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
     inference_data = posterior.to_inference_data(prior_density)
-    print(f'posterior samples from infernce data object shape =', inference_data.posterior.samples.shape)
     popsycle = PopulationModel.from_library('popsycle_singles_sukhboldn20')
 
     classification = classify(population_model=popsycle, inference_data=inference_data,
@@ -36,6 +34,65 @@ def test_full_example():
     for class_name in popsycle.classes:
         assert(class_name in classification)
 
+    assert(abs(1.0 - sum(classification.values())) < 0.001)
     
+
+def test_BH_example():
+    """
+    test high probability black hole
+
+    """
+
+    NUM_POSTERIOR_SAMPLES = 10000
+
+    logtE_posterior_samples = np.random.normal(loc=2.2,scale=0.00001, size=NUM_POSTERIOR_SAMPLES)
+    logpiE_posterior_samples = np.random.normal(loc=-1.8,scale=0.00001, size=NUM_POSTERIOR_SAMPLES)
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
+    parameters =['log10tE', 'log10piE']
+
+    posterior_samples = np.vstack(
+        [
+            logtE_posterior_samples,
+            logpiE_posterior_samples
+        ]
+    ).swapaxes(0,1)
+    posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
+    inference_data = posterior.to_inference_data(prior_density)
+    popsycle = PopulationModel.from_library('popsycle_singles_sukhboldn20')
+
+    classification = classify(population_model=popsycle, inference_data=inference_data,
+                              parameters=parameters)
+
+    assert(abs(1.0 - classification['black_hole']) < 0.0001)
+
+
+def test_star_example():
+    """
+    test high probability star
+
+    """
+
+    NUM_POSTERIOR_SAMPLES = 10000
+
+    logtE_posterior_samples = np.random.normal(loc=0.7,scale=0.00001, size=NUM_POSTERIOR_SAMPLES)
+    logpiE_posterior_samples = np.random.normal(loc=-0.65,scale=0.00001, size=NUM_POSTERIOR_SAMPLES)
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
+    parameters =['log10tE', 'log10piE']
+
+    posterior_samples = np.vstack(
+        [
+            logtE_posterior_samples,
+            logpiE_posterior_samples
+        ]
+    ).swapaxes(0,1)
+    posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
+    inference_data = posterior.to_inference_data(prior_density)
+    popsycle = PopulationModel.from_library('popsycle_singles_sukhboldn20')
+
+    classification = classify(population_model=popsycle, inference_data=inference_data,
+                              parameters=parameters)
+
+    assert(abs(1.0 - classification['star']) < 0.0001)
+    assert(classification['black_hole'] < 0.0001)
 
 
