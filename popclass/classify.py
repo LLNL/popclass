@@ -29,6 +29,8 @@ def classify(inference_data, population_model, parameters):
     posterior = inference_data.posterior.marginal(parameters)
     posterior_samples = posterior.samples
 
+    print(posterior_samples.shape)
+
     prob_dict = {}
 
     for class_name in class_names:
@@ -41,7 +43,7 @@ def classify(inference_data, population_model, parameters):
         print(class_kde.shape)
         print(inference_data.prior_density.shape)
 
-        raise ValueError
+        #raise ValueError
 
         class_prob = np.mean(class_kde/inference_data.prior_density)
         class_prob *= population_model.class_weight(class_name)

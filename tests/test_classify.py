@@ -18,10 +18,16 @@ def test_full_example():
     prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
     parameters =['log10tE', 'log10piE']
 
-    posterior_samples = np.dstack((logtE_posterior_samples,logpiE_posterior_samples))
+    posterior_samples = np.vstack(
+        [
+            logtE_posterior_samples,
+            logpiE_posterior_samples
+        ]
+    ).swapaxes(0,1)
+    print(f'posterior samples shape =', posterior_samples.shape)
     posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
     inference_data = posterior.to_inference_data(prior_density)
-
+    print(f'posterior samples from infernce data object shape =', inference_data.posterior.samples.shape)
     popsycle = PopulationModel.from_library('popsycle_singles_sukhboldn20')
 
     classification = classify(population_model=popsycle, inference_data=inference_data,

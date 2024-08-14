@@ -34,6 +34,8 @@ def test_marginal():
     test_params = ['A', 'B', 'C']
     post = Posterior(samples=test_samples, parameter_labels=test_params)
 
+    assert(np.array_equal(post.marginal(test_params).samples.shape, test_samples.shape))
+
     assert(np.allclose(post.marginal(['A']).samples, test_samples[:,0].reshape(1000,1)))
     assert(np.allclose(post.marginal(['B']).samples, test_samples[:,1].reshape(1000,1)))
     assert(np.allclose(post.marginal(['C']).samples, test_samples[:,2].reshape(1000,1)))
