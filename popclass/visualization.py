@@ -17,6 +17,8 @@ def plot_population_model(PopulationModel, parameter_list, all_samples=False, kd
         Args:
             PopulationModel (class) - as defined in model.py, class containing the population samples, parameters, and a method for evaluating density
 
+			parameter_list (list[str]) - List that contains the parameters we are interested
+
             all_samples (bool, optional) - flag for plotting all simulated samples in a scatter plot. Default: False.
 
             kdes (bool, optional) - flag for plotting the simulated population KDEs (according to the evaluate_density method specified in PopulationModel) constructed from samples. Default: True.
@@ -51,8 +53,6 @@ def plot_population_model(PopulationModel, parameter_list, all_samples=False, kd
 			param_min, param_max = np.min(mins), np.max(maxes)
 			param_lower, param_upper = param_min - (param_max - param_min)/10, param_max + (param_max - param_min)/10
 			bounds[counter] = [param_lower, param_upper]
-			print(param_lower, param_upper)
-	print(bounds)
 	bins = np.linspace(bounds.T[:][0], bounds.T[:][1], N_bins+1).T
 	bin_centers = (bins[:,1:]+bins[:,:-1])/2
 
@@ -74,10 +74,10 @@ def plot_population_model(PopulationModel, parameter_list, all_samples=False, kd
 
 		if kdes:
 			if(ndim==1):
-				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval.swapaxes(0,1))
+				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval.swapaxes(0,1)) 
 				ax.plot(coords_eval, eval_, color=color_cycler[counter%7], lw=2, label=f'{class_name} density estimate')
 			else:
-				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval.swapaxes(0,1))
+				eval_ = PopulationModel.evaluate_density(class_name=class_name, parameters=parameters, points=coords_eval.swapaxes(0,1)) 
 				ax.contour(X, Y, eval_.reshape(np.shape(X)), colors=color_cycler[counter%7], lw=2, levels=levels, label=f'{class_name} density estimate')
 
 
@@ -92,8 +92,6 @@ def plot_population_model(PopulationModel, parameter_list, all_samples=False, kd
 
 	if(legend):
 		ax.legend(loc='best', fontsize=20)
-
-	plt.savefig('test.png')
 
 	return fig, ax
 
