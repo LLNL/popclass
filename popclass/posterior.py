@@ -36,6 +36,7 @@ class Posterior:
     **Supported Formats**:
 
     * ArViz
+    * BAGLE (Microlensing specific, see below)
     """
 
     def __init__(self, samples, parameter_labels):
@@ -109,7 +110,7 @@ class Posterior:
         """
         Utility to convert an ArViz posterior object directly to popclass posterior object
 
-        Parameters:
+        Args:
             arviz_posterior_object (arviz.InferenceData):
                 InferenceData from an ArViz run
 
@@ -119,6 +120,20 @@ class Posterior:
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
         return cls(np.array(samples).swapaxes(0,1), labels)
+
+    @classmethod
+    def from_bagle(cls, bagle_posterior_object):
+        """
+        This utility is specifically for use with BAGLE (Bayesian Analysis of Gravitational Lensing Events) outputs.
+
+        Args:
+            bagle_posterior_object
+                A model from BAGLE. 
+
+        Returns:
+            ``popclass.Posterior`` object
+        """
+
 
 
 #def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
