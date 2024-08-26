@@ -74,13 +74,13 @@ def test_valid_asdf_file():
         "class_data": class_data,
         "parameters": parameters,
         "class_weights": class_weights,
-        "model_name": "popsycle_singles_imfr_sukhboldn20"
+        "model_name": "popsycle_singles_sukhboldn20"
     }
 
     invalid_tree = {
         "class_data": class_data,
         "class_weights": class_weights,
-        "model_name": "popsycle_singles_imfr_sukhboldn20"
+        "model_name": "popsycle_singles_sukhboldn20"
     }
 
     valid_file = asdf.AsdfFile(valid_tree)

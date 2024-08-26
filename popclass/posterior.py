@@ -122,17 +122,20 @@ class Posterior:
         return cls(np.array(samples).swapaxes(0,1), labels)
 
     @classmethod
-    def from_bagle(cls, bagle_posterior_object):
+    def convert_pymultinest(cls, pymultinest_posterior_object, parameter_labels):
         """
-        This utility is specifically for use with BAGLE (Bayesian Analysis of Gravitational Lensing Events) outputs.
+        Utility to convert a PyMultiNest posterior to a popclass posterior
 
         Args:
-            bagle_posterior_object
-                A model from BAGLE. 
+            pymultinest_posterior_object:
+                Posterior from PyMultiNest
 
         Returns:
             ``popclass.Posterior`` object
         """
+        samples = pymultinest_posterior_object['samples']
+
+        return Posterior(samples, parameter_labels)
 
 
 
@@ -146,11 +149,5 @@ class Posterior:
 #
 #    return Posterior(samples, parameter_labels)
 
-#def convert_pymultinest(pymultinest_posterior_object, parameter_labels) -> Posterior:
-#    """
-#    function should convert pymultinest posterior object to our definition of Posterior.
-#    """
-#    samples = pymultinest_posterior_object['samples']
-#
-#    return Posterior(samples, parameter_labels)
+
 
