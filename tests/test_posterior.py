@@ -3,6 +3,7 @@ from dynesty.results import Results
 import numpy as np 
 import pytest
 import arviz as az
+from pymultinest.analyse import Analyzer
 
 
 def test_posterior_init_parameters():
@@ -69,6 +70,18 @@ def test_convert_arviz():
     popclass_from_az_post = Posterior.from_arviz(az_post)
 
     assert(np.allclose(test_samples, popclass_from_az_post.samples))
+
+def test_convert_pymultinest():
+    """
+    Test that we get a proper Posterior object from Pymultinest
+    """
+    test_samples = np.loadtxt('tests/test_post_equal_weights.dat')
+    pymultinest_posterior = Analyzer(3, 'tests/test_')
+    test_params = ['A', 'B', 'C']
+    popclass_post = Posterior.from_pymultinest(pymultinest_posterior, test_params)
+
+    assert(np.array_equal(test_samples, popclass_post.samples))
+    assert(np.array_equal(test_params, popclass_post.parameter_labels))
 
 def test_to_InferenceData():
     """

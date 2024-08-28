@@ -36,6 +36,7 @@ class Posterior:
     **Supported Formats**:
 
     * ArViz
+    * BAGLE (Microlensing specific, see below)
     """
 
     def __init__(self, samples, parameter_labels):
@@ -109,7 +110,7 @@ class Posterior:
         """
         Utility to convert an ArViz posterior object directly to popclass posterior object
 
-        Parameters:
+        Args:
             arviz_posterior_object (arviz.InferenceData):
                 InferenceData from an ArViz run
 
@@ -119,6 +120,26 @@ class Posterior:
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
         return cls(np.array(samples).swapaxes(0,1), labels)
+
+    @classmethod
+    def from_pymultinest(cls, pymultinest_analyzer_object, parameter_labels):
+        """
+        Utility to convert a PyMultiNest posterior to a popclass posterior
+
+        Args:
+            pymultinest_analyzer_object:
+                Analyzer object from PyMultiNest
+            parameter_labels:
+                ordered list of parameters. Should correspond to the order of 
+                parameterss in ``pymultinest_analyzer_object``
+
+        Returns:
+            ``popclass.Posterior`` object
+        """
+        samples = pymultinest_analyzer_object.get_equal_weighted_posterior()
+
+        return Posterior(samples, parameter_labels)
+
 
 
 #def convert_dynesty(dynesty_posterior_object, parameter_labels) -> Posterior:
@@ -131,11 +152,5 @@ class Posterior:
 #
 #    return Posterior(samples, parameter_labels)
 
-#def convert_pymultinest(pymultinest_posterior_object, parameter_labels) -> Posterior:
-#    """
-#    function should convert pymultinest posterior object to our definition of Posterior.
-#    """
-#    samples = pymultinest_posterior_object['samples']
-#
-#    return Posterior(samples, parameter_labels)
+
 
