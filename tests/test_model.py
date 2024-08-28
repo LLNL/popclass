@@ -99,6 +99,14 @@ def test_all_population_model_files_are_valid():
             print(tree)
             assert(validate_asdf_population_model(tree) is True)
 
+def test_model_name_match():
+    """
+    Be sure that the model name in both the filepath and metadata match
+    """
+    for model in AVAILABLE_MODELS:
+        print(model)
+        with asdf.open(f'popclass/data/{model}.asdf') as f:
+            assert(f['model_name']==model)
     
 
 

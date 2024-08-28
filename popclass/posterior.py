@@ -122,7 +122,7 @@ class Posterior:
         return cls(np.array(samples).swapaxes(0,1), labels)
 
     @classmethod
-    def convert_pymultinest(cls, pymultinest_analyzer_object, parameter_labels):
+    def from_pymultinest(cls, pymultinest_analyzer_object, parameter_labels):
         """
         Utility to convert a PyMultiNest posterior to a popclass posterior
 
@@ -136,7 +136,7 @@ class Posterior:
         Returns:
             ``popclass.Posterior`` object
         """
-        samples = pymultinest_analyzer_object.get_equal_weigted_posterior()
+        samples = pymultinest_analyzer_object.get_equal_weighted_posterior()
 
         return Posterior(samples, parameter_labels)
 
