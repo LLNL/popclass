@@ -1,5 +1,5 @@
 """
-In order to make object classification probabilities, 
+In order to make object classification probabilities,
 we must define a galactic model.
 ``popclass`` allows the user to either specify one of the models included with
 the library or supply their own, given that it is in ASDF file format.
@@ -9,7 +9,7 @@ import numpy as np
 from scipy.stats import gaussian_kde
 
 AVAILABLE_MODELS = [
-    "popsycle_singles_raithel18", 
+    "popsycle_singles_raithel18",
     "popsycle_singles_spera15",
     "popsycle_singles_sukhboldn20"
     ]
@@ -34,7 +34,7 @@ class PopulationModel:
                 in population_samples.
             density_estimator: (scipy.stats.gaussian_kde like):
                 Kernel density estimator used to compute density from
-                population data. 
+                population data.
         """
 
         self._class_weights = class_weights
@@ -57,11 +57,11 @@ class PopulationModel:
         """
 
         with asdf.open(path, lazy_load=False, copy_arrays=True) as tree:
-            population_samples=tree['class_data'] 
+            population_samples=tree['class_data']
             parameters=tree['parameters']
             class_weights=tree['class_weights']
-    
-        return cls(population_samples=population_samples, 
+
+        return cls(population_samples=population_samples,
                     parameters=parameters,
                     class_weights=class_weights)
 
@@ -79,7 +79,7 @@ class PopulationModel:
         Args:
             model_name (str): Name of the model.
             library_path (str): Path to library of models.
-        
+
         Returns:
             PopulationModel from library of avaible models.t
         """
@@ -89,23 +89,25 @@ class PopulationModel:
         path = "popclass/data/" if library_path is None else library_path
 
         return cls.from_asdf(f'{path}{model_name}.asdf')
-    
+
     def samples(self, class_name, parameters):
         """
         Return simulation samples for a given class and given list of parameters.
 
         Args:
-            class_name: (str): 
+            class_name: (str):
                 name of class to get population samples for.
-            parameters: (list[str]): 
+            parameters: (list[str]):
                 List of parameters to get samples for.
-        
+
         Returns:
             samples of shape (`num_samples, len(parameters)`) with
             the order of the second dimension being set by the order of parameters.
         """
-        _, indicies, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
-        return self._population_samples[class_name][:, indicies]
+        params_sorted, indices, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
+        samples_sorted = self._population_samples[class_name][:, indices]
+        order = np.array(parameters).argsort().argsort()
+        return samples_sorted[:, order]
 
     @property
     def parameters(self):
@@ -141,25 +143,25 @@ class PopulationModel:
 
     def evaluate_density(self, class_name, parameters, points):
         """
-        Evaulate the kernal density estimate of a point
+        Evaluate the kernel density estimate of a point
         for a class.
 
         Args:
-            class_name (str): 
+            class_name (str):
                 name of class to evaluate density.
-            parameters (list[str]): 
+            parameters (list[str]):
                 parameters to evaluate
                 population model density over. Order sets the order
                 of the second dimension of points.
-            points (np.ndarray): 
-                data to evalute desnity on has shape
+            points (np.ndarray):
+                data to evalute density on. Has shape
                 (num_data_points, len(parameters)).
         Returns:
             density_evaluation (np.ndarray)
         """
         class_samples = self.samples(class_name, parameters).swapaxes(0,1)
-        kernal = self._density_estimator(class_samples)
-        return kernal.evaluate(points.swapaxes(0,1))
+        kernel = self._density_estimator(class_samples)
+        return kernel.evaluate(points.swapaxes(0,1))
 
 
     def to_asdf(self, path, model_name):
@@ -168,7 +170,7 @@ class PopulationModel:
 
         Args:
             path (str): path to save the asdf file
-            model_name (str): Name of the model to be saving in the asdf file. 
+            model_name (str): Name of the model to be saving in the asdf file.
         """
         tree = {
             "class_data": self._population_samples,
@@ -187,7 +189,7 @@ def validate_asdf_population_model(asdf_object):
     Args:
         asdf_object (asdf): asdf file to validate against a
             Population model required format.
-    
+
     Returns:
         True if asdf is valid. False otherwise.
     """
@@ -203,8 +205,3 @@ def validate_asdf_population_model(asdf_object):
     else:
         valid = False
     return valid
-    
-    
-
-
-
