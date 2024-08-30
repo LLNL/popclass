@@ -27,7 +27,7 @@ def test_load_model():
         model_from_library.samples(class_name,parameters)))
 
 
-def test_load_model_not_in_libaray():
+def test_load_model_not_in_library():
     """
     Test model not in library raise value error 
     """
