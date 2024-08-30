@@ -1,5 +1,5 @@
 """
-Utilities for creating the posterior and inference data objects for interfacing 
+Utilities for creating the posterior and inference data objects for interfacing
 with ``popclass``' classification function.
 """
 import numpy as np
@@ -19,10 +19,10 @@ class InferenceData:
         Initialize the InferenceData object
 
         Args:
-            posterior (popclass.Posterior): 
+            posterior (popclass.Posterior):
                 A posterior object in popclass formatting convention
             prior_density (array-like):
-                
+
         """
         self.posterior=posterior
         self.prior_density=prior_density
@@ -47,14 +47,14 @@ class Posterior:
             samples (array-like):
                 Posterior samples
             parameter_labels (list[str]):
-                Labels of the paramater labels corresponding to 
+                Labels of the paramater labels corresponding to
                 posterior samples.
 
         """
         testnan = np.isnan(samples)
         if True in testnan:
             raise ValueError("Posterior samples cannot be NaN")
-        
+
         self.parameter_labels=parameter_labels
         self.samples=samples
 
@@ -74,10 +74,13 @@ class Posterior:
         """
 
         _, idx, _ = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
-        
+
+        samples_sorted = self.samples[:, idx]
+        order = np.array(parameter_list).argsort().argsort()
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = parameter_list
-        marginal.samples = self.samples[:, idx]
+        marginal.samples = samples_sorted[:, order]
+
         return marginal
 
     @property
@@ -88,7 +91,7 @@ class Posterior:
                 Ordered list of parameters in ``Posterior`` object.
         """
         return self.parameter_labels
-    
+
     def to_inference_data(self, prior_density):
         """
         Go from ``Posterior`` object to a new ``InferenceData`` object.
@@ -130,7 +133,7 @@ class Posterior:
             pymultinest_analyzer_object:
                 Analyzer object from PyMultiNest
             parameter_labels:
-                ordered list of parameters. Should correspond to the order of 
+                ordered list of parameters. Should correspond to the order of
                 parameterss in ``pymultinest_analyzer_object``
 
         Returns:
@@ -151,6 +154,3 @@ class Posterior:
 #    samples = dynesty_posterior_object.sample_equal()
 #
 #    return Posterior(samples, parameter_labels)
-
-
-
