@@ -1,13 +1,17 @@
 """
-Main classification utilities.
+Main function and usage case for ``popclass``.
+Will take an ``InferenceData`` and ``PopulationModel`` object and return 
+object class probabilities for classes in ``PopulationModel.classes()``.
+
 """
 import numpy as np
 
 
 def classify(inference_data, population_model, parameters):
     """
-    main function, takes in a posterior, population model, prior density 
-    of posterior samples and returns class probabilities.
+    ``popclass`` classification function. 
+    Takes in ``popclass.InferenceData`` and ``popclass.PopulationModel`` objects, 
+    then returns class probabilities.
 
     Args:
         inference_data (popclass.InferenceData):
@@ -16,21 +20,27 @@ def classify(inference_data, population_model, parameters):
             popclass PopulationModel object
         parameters (list):
             Parameters to use for classification.
+
+    Returns:
+        Dictionary of classes in ``PopulationModel.classes()`` and associated 
+        probability.
     """
     class_names = population_model.classes
     posterior = inference_data.posterior.marginal(parameters)
     posterior_samples = posterior.samples
 
-    prob_dict = {}
+    unnormalized_prob = {}
 
     for class_name in class_names:
-        class_kde = population_model.evaluate_denisty(
+        class_kde = population_model.evaluate_density(
             class_name=class_name, 
             parameters=parameters, 
             points=posterior_samples
         )
-        class_prob = np.mean(class_kde/inference_data.prior_density)
-        class_prob *= population_model.class_weight(class_name)
-        prob_dict[class_name] = class_prob
+        integrated_posterior = np.mean(class_kde/inference_data.prior_density)
+        weighted_integrated_posterior = integrated_posterior * population_model.class_weight(class_name)
+        unnormalized_prob[class_name] = weighted_integrated_posterior
 
-    return prob_dict
+    normalization = sum(unnormalized_prob.values())
+    class_prob = {class_name: float(value / normalization) for class_name, value in unnormalized_prob.items()}
+    return class_prob

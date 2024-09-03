@@ -45,15 +45,17 @@ For a complete list current contributor see Github.
 Funding
 =======
 
-This work was performed under the auspices of the U.S.
-Department of Energy by Lawrence Livermore National
-Laboratory (LLNL) under Contract DE-AC52-07NA27344. The 
-theoretical foundation of this work was established under
-support from Lawrence Livermore National Laboratory's
-Laboratory Directed Research and Development (LDRD) Program under 
-project `22-ERD-037 <https://ldrd-annual.llnl.gov/ldrd-annual-2023/project-highlights/space-security/new-dark-matter-and-early-universe-grand-science-campaign>`_.  
-This project was funded under the LLNL `Space Science Institute's <https://space-science.llnl.gov/>`_ 
-Institutional Scientific Capability Portfolio.
+This work was performed under the auspices of the U.S. 
+Department of Energy by Lawrence Livermore National 
+Laboratory (LLNL) under Contract DE-AC52-07NA27344. 
+The theoretical foundation of this work was established
+under support from Lawrence Livermore National Laboratory’s
+Laboratory Directed Research and Development Program 
+under project `22-ERD-037 <https://ldrd-annual.llnl.gov/ldrd-annual-2023/project-highlights/space-security/new-dark-matter-and-early-universe-grand-science-campaign>`_. The software implementation 
+for this project was funded under the LLNL 
+`Space Science Institute's <https://space-science.llnl.gov/>`_ Institutional Scientific 
+Capability Portfolio funds in partnership with LLNL’s 
+`Academic Engagement Office <https://st.llnl.gov/about-us/AEO>`_.
 
 Disclaimer
 ==========

@@ -74,13 +74,13 @@ def test_valid_asdf_file():
         "class_data": class_data,
         "parameters": parameters,
         "class_weights": class_weights,
-        "model_name": "popsycle_singles_imfr_sukhboldn20"
+        "model_name": "popsycle_singles_sukhboldn20"
     }
 
     invalid_tree = {
         "class_data": class_data,
         "class_weights": class_weights,
-        "model_name": "popsycle_singles_imfr_sukhboldn20"
+        "model_name": "popsycle_singles_sukhboldn20"
     }
 
     valid_file = asdf.AsdfFile(valid_tree)
@@ -94,9 +94,19 @@ def test_all_population_model_files_are_valid():
     Test all library population model files are valid
     """
     for model in AVAILABLE_MODELS:
+        print(model)
         with asdf.open(f'popclass/data/{model}.asdf') as tree:
+            print(tree)
             assert(validate_asdf_population_model(tree) is True)
 
+def test_model_name_match():
+    """
+    Be sure that the model name in both the filepath and metadata match
+    """
+    for model in AVAILABLE_MODELS:
+        print(model)
+        with asdf.open(f'popclass/data/{model}.asdf') as f:
+            assert(f['model_name']==model)
     
 
 

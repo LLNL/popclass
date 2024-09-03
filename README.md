@@ -1,11 +1,10 @@
 # popclass
 
-Run tests
+popclass is a lightweight python package that allows fast, probabilistic classification of the lens of a microlensing event given the event's posterior distribution and a model of the Galaxy. popclass provides the bridge between Galactic simulation and lens classification, an interface to common Bayesian inference libraries, and the ability for users to flexibly specify their own Galactic model and classification parameters.
 
-`python -m pytest tests/`
+For more details on the project please see the documentation.
 
-Build docs
+![image info](./docs/images/lens_class.gif)
 
-`sphinx-build -M html docs/source/ docs/build/`
+Example of popclass classifying a microlensing event with a range of different posterior distributions. Left panel shows a population simulation used to classify the event. Right panel shows the output lens classification from popclass which is calculated by combining the event posterior information with the simulation.
 
-Then open docs/build/html/index.html in your browser.
