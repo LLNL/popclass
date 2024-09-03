@@ -8,3 +8,12 @@ For more details on the project please see the documentation.
 
 Example of popclass classifying a microlensing event with a range of different posterior distributions. Left panel shows a population simulation used to classify the event. Right panel shows the output lens classification from popclass which is calculated by combining the event posterior information with the simulation.
 
+## License
+
+popclass is distributed under the terms of the MIT license. All new contributions must be made under the MIT license.
+
+See Link to [license](https://github.com/LLNL/popclass/blob/main/LICENSE) and [NOTICE](https://github.com/LLNL/popclass/blob/main/NOTICE) for details.
+
+SPDX-License-Identifier: MIT
+
+LLNL-CODE-2000456
