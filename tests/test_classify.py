@@ -64,6 +64,8 @@ def test_BH_example():
     classification = classify(population_model=popsycle, inference_data=inference_data,
                               parameters=parameters)
 
+    print(classification)
+
     assert(abs(1.0 - classification['black_hole']) < 0.0001)
 
 
