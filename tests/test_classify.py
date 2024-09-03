@@ -61,7 +61,7 @@ def test_BH_example():
     inference_data = posterior.to_inference_data(prior_density)
     popsycle = PopulationModel.from_library('popsycle_singles_sukhboldn20')
 
-    classification = classify(population_model=popsycle, inference_data=inference_data,
+    classification = classify(population_model=popsycle,                inference_data=inference_data,
                               parameters=parameters)
 
     print(classification)
