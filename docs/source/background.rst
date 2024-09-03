@@ -57,9 +57,9 @@ using a simulated catalog of microlensing events from :math:`\mathcal{G}`.
 to each class before any data is seen, which is just set by relative number of expected
 events predicted by the Galactic model :math:`\mathcal{G}`.
 
-++++++++++++++++++++++++++++++++++++
+------------------------------------ 
 Event parameter prior considerations 
-++++++++++++++++++++++++++++++++++++
+------------------------------------ 
 
 To properly use importance sampling, as outline above, one must reweight the posterior samples by the original prior on the event parameters :math:`\pi(\theta_{c})`.
 This yields a classification probability invariant under the original choice of prior for the event parameters (disregarding numerical error in the re-sampling and assuming the prior is smooth and continuous), a very attractive feature in this framework due to the fully Bayesian nature of the calculation. 
@@ -88,3 +88,32 @@ giving a final form of the prior
         \pi(\log_{10} t_E, \log_{10} \pi_E) = (\ln 10)^2   (t_E   \pi_E) \pi(t_E, \pi_E) \,.
 
 Even in the case that a uniform prior was used for :math:`t_E` and :math:`\pi_E`, the resulting prior needed in this framework will not be uniform :math:`\log_{10} t_E` and :math:`\log_{10} \pi_E`, giving biased results if this transformation is not taken into account.
+
+------------------------------------------------------
+Uncertainty Quantification - :math:`\text{None}` Class
+------------------------------------------------------
+
+Quantifying the uncertainty in classifying events into subpopulations is not a uniquely solvable problem, but some specific instances can be diagnosed.
+One example of a systematic effect that we would like to mitigate comes about when an event posterior extends well beyond the domain of the simulation data for all the classes.
+This could be a shift of the mean of the posterior outside the domain of support or an inflation of the posterior well beyond said domain.
+In this case, one might apply our classifier to the event posterior, obtaining a strong probability of this event belonging to a specific class. 
+However, this could be a deceptive conclusion if taken at face value, as there is a real possibility that the classifier is simply picking the best of many bad explanations of the data and the result is driven by the noisy tails of the class distributions.
+This situation illustrates a case where information is lost about the completeness of the simulation and the overall ability of the population model to explain a specific event when we assumed the set of classes was complete.
+
+We implement in this package one method to handle this uncertainty, by appending an additional population on top of the existing simulation data. 
+This additional population, which we will denote as the :math:`\text{None}` class following the notation of :cite:t:`Kaczmarek2024`, will be designed to be the complement to the modeled populations in the simulation (defined more precisely below).
+By injecting a non-physical "class" into the population model which fills up the parameter space not occupied by the physical population model, we now have a metric to quantify the lack of our population model to explain an events posterior.
+If an event has a substantial probability to belong to the :math:`\text{None}` class, we know that the population model struggled to confidently identify it as belonging to the physical classes, even if one of those physical classes dominates over the other physical classes.
+Therefore, this event should receive more careful consideration, as it might be an outlier of the population model.
+
+The way in which this :math:`\text{None}` class is defined is somewhat subjective, and several methods might need to be employed to marginalize over this choice.
+For now, we following :cite:t:`Kaczmarek2024` and define this class as 
+
+.. math::
+    p(\theta | \text{None},\mathcal{G}) = A \left( 1 - \frac{p(\theta | \mathcal{G})}{\max_{\hat{\phi}} (p(\hat{\phi} | \mathcal{G}))} \right)\,,
+
+where, as above, :math:`\theta` represents a vector of event parameters, and :math:`\mathcal{G}` generally represents all other assumptions about the modeling (such as the galactic model, in the microlensing context).
+The quantity :math:`p(\theta | \mathcal{G})` represents the prediction for :math:`\theta` marginalized over class, i.e., for the entire population model as a whole (excluding the :math:`\text{None}` class).
+The quantity :math:`A` is the normalization constant that ensures :math:`p(\theta | \text{None},\mathcal{G})` is properly normalized over the entire, supported parameter space.
+With this definition, the :math:`\text{None}` class is appended onto the list of possible classes that events are classified into, and it is subsequently treated identically as the physical classes.
+
