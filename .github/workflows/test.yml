@@ -1,20 +1,20 @@
-name: Run Test Suite
+name: Run tests
 
 on:
- push:
-   branches:
-     - main
+  push:
+    branches: [main]
   pull_request:
-   branches:
-     - main
+    branches: [main]
 
 jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: docker build . -t popclass
+      - name: Run tests
+        run: docker run -v .:/popclass/ popclass bash -c "cd /popclass && pytest -v" 
 
- build:
-   runs-on: 'ubuntu-latest'
-
-   steps:
-   - uses: actions/checkout@v2
-
-   - name: Build Docker image
-      run: docker build . -t popclass
+        
