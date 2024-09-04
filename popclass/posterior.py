@@ -77,6 +77,7 @@ class Posterior:
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = list([ parameter_list[i] for i in id_arr_list])
         marginal.samples = self.samples[:,id_arr_labels]
+
         return marginal
 
     @property
