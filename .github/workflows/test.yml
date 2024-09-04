@@ -15,6 +15,6 @@ jobs:
       - name: Build Docker Image
         run: docker build . -t popclass
       - name: Run tests
-        run: docker run -v .:/popclass/ popclass bash cd /popclass/ && pytest -v 
+        run: docker exec -v .:/popclass/ popclass bash-c "cd /popclass && pytest -v" 
 
         
