@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  docker:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,6 +19,6 @@ jobs:
           ci_env=`bash <(curl -s https://codecov.io/env)`
           docker run -v .:/popclass/ $ci_env -e CI=true popclass bash -c "cd /popclass && pytest -v --cov=api.calculator --cov-report=xml" 
       - name: Upload coverage reports to Codecov with GitHub Action
-      uses: codecov/codecov-action@v4.2.0
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v4.2.0
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
