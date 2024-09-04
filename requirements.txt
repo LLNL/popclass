@@ -10,3 +10,4 @@ sphinxcontrib-bibtex
 arviz
 dynesty
 pymultinest
+pytest-cov
