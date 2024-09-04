@@ -1,5 +1,4 @@
 .devcontainer/*
-.github/*
 */__pycache__/*
 */pytest_cache/*
 docs/build/*
