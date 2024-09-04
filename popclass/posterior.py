@@ -74,10 +74,13 @@ class Posterior:
         """
 
         _, idx, _ = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
-        
+
+        samples_sorted = self.samples[:, idx]
+        order = np.array(parameter_list).argsort().argsort()
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = parameter_list
-        marginal.samples = self.samples[:, idx]
+        marginal.samples = samples_sorted[:, order]
+
         return marginal
 
     @property
