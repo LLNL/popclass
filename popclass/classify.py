@@ -30,11 +30,10 @@ def classify(inference_data, population_model, parameters):
     posterior_samples = posterior.samples
 
     unnormalized_prob = {}
-
     for class_name in class_names:
         class_kde = population_model.evaluate_density(
             class_name=class_name, 
-            parameters=parameters, 
+            parameters=posterior.parameter_labels, 
             points=posterior_samples
         )
         integrated_posterior = np.mean(class_kde/inference_data.prior_density)
