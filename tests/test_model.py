@@ -6,6 +6,7 @@ from popclass.model import PopulationModel, validate_asdf_population_model, AVAI
 import numpy as np 
 import pytest
 import asdf
+from scipy.stats import norm
 
 def test_load_model():
     """
@@ -107,6 +108,38 @@ def test_model_name_match():
         print(model)
         with asdf.open(f'popclass/data/{model}.asdf') as f:
             assert(f['model_name']==model)
+
+
+def test_evaluate_transpose():
+    """ Testing whether changing the order of the data/parameters/classes and the order of the density evaluation changes the value of the PDF, as it should not. 
+
+    """ 
+    # Configuration 1
+    classes = ["A","B","C"]
+    class_vals = {"A":np.array([2,3]), "B":np.array([4,5]),"C":np.array([6,7])}
+
+    population_samples = {key: norm.rvs(size=20,loc=0,scale=1).reshape((10,2))*class_vals[key] for key in classes}
+    class_weights = { key: 1./3. for key in classes}
+    parameters = ["parameter_1","parameter_2"]
+    model1 = PopulationModel(population_samples=population_samples, class_weights=class_weights, parameters = parameters)
+
+    # Configuration 2 - permutate classes by 1 and flip the parameters
+    classes2 = [classes[i] for i in [1,2,0]]
+    parameters2 = [parameters[i] for i in [1,0]]
+    population_samples2 = {key: population_samples[key][:,[1,0]] for key in classes2}
+    class_weights2 = { key: 1./3. for key in classes2}
+    model2 = PopulationModel(population_samples=population_samples2, class_weights=class_weights2, parameters = parameters2)
+
+    # Check all classes and pairs of parameters
+    for key in classes:
+        assert(model1.evaluate_density(key,parameters,np.array([[2,0]])) == model2.evaluate_density(key,parameters,np.array([[2,0]])))
+        flipped = list([parameters[1],parameters[0]])
+        assert(round(model1.evaluate_density(key,flipped,np.array([[0,2]]))[0],10) == round(model2.evaluate_density(key,parameters,np.array([[2,0]]))[0],10))
+
+    # Check all classes and single parameters 
+    for key in classes:
+        for parameter in parameters:
+            assert(model1.evaluate_density(key,parameter,np.array([[2]])) == model2.evaluate_density(key,parameter,np.array([[2]])))
     
 
 
