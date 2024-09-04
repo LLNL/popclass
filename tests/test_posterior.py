@@ -31,16 +31,23 @@ def test_marginal():
     Test that a marginal distribution can be constructed.
     """
 
+    # Note, we are purposefully not using pre-sorted labels to test sorting 
+    # procedures in Posterior
     test_samples = np.random.rand(1000,3)
-    test_params = ['A', 'B', 'C']
+    test_samples[:,0] += 2
+    test_samples[:,2] += 30
+    test_samples[:,1] += 400
+    test_params = ['A', 'C', 'B']
     post = Posterior(samples=test_samples, parameter_labels=test_params)
-
     assert(np.array_equal(post.marginal(test_params).samples.shape, test_samples.shape))
 
     assert(np.allclose(post.marginal(['A']).samples, test_samples[:,0].reshape(1000,1)))
-    assert(np.allclose(post.marginal(['B']).samples, test_samples[:,1].reshape(1000,1)))
-    assert(np.allclose(post.marginal(['C']).samples, test_samples[:,2].reshape(1000,1)))
-    assert(np.allclose(post.marginal(['A','B']).samples, test_samples[:,[0,1]]))
+    assert(np.allclose(post.marginal(['B']).samples, test_samples[:,2].reshape(1000,1)))
+    assert(np.allclose(post.marginal(['C']).samples, test_samples[:,1].reshape(1000,1)))
+    assert(np.allclose(post.marginal(['A','B']).samples, test_samples[:,[0,2]]))
+    assert(np.allclose(post.marginal(['B','A']).samples, test_samples[:,[0,2]]))
+
+    assert(np.all(post.marginal(['B','A']).parameter_labels== ["A","B"]))
 
 def test_nan_in_samples_exception():
     """
