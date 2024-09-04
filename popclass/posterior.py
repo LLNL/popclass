@@ -73,21 +73,11 @@ class Posterior:
             determined and ordered by `parameter_list`.
         """
 
-<<<<<<< HEAD
         _1, id_arr_labels, id_arr_list = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = list([ parameter_list[i] for i in id_arr_list])
         marginal.samples = self.samples[:,id_arr_labels]
-=======
-        _, idx, _ = np.intersect1d(self.parameter_labels, parameter_list, return_indices=True)
 
-        samples_sorted = self.samples[:, idx]
-        order = np.array(parameter_list).argsort().argsort()
-        marginal = copy.deepcopy(self)
-        marginal.parameter_labels = parameter_list
-        marginal.samples = samples_sorted[:, order]
-
->>>>>>> 47849ee5c0d0b2fe2b20719cc2afe249ae6a8504
         return marginal
 
     @property
