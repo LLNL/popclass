@@ -11,15 +11,22 @@ from scipy.stats import gaussian_kde
 AVAILABLE_MODELS = [
     "popsycle_singles_raithel18",
     "popsycle_singles_spera15",
-    "popsycle_singles_sukhboldn20"
-    ]
+    "popsycle_singles_sukhboldn20",
+]
+
 
 class PopulationModel:
     """
     Used to store information on simulation data necessary for classification.
     """
 
-    def __init__(self, population_samples, class_weights, parameters, density_estimator=gaussian_kde):
+    def __init__(
+        self,
+        population_samples,
+        class_weights,
+        parameters,
+        density_estimator=gaussian_kde,
+    ):
         """
         Initialize PopulationModel.
 
@@ -57,13 +64,15 @@ class PopulationModel:
         """
 
         with asdf.open(path, lazy_load=False, copy_arrays=True) as tree:
-            population_samples=tree['class_data']
-            parameters=tree['parameters']
-            class_weights=tree['class_weights']
+            population_samples = tree["class_data"]
+            parameters = tree["parameters"]
+            class_weights = tree["class_weights"]
 
-        return cls(population_samples=population_samples,
-                    parameters=parameters,
-                    class_weights=class_weights)
+        return cls(
+            population_samples=population_samples,
+            parameters=parameters,
+            class_weights=class_weights,
+        )
 
     @classmethod
     def from_library(cls, model_name, library_path=None):
@@ -85,10 +94,12 @@ class PopulationModel:
         """
 
         if model_name not in AVAILABLE_MODELS:
-            raise ValueError(f"{model_name} not available. Available models are: {AVAILABLE_MODELS}")
+            raise ValueError(
+                f"{model_name} not available. Available models are: {AVAILABLE_MODELS}"
+            )
         path = "popclass/data/" if library_path is None else library_path
 
-        return cls.from_asdf(f'{path}{model_name}.asdf')
+        return cls.from_asdf(f"{path}{model_name}.asdf")
 
     def samples(self, class_name, parameters):
         """
@@ -104,7 +115,9 @@ class PopulationModel:
             samples of shape (`num_samples, len(parameters)`) with
             the order of the second dimension being set by the order of parameters.
         """
-        params_sorted, indices, _ = np.intersect1d(self.parameters, parameters, return_indices=True)
+        params_sorted, indices, _ = np.intersect1d(
+            self.parameters, parameters, return_indices=True
+        )
         samples_sorted = self._population_samples[class_name][:, indices]
         order = np.array(parameters).argsort().argsort()
         return samples_sorted[:, order]
@@ -130,7 +143,6 @@ class PopulationModel:
 
         return list(self._population_samples.keys())
 
-
     def class_weight(self, class_name):
         """
         Return the class weight for a given class.
@@ -139,7 +151,6 @@ class PopulationModel:
             Class Weight for the specified class.
         """
         return self._class_weights[class_name]
-
 
     def evaluate_density(self, class_name, parameters, points):
         """
@@ -159,10 +170,9 @@ class PopulationModel:
         Returns:
             density_evaluation (np.ndarray)
         """
-        class_samples = self.samples(class_name, parameters).swapaxes(0,1)
+        class_samples = self.samples(class_name, parameters).swapaxes(0, 1)
         kernel = self._density_estimator(class_samples)
-        return kernel.evaluate(points.swapaxes(0,1))
-
+        return kernel.evaluate(points.swapaxes(0, 1))
 
     def to_asdf(self, path, model_name):
         """
@@ -193,14 +203,17 @@ def validate_asdf_population_model(asdf_object):
     Returns:
         True if asdf is valid. False otherwise.
     """
-    valid_key_set = ['model_name', 'class_weights', 'parameters', 'class_data']
+    valid_key_set = ["model_name", "class_weights", "parameters", "class_data"]
     keys_present = [name in asdf_object for name in valid_key_set]
 
     if all(keys_present):
-        number_of_classes = len(asdf_object['class_data'])
-        number_of_parameters = len(asdf_object['parameters'])
-        #valid_class_data = [isinstance(data, np.ndarray) for data in asdf_object['class_data'].values()]
-        valid_class_data_dim = [data.shape[1] == number_of_parameters for data in asdf_object['class_data'].values()]
+        number_of_classes = len(asdf_object["class_data"])
+        number_of_parameters = len(asdf_object["parameters"])
+        # valid_class_data = [isinstance(data, np.ndarray) for data in asdf_object['class_data'].values()]
+        valid_class_data_dim = [
+            data.shape[1] == number_of_parameters
+            for data in asdf_object["class_data"].values()
+        ]
         valid = all(valid_class_data_dim)
     else:
         valid = False
