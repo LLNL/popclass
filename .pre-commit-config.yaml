@@ -1,5 +1,5 @@
 exclude: |
-    (?x)(
+    (?x)^(
         popclass/data/.*|
         examples/.*|
     )
