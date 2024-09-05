@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "popclass"
-version = "0.1.0"
+version = "0.1.1"
 description = "A python package for classifying microlensing events"
 authors = [{ name = "Greg Sallaberry, Scott E. Perkins, Peter McGill, Zofia Kaczmarek, William A. Dawson", email = "mcgill5@llnl.gov" }]
 readme = "README.md"
