@@ -2,22 +2,22 @@
 Model Library
 =============
 
-popclass contains pre-loaded models that can be acceses by 
-:code:`PopulationModel.from_library`. This page contains 
+popclass contains pre-loaded models that can be acceses by
+:code:`PopulationModel.from_library`. This page contains
 details on these available models.
 
 popsycle_singles_sukhboldn20
 ----------------------------
 
 This population model was generated using the Population Synthesis for Compact-object Lensing Events
-or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_
 and paper :cite:`Lam2020`. The input parameters to the simulation were:
 
 .. code::
 
-    BH_kick_speed_mean: 100 
+    BH_kick_speed_mean: 100
     IFMR: Sukhboldn20
-    NS_kick_speed_mean: 350 
+    NS_kick_speed_mean: 350
     bin_edges_number: None
     blend_rad: 0.65
     filter_name: I
@@ -51,14 +51,14 @@ popsycle_singles_raithel18
 --------------------------
 
 This population model was generated using the Population Synthesis for Compact-object Lensing Events
-or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_
 and paper :cite:`Lam2020`. The input parameters to the simulation were:
 
 .. code::
 
-    BH_kick_speed_mean: 100 
+    BH_kick_speed_mean: 100
     IFMR: Raithel18
-    NS_kick_speed_mean: 350 
+    NS_kick_speed_mean: 350
     bin_edges_number: None
     blend_rad: 0.65
     filter_name: I
@@ -92,14 +92,14 @@ popsycle_singles_spera15
 ------------------------
 
 This population model was generated using the Population Synthesis for Compact-object Lensing Events
-or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_ 
+or PopSyCLE. See the `code repositoy <https://github.com/jluastro/PopSyCLE/tree/main>`_
 and paper :cite:`Lam2020`. The input parameters to the simulation were:
 
 .. code::
 
-    BH_kick_speed_mean: 100 
+    BH_kick_speed_mean: 100
     IFMR: Spera15
-    NS_kick_speed_mean: 350 
+    NS_kick_speed_mean: 350
     bin_edges_number: None
     blend_rad: 0.65
     filter_name: I
