@@ -1,6 +1,6 @@
 exclude: |
     (?x)(
-        ^popclassdata/|
+        ^popclass/data/|
         ^examples/|
     )
 repos:
