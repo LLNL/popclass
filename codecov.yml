@@ -1,3 +1,22 @@
+coverage:
+  status:
+    project:
+      default:
+        # basic
+        target: auto #default
+        threshold: 0
+        base: auto 
+        flags: 
+          - popclass
+        paths: 
+          - "popclass"
+       # advanced settings
+        branches: 
+          - main
+        if_ci_failed: error #success, failure, error, ignore
+        informational: false
+        only_pulls: True
+
 comment:                  # this is a top-level key
   layout: " diff, flags, files"
   behavior: default
