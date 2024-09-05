@@ -1,7 +1,7 @@
 exclude: |
     (?x)(
-        popclass/data/|
-        examples/|
+        popclass/data/*|
+        examples/*|
     )
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
