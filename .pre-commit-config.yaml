@@ -1,8 +1,4 @@
-exclude: |
-    (?x)^(
-        popclass/data/.*|
-        examples/.*|
-    )
+exclude: 'popclass/data/.*|examples/.*'
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.6.0
