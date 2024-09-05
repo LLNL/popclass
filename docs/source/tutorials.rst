@@ -5,10 +5,10 @@ Tutorials
 Converting and creating posterior objects
 -----------------------------------------
 
-``popclass`` includes convenience functions for ingesting common inference 
+``popclass`` includes convenience functions for ingesting common inference
 data objects.
 While an array of samples and associated parameter labels can be passed
-directly to ``popclass.Posterior``, we currently support conversion from 
+directly to ``popclass.Posterior``, we currently support conversion from
 the following output formats:
 
 * ArviZ
@@ -39,12 +39,12 @@ In this section we will cover how simulation data from a population model
 is saved. You might find this useful if you are planning on creating your
 own population model and contributing it to popclass.
 
-popclass models can be saved in the ASDF (Advanced Scientific Data Format). 
-This Python implementation of the ASDF Standard can be found 
-`here <https://asdf.readthedocs.io/en/latest/>`_ and more information 
+popclass models can be saved in the ASDF (Advanced Scientific Data Format).
+This Python implementation of the ASDF Standard can be found
+`here <https://asdf.readthedocs.io/en/latest/>`_ and more information
 on the ASDF Standard itself can be found in :cite:`Greenfield2015`.
 
-Here is an example schema of a popclass population model file 
+Here is an example schema of a popclass population model file
 :code:`popsycle_singles_raithel18.asdf`.
 
 .. code-block:: python
@@ -102,7 +102,7 @@ mock class data.
                   "neutron_star": np.random.randn(21,4),
                   "star": np.random.randn(1255,4),
                   "white dwarf": np.random.randn(178,4)}
-                  
+
     model_name = 'popsycle_singles_sukhboldn20'
     class_weights = {
                     "black_hole": 0.011556764106050306,
@@ -130,7 +130,7 @@ To read-in a user-generated population model:
     file = 'path/to/file.asdf'
     user_population_model = PopulationModel.from_asdf(file)
 
-Additionally, to contribute a population model to the library, 
+Additionally, to contribute a population model to the library,
 the file may be placed in ``popclass/data`` and then added to the list of
 ``AVAILABLE_MODELS`` in ``model.py``.
 The data can then be read using ``from_library().``
@@ -146,9 +146,9 @@ The model can then be read in directly from the library via
 
 Using the classifier
 --------------------
-In order to perform object classification, the user must specify *both* a 
+In order to perform object classification, the user must specify *both* a
 ``PopulationModel`` and an ``InferenceData`` object.
-The creation of the ``PopulationModel`` is as described above and the 
+The creation of the ``PopulationModel`` is as described above and the
 ``InferenceData`` object can be created from an existing ``Posterior`` object
 by passing a prior density to the ``Posterior.to_InferenceData`` method:
 
@@ -163,11 +163,11 @@ by passing a prior density to the ``Posterior.to_InferenceData`` method:
     # for the above posterior object
     inference_data = post.to_InferenceData(prior)
 
-The ``InferenceData`` object can also be formed using the marginal distribution 
+The ``InferenceData`` object can also be formed using the marginal distribution
 formed by ``popclass.Posterior.marginal()``.
 
-To run the classifier, the user must also pass the ``classify()`` function the 
-parameters to use for classification. 
+To run the classifier, the user must also pass the ``classify()`` function the
+parameters to use for classification.
 The models supplied by ``popclass`` include the following parameters:
 
 * 'log10tE'
@@ -182,9 +182,3 @@ The models supplied by ``popclass`` include the following parameters:
     classification = (population_model, inference_data, parameters=['log10tE', 'log10piE'])
 
 This will return a dictionary of object clases with their associated probabilities.
-
-
-
-
-
-

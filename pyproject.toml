@@ -27,7 +27,7 @@ mypkg = ["*.asdf"]
 
 [project.optional-dependencies]
 test = ["pytest", "arviz", "dynesty"]
-docs = ["sphinx","sphinx_rtd_theme", "sphinxcontrib-bibtex"]                   
+docs = ["sphinx","sphinx_rtd_theme", "sphinxcontrib-bibtex"]
 
 [project.urls]
 Homepage = "https://github.com/llnl/popclass"

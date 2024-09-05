@@ -2,7 +2,7 @@
 API
 ===
 
-posterior 
+posterior
 ---------
 
 .. automodule:: popclass.posterior
@@ -26,7 +26,3 @@ visualization
 
 .. automodule:: popclass.visualization
    :members:
-
-
-
-
