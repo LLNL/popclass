@@ -62,5 +62,3 @@ classification is a dictionary of len class probabilities.
 
 For more advanced usage and a deeper dive into the details, please see
 the documentation tutorials.
-
-
