@@ -7,10 +7,6 @@ import pytest
 from popclass.model import PopulationModel
 from popclass.visualization import plot_population_model
 from unittest import TestCase
-<<<<<<< HEAD
-
-=======
->>>>>>> 15b2f6dde1a48bdc5b88825ebd93379f2ed04913
 
 def test_plot_population_model():
     """
