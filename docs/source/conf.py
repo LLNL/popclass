@@ -13,7 +13,8 @@ extensions = ['sphinx_rtd_theme',
               'sphinxcontrib.bibtex', 
               'sphinx.ext.autodoc',
               "sphinx.ext.napoleon",
-              "sphinx.ext.viewcode"]
+              "sphinx.ext.viewcode",
+              "nbsphinx"]
 
 bibtex_bibfiles = ['refs.bib']
 bibtex_reference_style = 'author_year'

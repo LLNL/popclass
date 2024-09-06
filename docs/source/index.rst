@@ -38,6 +38,7 @@ Contents
    gettingstarted
    background
    tutorials
+   ../../examples/popclass_tutorial.ipynb
    library
    acknowledgements
    contributing
