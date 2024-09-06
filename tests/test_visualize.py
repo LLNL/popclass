@@ -7,7 +7,10 @@ import pytest
 from popclass.model import PopulationModel
 from popclass.visualization import plot_population_model
 from unittest import TestCase
+<<<<<<< HEAD
 
+=======
+>>>>>>> 15b2f6dde1a48bdc5b88825ebd93379f2ed04913
 
 def test_plot_population_model():
     """
@@ -45,6 +48,16 @@ def test_parameters():
     parameters = ["log10tE", "log10piE"]
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
     assert [ax.get_xlabel(), ax.get_ylabel()] == parameters
+    
+def test_1D_parameter():
+    """
+    Check 1D figure is plotted and labels match a density histogram of parameter
+    """
+    popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
+    parameters = ['log10tE']
+    fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
+    assert(ax.get_xlabel() == parameters[0])
+    assert(ax.get_ylabel() == 'density')
     
 def test_1D_parameter():
     """
