@@ -22,4 +22,3 @@ RUN rm -rf MultiNest
 COPY ./requirements.txt ./requirements.txt
 
 RUN pip install -r requirements.txt
-
