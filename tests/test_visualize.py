@@ -8,7 +8,7 @@ import pytest
 
 from popclass.model import PopulationModel
 from popclass.visualization import plot_population_model
-from unittest import TestCase
+
 
 def test_plot_population_model():
     """
@@ -47,25 +47,28 @@ def test_parameters():
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
     assert [ax.get_xlabel(), ax.get_ylabel()] == parameters
 
-def test_1D_parameter():
-    """
-    Check 1D figure is plotted and labels match a density histogram of parameter
-    """
-    popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
-    parameters = ['log10tE']
-    fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
-    assert(ax.get_xlabel() == parameters[0])
-    assert(ax.get_ylabel() == 'density')
 
 def test_1D_parameter():
     """
     Check 1D figure is plotted and labels match a density histogram of parameter
     """
-    popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
-    parameters = ['log10tE']
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    parameters = ["log10tE"]
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
-    assert(ax.get_xlabel() == parameters[0])
-    assert(ax.get_ylabel() == 'density')
+    assert ax.get_xlabel() == parameters[0]
+    assert ax.get_ylabel() == "density"
+
+
+def test_1D_parameter():
+    """
+    Check 1D figure is plotted and labels match a density histogram of parameter
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    parameters = ["log10tE"]
+    fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
+    assert ax.get_xlabel() == parameters[0]
+    assert ax.get_ylabel() == "density"
+
 
 def test_bounds():
     """
@@ -80,12 +83,15 @@ def test_bounds():
     figure_bounds = np.array([ax.get_xbound(), ax.get_ybound()])
     np.testing.assert_almost_equal(figure_bounds, bounds)
 
+
 class TestDimensionError(TestCase):
     def test_dimensions(self):
         """
         Check that ValueError is raised if too many parameters given to visualize
         """
-        popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
-        parameters = ['log10tE', 'log10piE', 'f_blend_I']
+        popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+        parameters = ["log10tE", "log10piE", "f_blend_I"]
         with self.assertRaises(ValueError):
-            fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
+            fig, ax = plot_population_model(
+                PopulationModel=popmodel, parameters=parameters
+            )
