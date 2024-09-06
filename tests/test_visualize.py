@@ -45,25 +45,28 @@ def test_parameters():
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
     assert [ax.get_xlabel(), ax.get_ylabel()] == parameters
 
-def test_1D_parameter():
-    """
-    Check 1D figure is plotted and labels match a density histogram of parameter
-    """
-    popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
-    parameters = ['log10tE']
-    fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
-    assert(ax.get_xlabel() == parameters[0])
-    assert(ax.get_ylabel() == 'density')
 
 def test_1D_parameter():
     """
     Check 1D figure is plotted and labels match a density histogram of parameter
     """
-    popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
-    parameters = ['log10tE']
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    parameters = ["log10tE"]
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
-    assert(ax.get_xlabel() == parameters[0])
-    assert(ax.get_ylabel() == 'density')
+    assert ax.get_xlabel() == parameters[0]
+    assert ax.get_ylabel() == "density"
+
+
+def test_1D_parameter():
+    """
+    Check 1D figure is plotted and labels match a density histogram of parameter
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    parameters = ["log10tE"]
+    fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
+    assert ax.get_xlabel() == parameters[0]
+    assert ax.get_ylabel() == "density"
+
 
 def test_bounds():
     """
