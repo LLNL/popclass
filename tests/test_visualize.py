@@ -1,6 +1,8 @@
 """
 Test that base visualization produces a figure
 """
+from unittest import TestCase
+
 import numpy as np
 import pytest
 
@@ -44,7 +46,7 @@ def test_parameters():
     parameters = ["log10tE", "log10piE"]
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
     assert [ax.get_xlabel(), ax.get_ylabel()] == parameters
-    
+
 def test_1D_parameter():
     """
     Check 1D figure is plotted and labels match a density histogram of parameter
@@ -54,7 +56,7 @@ def test_1D_parameter():
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
     assert(ax.get_xlabel() == parameters[0])
     assert(ax.get_ylabel() == 'density')
-    
+
 def test_1D_parameter():
     """
     Check 1D figure is plotted and labels match a density histogram of parameter
@@ -64,7 +66,7 @@ def test_1D_parameter():
     fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
     assert(ax.get_xlabel() == parameters[0])
     assert(ax.get_ylabel() == 'density')
-    
+
 def test_bounds():
     """
     Check figure bounds are adjusted as specified
@@ -87,4 +89,3 @@ class TestDimensionError(TestCase):
         parameters = ['log10tE', 'log10piE', 'f_blend_I']
         with self.assertRaises(ValueError):
             fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
-    
