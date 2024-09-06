@@ -1,14 +1,12 @@
 """
 Test that base visualization produces a figure
 """
-from unittest import TestCase
 
 import numpy as np
 import pytest
 
 from popclass.model import PopulationModel
 from popclass.visualization import plot_population_model
-from unittest import TestCase
 
 def test_plot_population_model():
     """
@@ -80,12 +78,11 @@ def test_bounds():
     figure_bounds = np.array([ax.get_xbound(), ax.get_ybound()])
     np.testing.assert_almost_equal(figure_bounds, bounds)
 
-class TestDimensionError(TestCase):
-    def test_dimensions(self):
-        """
-        Check that ValueError is raised if too many parameters given to visualize
-        """
-        popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
-        parameters = ['log10tE', 'log10piE', 'f_blend_I']
-        with self.assertRaises(ValueError):
-            fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
+def test_dimensions():
+    """
+    Check that ValueError is raised if too many parameters given to visualize
+    """
+    popmodel = PopulationModel.from_library('popsycle_singles_sukhboldn20')
+    parameters = ['log10tE', 'log10piE', 'f_blend_I']
+    with pytest.raises(ValueError):
+        fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
