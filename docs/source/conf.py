@@ -8,13 +8,15 @@ copyright = "2024, Lawrence Livermore National Laboratory | LLNL-SM-868436"
 author = "Lawrence Livermore National Laboratory"
 release = "0.1.0"
 
-extensions = ['sphinx_rtd_theme',
-              'sphinx.ext.mathjax', 
-              'sphinxcontrib.bibtex', 
-              'sphinx.ext.autodoc',
-              "sphinx.ext.napoleon",
-              "sphinx.ext.viewcode",
-              "nbsphinx"]
+extensions = [
+    "sphinx_rtd_theme",
+    "sphinx.ext.mathjax",
+    "sphinxcontrib.bibtex",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "nbsphinx",
+]
 
 bibtex_bibfiles = ["refs.bib"]
 bibtex_reference_style = "author_year"
