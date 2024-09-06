@@ -57,15 +57,15 @@ def test_1D_parameter():
     assert ax.get_ylabel() == "density"
 
 
-def test_1D_parameter():
+def test_plot_samples():
     """
-    Check 1D figure is plotted and labels match a density histogram of parameter
+    Check plotting functions return a figure when visualizing full sample distributions instead of density estimates
     """
     popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
-    parameters = ["log10tE"]
-    fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
-    assert ax.get_xlabel() == parameters[0]
-    assert ax.get_ylabel() == "density"
+    fig1, ax1 = plot_population_model(PopulationModel=popmodel, parameters=["log10tE", "log10piE"], plot_samples=True, plot_kdes=False)
+    fig2, ax2 = plot_population_model(PopulationModel=popmodel, parameters=["log10tE"], plot_samples=True, plot_kdes=False)
+    assert fig1
+    assert fig2
 
 
 def test_bounds():
@@ -90,3 +90,4 @@ def test_dimensions():
     parameters = ["log10tE", "log10piE", "f_blend_I"]
     with pytest.raises(ValueError):
         fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
+        
