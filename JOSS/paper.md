@@ -34,7 +34,7 @@ bibliography: paper.bib
 # Optional fields if submitting to a AAS journal too, see this blog post:
 # https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
 aas-doi:
-aas-journal: 
+aas-journal:
 ---
 
 # Summary
