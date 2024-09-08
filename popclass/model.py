@@ -194,7 +194,7 @@ class PopulationModel:
 
 def validate_asdf_population_model(asdf_object):
     """
-    Chack if PopulationModel asdf file is valid.
+    Check if PopulationModel asdf file is valid.
 
     Args:
         asdf_object (asdf): asdf file to validate against a
