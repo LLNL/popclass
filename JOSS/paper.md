@@ -38,10 +38,14 @@ aas-journal:
 ---
 
 # Summary
+`popclass` is a lightweight Python library that provides a flexible, probabilistic framework for classification based on a user provided model.
+The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
 
 
 
 # Statement of need
+In the current climate of observational astronomy, with the Vera C. Rubin Observatory (CITE) and the Nancy Grace Roman Space Telescope (CITE) soon to see first light, selection of interesting targets becomes key to maximizing science output.
+In the realm of time-domain astronomy and transients, it is important to be able to qiuckly identify targets for follow-up imaging with confidence that the selected object is an appropriate use of resources.
 
 # Citations
 
