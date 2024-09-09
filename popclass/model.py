@@ -7,6 +7,7 @@ the library or supply their own, given that it is in ASDF file format.
 import asdf
 import numpy as np
 from scipy.stats import gaussian_kde
+import pkg_resources
 
 AVAILABLE_MODELS = [
     "popsycle_singles_raithel18",
@@ -97,9 +98,11 @@ class PopulationModel:
             raise ValueError(
                 f"{model_name} not available. Available models are: {AVAILABLE_MODELS}"
             )
-        path = "popclass/data/" if library_path is None else library_path
+        
+        stream = pkg_resources.resource_stream(__name__, f'data/{model_name}.asdf')
+        path = stream if library_path is None else f"{library_path}{model_name}.asdf"
 
-        return cls.from_asdf(f"{path}{model_name}.asdf")
+        return cls.from_asdf(path)
 
     def samples(self, class_name, parameters):
         """
