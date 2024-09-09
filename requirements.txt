@@ -11,4 +11,3 @@ arviz
 dynesty
 pymultinest
 pytest-cov
-
