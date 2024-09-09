@@ -4,3 +4,4 @@ sphinxcontrib-bibtex
 numpy
 asdf
 matplotlib
+scipy
