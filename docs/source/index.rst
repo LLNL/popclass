@@ -33,6 +33,7 @@ Contents
 
 .. toctree::
    :titlesonly:
+   :maxdepth: 1
 
    installation
    gettingstarted
@@ -43,4 +44,13 @@ Contents
    contributing
    changelog
    references
+   developer
    api
+
+Examples
+--------
+
+.. toctree::
+   :titlesonly:
+
+   examples/popsycle_model_example.ipynb
