@@ -41,11 +41,11 @@ aas-journal:
 `popclass` is a lightweight Python library that provides a flexible, probabilistic framework for classification based on a model.
 The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
 At base level, the library solves the following:
-$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}$$.
-*explain the terms and where they fit into popclass*
+$$ p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}$$
+the probability that an event belongs to class L given microlensing event light curve data $\boldsymbol{d}$ and a galactic model $\mathcal{G}$.
 
 The library includes several models containing information on several key parameters which may be useful for lens classification ($\log_{10}t_E$, $\log_{10}\pi_E$, $\log_{10}\theta_E$, and $f_{\rm{blend}}$), but allows the user to provide their own model file so long as it is consistent with the supplied posterior at each step of analysis.
-`popclass` also supplies tools for visualizing population models (in one and two-dimansional parameter space) alongside the supplied posterior samples (FIGURE?).
+`popclass` also supplies tools for visualizing population models (in multi-dimensional parameter space) alongside the supplied posterior samples (FIGURE?).
 
 # Statement of need
 In the current climate of observational astronomy, with the Vera C. Rubin Observatory (CITE) and the Nancy Grace Roman Space Telescope (CITE) soon to see first light, selection of interesting targets becomes key to maximizing science output.
@@ -55,7 +55,9 @@ Use of the classifier is not computationally intensive; the code creates kernel 
 *Talk about DarkLens code and PyLIMAS and things that are related*
 
 # Method
-While lens classification in microlensing is the primary use case and `popclass` includes specific models to this end, it is important to reiterate that it relies on a completely general Bayesian framework.
+While lens classification in microlensing is the primary use case for `popclass`, it relies on a completely general Bayesian framework.
+Extending on the framework introduced above, we can use Bayes' Theorem 
+$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})},$$
 
 *include the rest of the math from the background*
 
