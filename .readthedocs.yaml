@@ -4,6 +4,8 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
+  commands:
+    - apt update && apt install pandoc
 
 sphinx:
   configuration: docs/source/conf.py

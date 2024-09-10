@@ -38,9 +38,11 @@ Contents
    gettingstarted
    background
    tutorials
+   examples/popsycle_model_example.ipynb
    library
    acknowledgements
    contributing
    changelog
    references
+   developer
    api
