@@ -3,6 +3,11 @@ sphinx_rtd_theme
 sphinxcontrib-bibtex
 nbsphinx
 numpy
+astropy
+jupyter
+jupyterlab
 asdf
-matplotlib
 scipy
+matplotlib
+pandas
+popclass
