@@ -33,12 +33,12 @@ Contents
 
 .. toctree::
    :titlesonly:
+   :maxdepth: 1
 
    installation
    gettingstarted
    background
    tutorials
-   examples/popsycle_model_example.ipynb
    library
    acknowledgements
    contributing
@@ -46,3 +46,11 @@ Contents
    references
    developer
    api
+
+Examples
+--------
+
+.. toctree::
+   :titlesonly:
+
+   examples/popsycle_model_example.ipynb
