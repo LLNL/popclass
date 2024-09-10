@@ -3,3 +3,9 @@ sphinx_rtd_theme
 sphinxcontrib-bibtex
 nbsphinx
 astropy
+jupyter
+jupyterlab
+asdf
+scipy
+matplotlib
+pandas
