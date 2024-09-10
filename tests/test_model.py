@@ -1,6 +1,9 @@
 """
 Tests to make sure model.py works
 """
+import fnmatch
+import os
+
 import asdf
 import numpy as np
 import pytest
@@ -10,6 +13,46 @@ from popclass.model import AVAILABLE_MODELS
 from popclass.model import PopulationModel
 from popclass.model import validate_asdf_population_model
 from popclass.posterior import Posterior
+
+
+def test_model_saving():
+    """
+    Test for saving a population model to an ASDF file.
+
+    Writes a temporary asdf file to the tests directory and tests to makes sure the saved file is valid.
+    """
+    population_samples_raw = norm.rvs(size=int(2e2), loc=0, scale=1).reshape((100, 2))
+    class_names = ["a", "b"]
+    population_samples = {key: population_samples_raw for key in class_names}
+    class_weights = [0.5, 0.5]
+    parameters = ["1", "2"]
+    test_model = PopulationModel(
+        population_samples=population_samples,
+        class_weights=class_weights,
+        parameters=parameters,
+    )
+    output_fp = os.path.dirname(os.path.realpath(__file__)) + "/tmp.asdf"
+    test_model.to_asdf(output_fp, "tmp")
+
+    with asdf.open(output_fp, lazy_load=False, copy_arrays=True) as tree:
+        assert validate_asdf_population_model(tree)
+
+    os.remove(output_fp)
+
+
+def test_model_library_supported_options():
+    """Test to ensure there is consistency between the models packaged with popclass
+    match the options enumerated in the software in models.py
+    """
+    data_dir = os.path.dirname(os.path.realpath(__file__)) + "/../popclass/data/"
+    model_data_tags = []
+    for file in os.listdir(data_dir):
+        if fnmatch.fnmatch(file, "*.asdf"):
+            model_data_tags.append(file[:-5])
+    AVAILABLE_MODELS_sorted = AVAILABLE_MODELS.sort()
+    model_data_tags_sorted = model_data_tags.sort()
+    assert len(AVAILABLE_MODELS) == len(model_data_tags)
+    assert np.all(AVAILABLE_MODELS_sorted == model_data_tags_sorted)
 
 
 def test_load_model():
