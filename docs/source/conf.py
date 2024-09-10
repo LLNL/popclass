@@ -1,7 +1,6 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../.."))
 
 project = "popclass"
 copyright = "2024, Lawrence Livermore National Laboratory | LLNL-SM-868436"
@@ -15,6 +14,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
+    "nbsphinx",
 ]
 
 bibtex_bibfiles = ["refs.bib"]
