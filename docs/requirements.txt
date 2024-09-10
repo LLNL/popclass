@@ -10,3 +10,4 @@ scipy
 matplotlib
 pandas
 popclass
+numpy
