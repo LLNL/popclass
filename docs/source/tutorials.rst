@@ -1,6 +1,15 @@
+
 =========
 Tutorials
 =========
+
+Examples
+--------
+
+.. toctree::
+   :titlesonly:
+
+   examples/popsycle_model_example.ipynb
 
 Converting and creating posterior objects
 -----------------------------------------
