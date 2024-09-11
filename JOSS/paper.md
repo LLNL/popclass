@@ -23,7 +23,7 @@ authors:
     orcid: 0000-0002-5910-3114
     affiliation: 1
     equal-contrib: true
-  
+
 affiliations:
  - name: Space Science Institute, Lawrence Livermore National Laboratory, 7000 East Ave., Livermore, CA 94550, USA
    index: 1
