@@ -6,28 +6,31 @@ tags:
   - milky way
   - black hole
 authors:
-  - name: Adrian M. Price-Whelan
+  - name: Greg Sallaberry
     orcid: 0000-0000-0000-0000
     equal-contrib: true
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID
-    equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
-    affiliation: 2
-  - name: Author with no affiliation
-    corresponding: true # (This is how to denote the corresponding author)
-    affiliation: 3
-  - given-names: Ludwig
-    dropping-particle: van
-    surname: Beethoven
-    affiliation: 3
+    affiliation: 1
+  - name: Zofia Kaczmarek
+    orcid: 0009-0007-4089-5012
+    equal-contrib: true
+    affiliation: "1, 2"
+  - name: Peter McGill
+    orcid: 0000-0002-1052-6749
+    corresponding: true
+    affiliation: 1
+    equal-contrib: true
+  - name: Scott E. Perkins
+    orcid: 0000-0002-5910-3114
+    affiliation: 1
+    equal-contrib: true
+  
 affiliations:
  - name: Space Science Institute, Lawrence Livermore National Laboratory, 7000 East Ave., Livermore, CA 94550, USA
    index: 1
    ror: 00hx57361
- - name: Institution Name, Country
+ - name: Zentrum f{\"u}r Astronomie der Universit{\"a}t Heidelberg, Astronomisches Rechen-Institut, M{\"o}nchhofstr. 12-14, 69120 Heidelberg, Germany
    index: 2
- - name: Independent Researcher, Country
-   index: 3
+
 date: 13 August 2017
 bibliography: paper.bib
 
@@ -73,8 +76,6 @@ format.
 
 # Acknowledgements
 
-## Funding
-
 This work was performed under the auspices of the U.S.
 Department of Energy by Lawrence Livermore National
 Laboratory (LLNL) under Contract DE-AC52-07NA27344.
@@ -86,9 +87,6 @@ for this project was funded under the LLNL
 [Space Science Institute's](https://space-science.llnl.gov/) Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
 [Academic Engagement Office](https://st.llnl.gov/about-us/AEO).
-
-## Disclaimer
-
 This work was prepared as an account of work sponsored by an agency of the United States
 Government. Neither the United States Government nor Lawrence Livermore National Security,
 LLC, nor any of their employees makes any warranty, expressed or implied, or assumes any
@@ -101,6 +99,5 @@ Government or Lawrence Livermore National Security, LLC. The views and opinions 
 expressed herein do not necessarily state or reflect those of the United States Government
 or Lawrence Livermore National Security, LLC, and shall not be used for advertising or
 product endorsement purposes.
-
 
 # References
