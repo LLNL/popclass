@@ -58,12 +58,12 @@ Use of the classifier is not computationally intensive; the code creates kernel 
 
 # Method
 
-wWile lens classification in microlensing is the primary use case for 
-`popclass`, it relies on a completely general Bayesian framework from 
-[@Perkins2024]. Consider the data from a single microlensing 
-event light curve $\boldsymbol{d}$, using a model of the Galaxy 
+wWile lens classification in microlensing is the primary use case for
+`popclass`, it relies on a completely general Bayesian framework from
+[@Perkins2024]. Consider the data from a single microlensing
+event light curve $\boldsymbol{d}$, using a model of the Galaxy
 $\mathcal{G}$, popclass calculates the probability that the lens of the
-events belongs to each lens class, $\text{class}_L$, where 
+events belongs to each lens class, $\text{class}_L$, where
 $\text{class}_L\in\text{classes}$ and $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, popclass calulates,
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.$$
@@ -115,7 +115,7 @@ under project 22-ERD-037. The software implementation
 for this project was funded under the LLNL
 Space Science Institute's Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
-Academic Engagement Office. This work was prepared as an account of 
+Academic Engagement Office. This work was prepared as an account of
 work sponsored by an agency of the United States
 Government. Neither the United States Government nor Lawrence Livermore National Security,
 LLC, nor any of their employees makes any warranty, expressed or implied, or assumes any
