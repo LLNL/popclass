@@ -46,4 +46,3 @@ Contents
    references
    developer
    api
-
