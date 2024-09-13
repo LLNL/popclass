@@ -58,21 +58,48 @@ Use of the classifier is not computationally intensive; the code creates kernel 
 
 # Method
 
+wWile lens classification in microlensing is the primary use case for 
+`popclass`, it relies on a completely general Bayesian framework from 
+[@Perkins2024]. Consider the data from a single microlensing 
+event light curve $\boldsymbol{d}$, using a model of the Galaxy 
+$\mathcal{G}$, popclass calculates the probability that the lens of the
+events belongs to each lens class, $\text{class}_L$, where 
+$\text{class}_L\in\text{classes}$ and $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, popclass calulates,
 
+$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.$$
 
-While lens classification in microlensing is the primary use case for `popclass`, it relies on a completely general Bayesian framework.
-Extending on the framework introduced above, we can use Bayes' Theorem
-$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})},$$
+Using Bayes' theorem we can write,
 
-*include the rest of the math from the background*
+$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
+Assuming that our set of considered lens classes is complete, the evidence of a single lens
+(the denominator of the above equation) is,
 
+$$p(\boldsymbol{d} | \mathcal{G}) = \sum_{\text{class}_L\in\text{classes}} p(\text{class}_L|\mathcal{G}) p(\boldsymbol{d}|\text{class}_L, \mathcal{G})$$.
 
-# Citations
+We can now write the equations in a form that can be computed by introducing parameters of
+the microlensing light curve $\theta=[t_{E}, \pi_{E}, \text{...}]$,
 
-Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
+$$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) &= \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})} \\
+    &\times \int p(\boldsymbol{d}| \theta ) p(\theta |\text{class}_L, \mathcal{G})d\theta.$$
+
+We can compute the integral on the right hand side by importance sampling if we have :math:`S`
+independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
+drawn under some prior, $\pi(\theta)$, with wide support [@Hogg2010],
+
+$$\begin{align}\label{eq:finalPosteriorclassIS}\nonumber
+    \int p(\boldsymbol{d} | \theta ) &p(\theta |\text{class}_L, \mathcal{G})d\theta \approx  \\
+    &\frac{1}{S} \sum_{c=0}^{S} \frac{ p(\theta_{c} |\text{class}_L, \mathcal{G})}{\pi(\theta_{c})}\,.
+    \end{align}$$
+
+This allows us to we leverage previously calculated posterior samples to perform
+lens classification for a single event in the context of a Galactic model. The term,
+$p(\theta_{c} |\text{class}_L, \mathcal{G})$ can be calculated by using kernel
+density estimation over the single event observable space (e.g., $t_{E}-\pi_{E}$)
+using a simulated catalog of microlensing events from $\mathcal{G}$.
+$p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs
+to each class before any data is seen, which is just set by relative number of expected
+events predicted by the Galactic model $\mathcal{G}$.
 
 # Figures
 
@@ -84,12 +111,12 @@ Laboratory (LLNL) under Contract DE-AC52-07NA27344.
 The theoretical foundation of this work was established
 under support from Lawrence Livermore National Laboratory’s
 Laboratory Directed Research and Development Program
-under project [22-ERD-037](https://ldrd-annual.llnl.gov/ldrd-annual-2023/project-highlights/space-security/new-dark-matter-and-early-universe-grand-science-campaign). The software implementation
+under project 22-ERD-037. The software implementation
 for this project was funded under the LLNL
-[Space Science Institute's](https://space-science.llnl.gov/) Institutional Scientific
+Space Science Institute's Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
-[Academic Engagement Office](https://st.llnl.gov/about-us/AEO).
-This work was prepared as an account of work sponsored by an agency of the United States
+Academic Engagement Office. This work was prepared as an account of 
+work sponsored by an agency of the United States
 Government. Neither the United States Government nor Lawrence Livermore National Security,
 LLC, nor any of their employees makes any warranty, expressed or implied, or assumes any
 legal liability or responsibility for the accuracy, completeness, or usefulness of any
