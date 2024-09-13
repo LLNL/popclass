@@ -213,3 +213,7 @@ def test_evaluate_transpose():
             assert model1.evaluate_density(
                 key, parameter, np.array([[2]])
             ) == model2.evaluate_density(key, parameter, np.array([[2]]))
+
+def test_MultivariateGaussianKernal():
+    # TODO 
+    assert True
