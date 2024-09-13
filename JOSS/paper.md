@@ -57,6 +57,9 @@ Use of the classifier is not computationally intensive; the code creates kernel 
 *Talk about DarkLens code and PyLIMAS and things that are related*
 
 # Method
+
+
+
 While lens classification in microlensing is the primary use case for `popclass`, it relies on a completely general Bayesian framework.
 Extending on the framework introduced above, we can use Bayes' Theorem
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})},$$
