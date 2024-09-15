@@ -15,7 +15,7 @@ You can also install popclass via conda-forge
     conda install conda-forge::popclass
 
 The conda-forge install is built from the pypi index and takes a couple of days to
-be avialable after a new popclass version is released.
+be available after a new popclass version is released.
 
 To install from source
 
