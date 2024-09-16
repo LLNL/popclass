@@ -43,8 +43,10 @@ aas-journal:
 `popclass` is a lightweight Python library that provides a flexible, probabilistic framework for classification based on a model.
 The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
 At base level, the library solves the following:
-$$ p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}$$
-the probability that an event belongs to class L given microlensing event light curve data $\boldsymbol{d}$ and a galactic model $\mathcal{G}$.
+
+$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}$$
+
+\- the probability that an event belongs to class L given microlensing event light curve data $\boldsymbol{d}$ and a galactic model $\mathcal{G}$.
 
 The library includes several models containing information on several key parameters which may be useful for lens classification ($\log_{10}t_E$, $\log_{10}\pi_E$, $\log_{10}\theta_E$, and $f_{\rm{blend}}$), but allows the user to provide their own model file so long as it is consistent with the supplied posterior at each step of analysis.
 `popclass` also supplies tools for visualizing population models (in multi-dimensional parameter space) alongside the supplied posterior samples (FIGURE?).
@@ -58,13 +60,13 @@ Use of the classifier is not computationally intensive; the code creates kernel 
 
 # Method
 
-wWile lens classification in microlensing is the primary use case for
+While lens classification in microlensing is the primary use case for
 `popclass`, it relies on a completely general Bayesian framework from
 [@Perkins2024]. Consider the data from a single microlensing
 event light curve $\boldsymbol{d}$, using a model of the Galaxy
 $\mathcal{G}$, popclass calculates the probability that the lens of the
 events belongs to each lens class, $\text{class}_L$, where
-$\text{class}_L\in\text{classes}$ and $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, popclass calulates,
+$\text{class}_L\in\text{classes}$ and $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, popclass calculates
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.$$
 
@@ -75,28 +77,22 @@ $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \math
 Assuming that our set of considered lens classes is complete, the evidence of a single lens
 (the denominator of the above equation) is,
 
-$$p(\boldsymbol{d} | \mathcal{G}) = \sum_{\text{class}_L\in\text{classes}} p(\text{class}_L|\mathcal{G}) p(\boldsymbol{d}|\text{class}_L, \mathcal{G})$$.
+$$p(\boldsymbol{d} | \mathcal{G}) = \sum_{\text{class}_L\in\text{classes}} p(\text{class}_L|\mathcal{G}) p(\boldsymbol{d}|\text{class}_L, \mathcal{G}).$$
 
 We can now write the equations in a form that can be computed by introducing parameters of
 the microlensing light curve $\theta=[t_{E}, \pi_{E}, \text{...}]$,
 
-$$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) &= \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})} \\
-    &\times \int p(\boldsymbol{d}| \theta ) p(\theta |\text{class}_L, \mathcal{G})d\theta.$$
+$$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
+    \times \int p(\boldsymbol{d}| \theta ) p(\theta |\text{class}_L, \mathcal{G})d\theta.$$
 
-We can compute the integral on the right hand side by importance sampling if we have :math:`S`
-independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
+We can compute the integral on the right hand side by importance sampling if we have $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
 drawn under some prior, $\pi(\theta)$, with wide support [@Hogg2010],
 
-$$\begin{align}\label{eq:finalPosteriorclassIS}\nonumber
-    \int p(\boldsymbol{d} | \theta ) &p(\theta |\text{class}_L, \mathcal{G})d\theta \approx  \\
-    &\frac{1}{S} \sum_{c=0}^{S} \frac{ p(\theta_{c} |\text{class}_L, \mathcal{G})}{\pi(\theta_{c})}\,.
-    \end{align}$$
+$$ \int p(d | \theta) p(\theta | \text{class}_L, \mathcal{G}) d\theta \approx \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})} $$
 
 This allows us to we leverage previously calculated posterior samples to perform
-lens classification for a single event in the context of a Galactic model. The term,
-$p(\theta_{c} |\text{class}_L, \mathcal{G})$ can be calculated by using kernel
-density estimation over the single event observable space (e.g., $t_{E}-\pi_{E}$)
-using a simulated catalog of microlensing events from $\mathcal{G}$.
+lens classification for a single event in the context of a Galactic model. The term
+$p(\theta_c | \text{class}_ L, \mathcal{G})$ can be calculated by using kernel density estimation over the single event observable space (e.g., $t_{E}-\pi_{E}$) using a simulated catalog of microlensing events from $\mathcal{G}$.
 $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs
 to each class before any data is seen, which is just set by relative number of expected
 events predicted by the Galactic model $\mathcal{G}$.
