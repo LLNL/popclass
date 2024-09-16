@@ -1,3 +1,4 @@
 popclass
 nbgitpuller
 pandas
+astropy
