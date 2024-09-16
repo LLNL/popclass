@@ -19,6 +19,46 @@ cmap_cycler = ["Greens", "RdPu", "Oranges", "Blues", "Reds", "Purples"]
 
 marker_cycler = ["o", "^", "*", "s", "H"]
 
+def get_bounds(PopulationModel, parameters):
+    """
+    Creates bounds on the basis of a PopulationModel and given parameters, if they are not specified by the user. Bounds are automatically constructed to be 10% of the extent in samples beyond the minimum and maximum value found in samples for each parameter.
+    
+    Args:
+        PopulationModel (class) - as defined in model.py, class containing the population samples and parameters
+        
+        parameters (list of str) - a subset of parameters for visualization (must be found in PopulationModel.parameters)
+    
+    Returns
+    -------
+        bounds (array-like) - pairs of upper and lower bounds for each parameter. Shape (N_dim, 2), where N_dim is equal to the number of parameters and has the same order.
+    """
+    
+    ndim = len(parameters)
+    classes = PopulationModel.classes
+    bounds = np.array([[0.0, 0.0] for i in range(ndim)])
+
+    samples_all = np.concatenate(
+        (
+            [
+                PopulationModel.samples(
+                    class_name=class_name, parameters=parameters
+                )
+                for class_name in classes
+            ]
+        )
+    )
+    for counter, param in enumerate(parameters):
+        param_min, param_max = np.min(samples_all[:, counter]), np.max(
+            samples_all[:, counter]
+        )
+        param_lower, param_upper = (
+            param_min - (param_max - param_min) / 10,
+            param_max + (param_max - param_min) / 10,
+        )
+        bounds[counter] = param_lower, param_upper
+        
+    return bounds
+
 
 def plot_population_model(
     PopulationModel,
@@ -65,27 +105,7 @@ def plot_population_model(
     fig, ax = plt.subplots()
 
     if bounds is None:
-        bounds = np.array([[0.0, 0.0] for i in range(ndim)])
-
-        samples_all = np.concatenate(
-            (
-                [
-                    PopulationModel.samples(
-                        class_name=class_name, parameters=parameters
-                    )
-                    for class_name in classes
-                ]
-            )
-        )
-        for counter, param in enumerate(parameters):
-            param_min, param_max = np.min(samples_all[:, counter]), np.max(
-                samples_all[:, counter]
-            )
-            param_lower, param_upper = (
-                param_min - (param_max - param_min) / 10,
-                param_max + (param_max - param_min) / 10,
-            )
-            bounds[counter] = param_lower, param_upper
+        bounds = get_bounds(PopulationModel, parameters)
 
     bins = np.linspace(bounds.T[:][0], bounds.T[:][1], N_bins + 1).T
     bin_centers = (bins[:, 1:] + bins[:, :-1]) / 2
@@ -208,27 +228,7 @@ def plot_rel_prob_surfaces(
         raise ValueError("Only 2-parameter input is currently supported for plotting relative probability surfaces.")
     else:
         if bounds is None:
-            bounds = np.array([[0.0, 0.0] for i in range(ndim)])
-
-            samples_all = np.concatenate(
-                (
-                    [
-                        PopulationModel.samples(
-                            class_name=class_name, parameters=parameters
-                        )
-                        for class_name in classes
-                    ]
-                )
-            )
-            for counter, param in enumerate(parameters):
-                param_min, param_max = np.min(samples_all[:, counter]), np.max(
-                    samples_all[:, counter]
-                )
-                param_lower, param_upper = (
-                    param_min - (param_max - param_min) / 10,
-                    param_max + (param_max - param_min) / 10,
-                )
-                bounds[counter] = param_lower, param_upper
+            bounds = get_bounds(PopulationModel, parameters)
 
         bins = np.linspace(bounds.T[:][0], bounds.T[:][1], N_bins + 1).T
         bin_centers = (bins[:, 1:] + bins[:, :-1]) / 2
