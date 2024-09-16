@@ -1,11 +1,12 @@
 """
-Test that base visualization produces a figure
+Tests for the visualization.py functions
 """
 import numpy as np
+import matplotlib.pyplot as plt
 import pytest
 
 from popclass.model import PopulationModel
-from popclass.visualization import plot_population_model
+from popclass.visualization import plot_population_model, plot_rel_prob_surfaces
 
 
 def test_plot_population_model():
@@ -91,3 +92,72 @@ def test_dimensions():
     with pytest.raises(ValueError):
         fig, ax = plot_population_model(PopulationModel=popmodel, parameters=parameters)
         
+        
+def test_rel_prob_all_figures():
+    """
+    Check that the relative probability function returns N figures, where N is the number of classes in the input PopulationModel, and that the i-th ax is connected to the i-th figure
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    classes = popmodel.classes
+    parameters = ["log10tE", "log10piE"]
+    plt.close()
+    figs, axes = plot_rel_prob_surfaces(PopulationModel=popmodel, parameters=parameters, N_bins=20)
+    assert(len(figs)==len(classes))
+    assert(len(axes)==len(classes))
+    for counter in range(len(classes)):
+        assert axes[counter].figure == figs[counter]
+        
+
+
+def test_rel_prob_parameters():
+    """
+    Check relative probability 2D plot labels match parameters
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    classes = popmodel.classes
+    parameters = ["log10tE", "log10piE"]
+    plt.close()
+    figs, axes = plot_rel_prob_surfaces(PopulationModel=popmodel, parameters=parameters, N_bins=20)
+    for counter in range(len(classes)):
+        ax = axes[counter]
+        assert [ax.get_xlabel(), ax.get_ylabel()] == parameters
+        
+        
+def test_rel_prob_samples():
+    """
+    Check that the relative probability function returns figures when the option of plotting samples is on 
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    classes = popmodel.classes
+    parameters = ["log10tE", "log10piE"]
+    plt.close()
+    figs, axes = plot_rel_prob_surfaces(PopulationModel=popmodel, parameters=parameters, N_bins=20, plot_samples=True)
+    assert(figs)
+    assert(axes)
+    
+    
+def test_rel_prob_bounds():
+    """
+    Check that the relative probability function works with user-specified bounds
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    parameters = ["log10tE", "log10piE"]
+    bounds = np.array([[0.0, 3.0], [-2.0, 0.0]])
+    plt.close()
+    figs, axes = plot_rel_prob_surfaces(
+        PopulationModel=popmodel, parameters=parameters, bounds=bounds, N_bins=20
+    )
+    for counter, fig in enumerate(figs):
+        figure_bounds = np.array([axes[counter].get_xbound(), axes[counter].get_ybound()])
+        np.testing.assert_almost_equal(figure_bounds, bounds)
+
+
+def test_rel_prob_dimensions():
+    """
+    Check that ValueError is raised if the given parameters space for relative probability visualization is not 2D
+    """
+    popmodel = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    with pytest.raises(ValueError):
+        figs, axes = plot_rel_prob_surfaces(PopulationModel=popmodel, parameters=["log10tE"])
+    with pytest.raises(ValueError):
+        figs, axes = plot_rel_prob_surfaces(PopulationModel=popmodel, parameters=["log10tE", "log10piE", "f_blend_I"])
