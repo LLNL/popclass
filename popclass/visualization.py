@@ -3,8 +3,8 @@ Light visualization library.
 """
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 color_cycler = [
     "#009988",
@@ -15,24 +15,25 @@ color_cycler = [
     "#0077BB",
 ]
 
-cmap_cycler = ["Greens", "RdPu", "Oranges", "Blues", "Reds", "Purples"] 
+cmap_cycler = ["Greens", "RdPu", "Oranges", "Blues", "Reds", "Purples"]
 
 marker_cycler = ["o", "^", "*", "s", "H"]
+
 
 def get_bounds(PopulationModel, parameters):
     """
     Creates bounds on the basis of a PopulationModel and given parameters, if they are not specified by the user. Bounds are automatically constructed to be 10% of the extent in samples beyond the minimum and maximum value found in samples for each parameter.
-    
+
     Args:
         PopulationModel (class) - as defined in model.py, class containing the population samples and parameters
-        
+
         parameters (list of str) - a subset of parameters for visualization (must be found in PopulationModel.parameters)
-    
+
     Returns
     -------
         bounds (numpy.ndarray) - pairs of upper and lower bounds for each parameter. Shape (N_dim, 2), where N_dim is equal to the number of parameters and has the same order.
     """
-    
+
     ndim = len(parameters)
     classes = PopulationModel.classes
     bounds = np.array([[0.0, 0.0] for i in range(ndim)])
@@ -40,9 +41,7 @@ def get_bounds(PopulationModel, parameters):
     samples_all = np.concatenate(
         (
             [
-                PopulationModel.samples(
-                    class_name=class_name, parameters=parameters
-                )
+                PopulationModel.samples(class_name=class_name, parameters=parameters)
                 for class_name in classes
             ]
         )
@@ -56,7 +55,7 @@ def get_bounds(PopulationModel, parameters):
             param_max + (param_max - param_min) / 10,
         )
         bounds[counter] = param_lower, param_upper
-        
+
     return bounds
 
 
@@ -76,9 +75,9 @@ def plot_population_model(
 
     Args:
         PopulationModel (class) - as defined in model.py, class containing the population samples, parameters, and a method for evaluating density
-        
+
         parameters (list of str) - a subset of parameters of the population model to create a subspace for visualization (must be found in PopulationModel.parameters)
-        
+
         plot_samples (bool, optional) - flag for plotting all simulated samples in a scatter plot. Default: False.
 
         plot_kdes (bool, optional) - flag for plotting the simulated population KDEs (according to the evaluate_density method specified in PopulationModel) constructed from samples. Default: True.
@@ -194,38 +193,35 @@ def plot_population_model(
 
 
 def plot_rel_prob_surfaces(
-    PopulationModel,
-    parameters=None,
-    plot_samples=False,
-    bounds=None,
-    N_bins=1000
+    PopulationModel, parameters=None, plot_samples=False, bounds=None, N_bins=1000
 ):
-
     """
     Plots 2D relative probability surfaces (p(class | parameters, model)). A visualisation of probability the classifier would return, for points with exactly known parameters, of belonging to the given class, taking into account distributions and weights of all classes.
-    
+
     Args:
         PopulationModel (class) - as defined in model.py, class containing the population samples, parameters, and a method for evaluating density
-        
+
         parameters (list of str) - a subset of parameters of the population model to create a subspace for visualization (must be found in PopulationModel.parameters)
-        
+
         plot_samples (bool, optional) - flag for overplotting all simulated samples belonging to a given class. Default: False.
 
         bounds (array-like or None, optional) - pairs of upper and lower bounds for each parameter or None. If provided, should have a shape (N_dim, 2) where N_dim is equal to the number of parameters and has the same order. If bounds are not provided, they are automatically constructed to be 10% of the extent in samples beyond the minimum and maximum value found in samples for each parameter. Default: None.
 
         N_bins (int, optional) - Resolution of the grid to evaluate the KDEs on. Default: 1000.
-        
+
     Returns
     -------
         figs, axes (lists of matplotlib objects) - figures visualising relative probability surfaces in the specified parameter space (one for each class)
-    
+
     """
-    
+
     classes = PopulationModel.classes
-        
+
     ndim = len(parameters)
-    if ndim!=2:
-        raise ValueError("Only 2-parameter input is currently supported for plotting relative probability surfaces.")
+    if ndim != 2:
+        raise ValueError(
+            "Only 2-parameter input is currently supported for plotting relative probability surfaces."
+        )
     else:
         if bounds is None:
             bounds = get_bounds(PopulationModel, parameters)
@@ -240,7 +236,6 @@ def plot_rel_prob_surfaces(
         weights = []
 
         for class_name in classes:
-            
             density_eval = PopulationModel.evaluate_density(
                 class_name=class_name,
                 parameters=parameters,
@@ -252,25 +247,32 @@ def plot_rel_prob_surfaces(
 
             maps_2d.append(map_2d)
             weights.append(weight)
-            
+
         maps_2d, weights = np.array(maps_2d), np.array(weights)
 
-        weighted_cmaps = (maps_2d.T * weights).T 
+        weighted_cmaps = (maps_2d.T * weights).T
         colormaps_normed = weighted_cmaps / np.sum(weighted_cmaps, axis=0)
-        
+
         figs, axes = [], []
         for counter, class_name in enumerate(classes):
             fig, ax = plt.subplots()
-            
-            im = ax.imshow(colormaps_normed[counter], origin='lower', extent=[bounds[0][0], bounds[0][1], bounds[1][0], bounds[1][1]], 
-            
-            cmap = cmap_cycler[counter%6], vmin=0., vmax=1.)
+
+            im = ax.imshow(
+                colormaps_normed[counter],
+                origin="lower",
+                extent=[bounds[0][0], bounds[0][1], bounds[1][0], bounds[1][1]],
+                cmap=cmap_cycler[counter % 6],
+                vmin=0.0,
+                vmax=1.0,
+            )
             divider = make_axes_locatable(ax)
-            cax = divider.append_axes('right', size='5%', pad=0.05)
-            cb = fig.colorbar(im, cax=cax, orientation='vertical')
-            
+            cax = divider.append_axes("right", size="5%", pad=0.05)
+            cb = fig.colorbar(im, cax=cax, orientation="vertical")
+
             if plot_samples:
-                samples = PopulationModel.samples(class_name=class_name, parameters=parameters)
+                samples = PopulationModel.samples(
+                    class_name=class_name, parameters=parameters
+                )
                 ax.scatter(
                     samples[:, 0],
                     samples[:, 1],
@@ -278,16 +280,17 @@ def plot_rel_prob_surfaces(
                     marker=marker_cycler[counter % 5],
                     edgecolor="black",
                     s=20,
-                    label=f"{class_name} samples")
+                    label=f"{class_name} samples",
+                )
                 ax.legend()
-            
+
             ax.set_xlabel(f"{parameters[0]}")
             ax.set_xlim(bounds[0])
             ax.set_ylabel(f"{parameters[1]}")
             ax.set_ylim(bounds[1])
-            cb.set_label(f'p({class_name} | ' + r'$\phi, \mathcal{G} )$')
-            
+            cb.set_label(f"p({class_name} | " + r"$\phi, \mathcal{G} )$")
+
             figs.append(fig)
             axes.append(ax)
-            
+
         return figs, axes
