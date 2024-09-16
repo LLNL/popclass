@@ -33,6 +33,7 @@ Contents
 
 .. toctree::
    :titlesonly:
+   :maxdepth: 1
 
    installation
    gettingstarted
@@ -43,4 +44,5 @@ Contents
    contributing
    changelog
    references
+   developer
    api

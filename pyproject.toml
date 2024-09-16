@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "popclass"
-version = "0.1.1"
+version = "0.1.2"
 description = "A python package for classifying microlensing events"
 authors = [{ name = "Greg Sallaberry, Scott E. Perkins, Peter McGill, Zofia Kaczmarek, William A. Dawson", email = "mcgill5@llnl.gov" }]
 readme = "README.md"
@@ -31,7 +31,7 @@ docs = ["sphinx","sphinx_rtd_theme", "sphinxcontrib-bibtex"]
 
 [project.urls]
 Homepage = "https://github.com/llnl/popclass"
-Documentation = "https://software.llnl.gov/popclass"
-Repository = "https://github.com/llnl/popclass.git"
-Issues = "https://github.com/llnl/popclass.git/issues"
-Changelog = "https://software.llnl.gov/popclass/changlog"
+Documentation = "https://popclass.readthedocs.io"
+Repository = "https://github.com/llnl/popclass"
+Issues = "https://github.com/llnl/popclass/issues"
+Changelog = "https://github.com/LLNL/popclass/releases"
