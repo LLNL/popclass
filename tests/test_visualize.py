@@ -6,8 +6,21 @@ import matplotlib.pyplot as plt
 import pytest
 
 from popclass.model import PopulationModel
-from popclass.visualization import plot_population_model, plot_rel_prob_surfaces
+from popclass.visualization import get_bounds, plot_population_model, plot_rel_prob_surfaces
 
+
+def test_get_bounds():
+    """
+    Check that the bounds function is returning an array of a given shape
+    """
+    popmodel = PopulationModel.from_library(
+        "popsycle_singles_sukhboldn20", library_path="popclass/data/"
+    )
+    parameters = ["log10tE", "log10piE"]
+    bounds = get_bounds(PopulationModel = popmodel, parameters = parameters)
+    assert isinstance(bounds, np.ndarray)
+    assert bounds.shape == (2, 2)
+    
 
 def test_plot_population_model():
     """
@@ -27,7 +40,7 @@ def test_plot_population_model():
     assert fig
 
 
-def test_figure_axes():
+def test_model_plot_figure_axes():
     """
     Check plotting returns axes connected to the figure
     """
@@ -37,7 +50,7 @@ def test_figure_axes():
     assert ax.figure == fig
 
 
-def test_parameters():
+def test_model_plot_parameters():
     """
     Check 2D figure labels match parameters
     """
@@ -47,7 +60,7 @@ def test_parameters():
     assert [ax.get_xlabel(), ax.get_ylabel()] == parameters
 
 
-def test_1D_parameter():
+def test_model_plot_1D_parameter():
     """
     Check 1D figure is plotted and labels match a density histogram of parameter
     """
@@ -58,7 +71,7 @@ def test_1D_parameter():
     assert ax.get_ylabel() == "density"
 
 
-def test_plot_samples():
+def test_model_plot_samples():
     """
     Check plotting functions return a figure when visualizing full sample distributions instead of density estimates
     """
@@ -79,7 +92,7 @@ def test_plot_samples():
     assert fig2
 
 
-def test_bounds():
+def test_model_plot_bounds():
     """
     Check figure bounds are adjusted as specified
     """
@@ -93,7 +106,7 @@ def test_bounds():
     np.testing.assert_almost_equal(figure_bounds, bounds)
 
 
-def test_dimensions():
+def test_model_plot_dimensions():
     """
     Check that ValueError is raised if too many parameters given to visualize
     """
