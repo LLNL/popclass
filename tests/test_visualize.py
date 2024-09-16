@@ -16,10 +16,10 @@ def test_get_bounds():
     popmodel = PopulationModel.from_library(
         "popsycle_singles_sukhboldn20", library_path="popclass/data/"
     )
-    parameters = ["log10tE", "log10piE"]
+    parameters = ["log10tE", "log10piE", "f_blend_I"]
     bounds = get_bounds(PopulationModel = popmodel, parameters = parameters)
     assert isinstance(bounds, np.ndarray)
-    assert bounds.shape == (2, 2)
+    assert bounds.shape == (3, 2)
     
 
 def test_plot_population_model():
