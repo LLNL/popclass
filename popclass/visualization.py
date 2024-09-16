@@ -30,7 +30,7 @@ def get_bounds(PopulationModel, parameters):
     
     Returns
     -------
-        bounds (array-like) - pairs of upper and lower bounds for each parameter. Shape (N_dim, 2), where N_dim is equal to the number of parameters and has the same order.
+        bounds (numpy.ndarray) - pairs of upper and lower bounds for each parameter. Shape (N_dim, 2), where N_dim is equal to the number of parameters and has the same order.
     """
     
     ndim = len(parameters)
@@ -202,7 +202,7 @@ def plot_rel_prob_surfaces(
 ):
 
     """
-    Plots 2D relative probability surfaces (p(class | parameters, model)). A visualisation of probability the classifier would return -- for a point with exactly known parameters -- of belonging to the given class, taking into account distributions and weights of all classes.
+    Plots 2D relative probability surfaces (p(class | parameters, model)). A visualisation of probability the classifier would return, for points with exactly known parameters, of belonging to the given class, taking into account distributions and weights of all classes.
     
     Args:
         PopulationModel (class) - as defined in model.py, class containing the population samples, parameters, and a method for evaluating density
