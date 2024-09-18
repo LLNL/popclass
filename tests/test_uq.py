@@ -77,6 +77,7 @@ def test_none_class_kde_build():
         grid_size=grid_size,
         population_model=population_model,
         parameters=parameters,
+        kde_kwargs={"bw_method": "scott"},
     )
 
     test_point = np.array([0, 0, 0])
