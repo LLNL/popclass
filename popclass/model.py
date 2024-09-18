@@ -225,29 +225,32 @@ def validate_asdf_population_model(asdf_object):
         valid = False
     return valid
 
-class CustomKernelDensity():
-    """ An example of defining a custom kernel for a PopulationModel. Wraps sklearn.neighbors.KernelDensity to conform to the template needed by PopulationModel and classify. 
-    """
+
+class CustomKernelDensity:
+    """An example of defining a custom kernel for a PopulationModel. Wraps sklearn.neighbors.KernelDensity to conform to the template needed by PopulationModel and classify."""
+
     def __init__(self, data, kernel_type="tophat", bandwidth=0.4):
-        """ Initialization.
+        """Initialization.
         Args:
             data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
             kernel_type (str): matches 'kernel' argument of KernelDensity. Default: "tophat".
             bandwidth (float): matches 'bandwidth' argument of KernelDensity. Default: 0.4.
-        Returns: 
+        Returns:
             None
-        """ 
+        """
         self.data = data
         self.kernel_type = kernel_type
         self.bandwidth = bandwidth
-        
-    def evaluate(self,pts):
-        """ Evaluation method for calculating the pdf of the kernel at a set of points.
-            
+
+    def evaluate(self, pts):
+        """Evaluation method for calculating the pdf of the kernel at a set of points.
+
         Args:
             pts (numpy.array): array of points to evaluate the density on. Shape: [# dimensions, # of points].
         Returns:
-            evaluated_density (numpy.array): the probability density values at each of the corresponding points. 
+            evaluated_density (numpy.array): the probability density values at each of the corresponding points.
         """
-        kernel = KernelDensity(kernel=self.kernel_type, bandwidth=self.bandwidth).fit(self.data.T)
+        kernel = KernelDensity(kernel=self.kernel_type, bandwidth=self.bandwidth).fit(
+            self.data.T
+        )
         return np.exp(kernel.score_samples(pts.T))
