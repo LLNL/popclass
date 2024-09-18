@@ -228,7 +228,7 @@ def validate_asdf_population_model(asdf_object):
 class CustomKernelDensity():
     """ An example of defining a custom kernel for a PopulationModel. Wraps sklearn.neighbors.KernelDensity to conform to the template needed by PopulationModel and classify. 
     """
-    def __init__(self, data, kernel_type="tophat", bandwidth=0.4):
+    def __init__(self, data, **kwargs):
         """ Initialization.
         Args:
             data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
@@ -238,8 +238,7 @@ class CustomKernelDensity():
             None
         """ 
         self.data = data
-        self.kernel_type = kernel_type
-        self.bandwidth = bandwidth
+        self.density_kwargs = kwargs
         
     def evaluate(self,pts):
         """ Evaluation method for calculating the pdf of the kernel at a set of points.
@@ -249,5 +248,5 @@ class CustomKernelDensity():
         Returns:
             evaluated_density (numpy.array): the probability density values at each of the corresponding points. 
         """
-        kernel = KernelDensity(kernel=self.kernel_type, bandwidth=self.bandwidth).fit(self.data.T)
+        kernel = KernelDensity(**self.density_kwargs).fit(self.data.T)
         return np.exp(kernel.score_samples(pts.T))
