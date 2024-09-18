@@ -234,9 +234,9 @@ class CustomKernelDensity():
             data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
             kernel_type (str): matches 'kernel' argument of KernelDensity. Default: "tophat".
             bandwidth (float): matches 'bandwidth' argument of KernelDensity. Default: 0.4.
-        Returns: 
+        Returns:
             None
-        """ 
+        """
         self.data = data
         self.density_kwargs = kwargs
         
@@ -246,7 +246,7 @@ class CustomKernelDensity():
         Args:
             pts (numpy.array): array of points to evaluate the density on. Shape: [# dimensions, # of points].
         Returns:
-            evaluated_density (numpy.array): the probability density values at each of the corresponding points. 
+            evaluated_density (numpy.array): the probability density values at each of the corresponding points.
         """
         kernel = KernelDensity(**self.density_kwargs).fit(self.data.T)
         return np.exp(kernel.score_samples(pts.T))
