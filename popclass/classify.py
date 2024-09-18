@@ -7,9 +7,7 @@ object class probabilities for classes in ``PopulationModel.classes()``.
 import numpy as np
 
 
-def classify(
-    inference_data, population_model, parameters, uq_method=None, uq_kwargs={}
-):
+def classify(inference_data, population_model, parameters, additive_uq=None):
     """
     ``popclass`` classification function.
     Takes in ``popclass.InferenceData`` and ``popclass.PopulationModel`` objects,
@@ -43,18 +41,13 @@ def classify(
             integrated_posterior * population_model.class_weight(class_name)
         )
         unnormalized_prob[class_name] = weighted_integrated_posterior
-    if uq_method == "none_class":
-        if uq_kwargs:
-            apply_none_class_uq(
-                unnormalized_prob=unnormalized_prob,
-                inference_data=inference_data,
-                population_model=population_model,
-                parameters=parameters,
-                **uq_kwargs,
-            )
-        else:
-            print("Error - Must supply appropriate parameters if using None class UQ")
-            # Add error throw
+    if additive_uq:
+        additive_uq.apply_uq(
+            unnormalized_prob=unnormalized_prob,
+            inference_data=inference_data,
+            population_model=population_model,
+            parameters=parameters,
+        )
 
     normalization = sum(unnormalized_prob.values())
     class_prob = {

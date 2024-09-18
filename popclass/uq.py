@@ -1,7 +1,6 @@
 """
 The classification framework is susceptible to systematic error through a variety of sources, including model assumptions (e.g. incomplete populations) or simulation noise in the tails of the distribution. The None class is constructed to have non-zero support in regions of low to no simulation support to reflect the epistemic uncertainty of the classifier.
 """
-
 import numpy as np
 from scipy.stats import gaussian_kde
 
@@ -21,7 +20,7 @@ class NoneClassUQ(additiveUQ):
         bounds,
         grid_size=int(1e3),
         kde=gaussian_kde,
-        kde_kwargs={"bw_method":0.4},
+        kde_kwargs={"bw_method": 0.4},
         population_model=None,
         parameters=None,
         none_class_weight=0.01,
@@ -145,18 +144,28 @@ class NoneClassUQ(additiveUQ):
         # Calculate likelihood of event in None class (integrated posterior, unweighted)
         # evaluate map (where map_binned[param1][param2][...][param_N] are coords for the parameter order)
         # todo: reconcile the grid format with map_binned and bins. check parameter order. get posterior and prior from InferenceData object.
-        
-        def evaluate(posterior, parameters, map_binned, bins): 
-            
+
+        def evaluate(posterior, parameters, map_binned, bins):
             grid_bins = {}
             for parameter in parameters:
-                grid_bins[parameter] = np.clip(np.digitize(x=posterior[parameter], bins=bins[parameter]), 1, len(bins[parameter])) - 1
+                grid_bins[parameter] = (
+                    np.clip(
+                        np.digitize(x=posterior[parameter], bins=bins[parameter]),
+                        1,
+                        len(bins[parameter]),
+                    )
+                    - 1
+                )
             bin_idx = tuple(tuple(grid_bins[parameter].T) for parameter in parameters)
             eval_ = map_binned[bin_idx]
-            
+
             return eval_
-            
-        none_evaluated = np.mean(evaluate(posterior, parameters, map_binned, bins)/prior_pdf) if map_binned is not None else 0.0 
+
+        none_evaluated = (
+            np.mean(evaluate(posterior, parameters, map_binned, bins) / prior_pdf)
+            if map_binned is not None
+            else 0.0
+        )
 
         # Append to dictionary
         unnormalized_prob["None"] = self.none_class_weight * none_evaluated
