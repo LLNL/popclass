@@ -28,7 +28,7 @@ class PopulationModel:
         class_weights,
         parameters,
         density_estimator=gaussian_kde,
-        density_kwargs=None,
+        density_kwargs={},
     ):
         """
         Initialize PopulationModel.
