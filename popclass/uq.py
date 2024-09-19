@@ -1,9 +1,10 @@
 """
-The classification framework is susceptible to systematic error through a variety of sources, including model assumptions (e.g. incomplete populations) or simulation noise in the tails of the distribution. The None class is constructed to have non-zero support in regions of low to no simulation support to reflect the epistemic uncertainty of the classifier.
+The classification framework is susceptible to systematic error through a variety of sources, including model assumptions (e.g. incomplete populations) or simulation noise in the tails of the distribution. This set of utilities allows users to incorporate uncertainty quantification into the classification.
 """
+
 import numpy as np
 from scipy.stats import gaussian_kde
-
+import warnings
 
 class additiveUQ:
     def __init__(self):
@@ -14,29 +15,67 @@ class additiveUQ:
 
 
 class NoneClassUQ(additiveUQ):
-    # def __init__(self,bounds, grid_size=int(1e3), kde=gaussian_kde, kde_kwargs={"bandwidth":0.4}, population_model =None, parameters=None,none_class_weight = .01):
     def __init__(
         self,
         bounds,
-        grid_size=int(1e3),
+        grid_size=int(1e2),
         kde=gaussian_kde,
         kde_kwargs={"bw_method": 0.4},
         population_model=None,
         parameters=None,
         none_class_weight=0.01,
+        base_model_kde=None,
     ):
+        """
+        Initialize NoneClassUQ.
+        The None class is constructed to have non-zero support in regions of low to no simulation support to reflect the epistemic uncertainty of the classifier.
+        
+        Args:
+            bounds (dictionary):
+                Dictionary containing the lower and upper bounds of the parameter space, with keys
+                matching the supplied ``parameters'' list. Format: {key : [lower_bound, upper_bound]}
+            grid_size (int, optional):
+                number of bin edges per dimension. Default: 1e2.
+            kde (scipy.gaussian_kde-like):
+                method to evaluate the density of population samples over the defined parameter subspace, used in building the None class. Default: gaussian_kde.
+            kde_kwargs (dictionary, optional):
+                kwargs to supply to the ``kde'' method. Default: {"bw_method": 0.4}
+            population_model (popclass.PopulationModel):
+                popclass PopulationModel object, containing population samples for classification
+            parameters (list):
+                Parameters to use for classification.
+            none_class_weight (float):
+                Total weight assigned to the None class. Default: 0.01.
+            base_model_kde (scipy.gaussian_kde instance-like, optional):
+                Pre-trained KDE to use (e.g. when classifying multiple objects with the same model). If not supplied, a new KDE will be constructed using ``kde'' and ``kde_kwargs'' arguments and ``population_model'' samples. Default: None.
+            
+            
+    """
+    
+        self.parameters = parameters
+        self.population_model = population_model
         self.bounds = bounds
         self.grid_size = grid_size
+        self.base_model_kde = base_model_kde
         self.kde = kde
         self.none_class_weight = none_class_weight
         self.kde_kwargs = kde_kwargs
         self._build_grids()
-        if population_model and parameters:
-            self.parameters = parameters
-            self.base_model_kde = self._train_base_model_kde(population_model)
-        else:
-            self.base_model_kde = None
-            self.parameters = None
+        
+        if self.base_model_kde is None:
+            if population_model is None:
+                warnings.warn("No pre-trained KDE or population samples supplied for building the None class PDF. Evaluation functions cannot be used.")
+            
+            else:
+                pop_model_samples = np.vstack(
+                        [   
+                            population_model.samples(class_name, self.parameters)
+                            for class_name in population_model.classes
+                        ]
+                    )
+                base_model_kde = self.kde(pop_model_samples.T, **self.kde_kwargs)
+                self.base_model_kde = base_model_kde
+        print(self.base_model_kde)
 
         return
 
@@ -46,13 +85,12 @@ class NoneClassUQ(additiveUQ):
             Populates the quantities:
 
             1. self.grid  (Dictionary containing the grid edges in each dimension. Format: {parameter_key : np.array(size=grid_size)})
-
             2. self.grid_mesh (Numpy containing the meshed grid, shape [dimensions, grid_size, grid_size])
             3. self.grid_corners (Numpy array containing the raveled grid corner coordinates, shape [grid_size**dimensions, dimensions])
-            4. self.grid _centers (Dictionary containing the grid centers in each dimension. Format: {parameter_key : np.array(size=grid_size-1)})
-            5. self.grid_mesh_centers (umpy containing the meshed grid centers, shape [dimensions, grid_size-1, grid_size-1])
+            4. self.grid_centers (Dictionary containing the grid centers in each dimension. Format: {parameter_key : np.array(size=grid_size-1)})
+            5. self.grid_mesh_centers (Numpy array containing the meshed grid centers, shape [dimensions, grid_size-1, grid_size-1])
             6. self.grid_centers (Numpy array containing the raveled grid center coordinates, shape [(grid_size-1)**dimensions, dimensions])
-            7. self.grid_volumes ( Numpy array volumes of every cell, shape [(grid_size-1)**dimensions])
+            7. self.grid_volumes (Numpy array volumes of every cell, shape [(grid_size-1)**dimensions])
 
         Args:
             None
@@ -78,21 +116,10 @@ class NoneClassUQ(additiveUQ):
 
         # Calculate grid volumes - Assume fixed grid
         # should be (grid_size-1)**d elements
-        self.grid_volumnes = np.prod(
+        self.grid_volumes = np.prod(
             np.array([self.grid[p][1] - self.grid[p][0] for p in self.grid.keys()])
-        ) * np.ones(self.grid_centers_raveled.shape)
+        ) * np.ones(self.grid_centers_raveled.shape[0])
         return
-
-    def _train_base_model_kde(self, population_model):
-        pop_model_samples = np.vstack(
-            [
-                population_model.samples(class_name, self.parameters)
-                for class_name in population_model.classes
-            ]
-        )
-        base_model_kde = self.kde(pop_model_samples.T, **self.kde_kwargs)
-
-        return base_model_kde
 
     def apply_uq(self, unnormalized_prob, inference_data, population_model, parameters):
         """
@@ -110,23 +137,16 @@ class NoneClassUQ(additiveUQ):
                 popclass PopulationModel object
             parameters (list):
                 Parameters to use for classification.
-            bounds (dictionary):
-                Dictionary containing the lower and upper bounds of the parameter space, with keys
-                matching the supplied ``parameter'' list. Format: {key : [lower_bound, upper_bound]}
 
         Returns:
             Dictionary of classes in ``PopulationModel.classes()`` and associated
             probability, unnormalized, with the appended ``None'' class and associated probability.
 
         """
-        # Train kde with tophat kernel and bandwidth of .4 on galactic model data
-        if self.base_model_kde is None:
-            self._train_base_model_kde(population_model)
-        pop_model_eval_centers = self.base_model_kde(self.grid_centers_raveled)
+        
+        pop_model_eval_centers = self.base_model_kde.evaluate(self.grid_centers_raveled.T)
         max_pop_model_eval_centers = np.amax(pop_model_eval_centers)
-
-        # Assign p(phi|NONE) to bin centers
-
+        
         none_class_pdf_centers_unnormed = (
             1.0 - pop_model_eval_centers / max_pop_model_eval_centers
         )
@@ -136,42 +156,60 @@ class NoneClassUQ(additiveUQ):
         none_class_pdf_centers = (
             none_class_pdf_centers_unnormed / none_class_pdf_normalization
         )
+        
+        self.none_pdf_binned = none_class_pdf_centers.reshape(self.grid_mesh_centers[0].shape)
 
-        # Undo prior weighting on unnormalized probability
         for class_name, value in unnormalized_prob.items():
             unnormalized_prob[class_name] = value * (1 - self.none_class_weight)
 
-        # Calculate likelihood of event in None class (integrated posterior, unweighted)
-        # evaluate map (where map_binned[param1][param2][...][param_N] are coords for the parameter order)
-        # todo: reconcile the grid format with map_binned and bins. check parameter order. get posterior and prior from InferenceData object.
-
-        def evaluate(posterior, parameters, map_binned, bins):
-            grid_bins = {}
-            for parameter in parameters:
-                grid_bins[parameter] = (
-                    np.clip(
-                        np.digitize(x=posterior[parameter], bins=bins[parameter]),
-                        1,
-                        len(bins[parameter]),
-                    )
-                    - 1
-                )
-            bin_idx = tuple(tuple(grid_bins[parameter].T) for parameter in parameters)
-            eval_ = map_binned[bin_idx]
-
-            return eval_
+        posterior = inference_data.posterior.marginal(parameters)
 
         none_evaluated = (
-            np.mean(evaluate(posterior, parameters, map_binned, bins) / prior_pdf)
-            if map_binned is not None
+            np.mean(self.evaluate(posterior) / inference_data.prior_density)
+            if self.none_pdf_binned is not None
             else 0.0
         )
 
-        # Append to dictionary
         unnormalized_prob["None"] = self.none_class_weight * none_evaluated
 
         return unnormalized_prob
+    
+    def evaluate(self, posterior):
+        """
+        Evaluates 
+        
+        Args:
+            posterior (popclass.Posterior):
+                
+            
+        Returns:
+            eval_ (numpy.ndarray):
+                1D array containing values of the None class probability distribution, evaluated at each sample.
+        """
 
+        sample_bins, sample_coords = {}, {}
+        posterior_samples = posterior.samples
+        
+        # todo: will be shortened when/if posterior.marginal is changed to return
+        # parameters in the specified order, following model.py and uq.py
+        for counter, parameter in enumerate(posterior.parameter_labels):
+            sample_coords[parameter] = posterior_samples[:,counter]
+        
+        for counter, parameter in enumerate(self.parameters):
+
+            sample_bins[parameter] = (
+                np.clip(
+                    np.digitize(x=sample_coords[parameter], bins=self.grid[parameter]),
+                    1,
+                    len(self.grid[parameter]-1),
+                )
+                - 1
+            )
+            
+        bin_idx = tuple(tuple(sample_bins[parameter].T) for parameter in self.parameters)
+        eval_ = self.none_pdf_binned[bin_idx]
+
+        return eval_
 
 def calculate_square_grid_coordinates(grid_size, bounds):
     """
