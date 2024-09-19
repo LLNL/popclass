@@ -1,10 +1,11 @@
 """
 The classification framework is susceptible to systematic error through a variety of sources, including model assumptions (e.g. incomplete populations) or simulation noise in the tails of the distribution. This set of utilities allows users to incorporate uncertainty quantification into the classification.
 """
+import warnings
 
 import numpy as np
 from scipy.stats import gaussian_kde
-import warnings
+
 
 class additiveUQ:
     def __init__(self):
@@ -29,7 +30,7 @@ class NoneClassUQ(additiveUQ):
         """
         Initialize NoneClassUQ.
         The None class is constructed to have non-zero support in regions of low to no simulation support to reflect the epistemic uncertainty of the classifier.
-        
+
         Args:
             bounds (dictionary):
                 Dictionary containing the lower and upper bounds of the parameter space, with keys
@@ -48,10 +49,10 @@ class NoneClassUQ(additiveUQ):
                 Total weight assigned to the None class. Default: 0.01.
             base_model_kde (scipy.gaussian_kde instance-like, optional):
                 Pre-trained KDE to use (e.g. when classifying multiple objects with the same model). If not supplied, a new KDE will be constructed using ``kde'' and ``kde_kwargs'' arguments and ``population_model'' samples. Default: None.
-            
-            
-    """
-    
+
+
+        """
+
         self.parameters = parameters
         self.population_model = population_model
         self.bounds = bounds
@@ -61,18 +62,20 @@ class NoneClassUQ(additiveUQ):
         self.none_class_weight = none_class_weight
         self.kde_kwargs = kde_kwargs
         self._build_grids()
-        
+
         if self.base_model_kde is None:
             if population_model is None:
-                warnings.warn("No pre-trained KDE or population samples supplied for building the None class PDF. Evaluation functions cannot be used.")
-            
+                warnings.warn(
+                    "No pre-trained KDE or population samples supplied for building the None class PDF. Evaluation functions cannot be used."
+                )
+
             else:
                 pop_model_samples = np.vstack(
-                        [   
-                            population_model.samples(class_name, self.parameters)
-                            for class_name in population_model.classes
-                        ]
-                    )
+                    [
+                        population_model.samples(class_name, self.parameters)
+                        for class_name in population_model.classes
+                    ]
+                )
                 base_model_kde = self.kde(pop_model_samples.T, **self.kde_kwargs)
                 self.base_model_kde = base_model_kde
         print(self.base_model_kde)
@@ -143,10 +146,12 @@ class NoneClassUQ(additiveUQ):
             probability, unnormalized, with the appended ``None'' class and associated probability.
 
         """
-        
-        pop_model_eval_centers = self.base_model_kde.evaluate(self.grid_centers_raveled.T)
+
+        pop_model_eval_centers = self.base_model_kde.evaluate(
+            self.grid_centers_raveled.T
+        )
         max_pop_model_eval_centers = np.amax(pop_model_eval_centers)
-        
+
         none_class_pdf_centers_unnormed = (
             1.0 - pop_model_eval_centers / max_pop_model_eval_centers
         )
@@ -156,8 +161,10 @@ class NoneClassUQ(additiveUQ):
         none_class_pdf_centers = (
             none_class_pdf_centers_unnormed / none_class_pdf_normalization
         )
-        
-        self.none_pdf_binned = none_class_pdf_centers.reshape(self.grid_mesh_centers[0].shape)
+
+        self.none_pdf_binned = none_class_pdf_centers.reshape(
+            self.grid_mesh_centers[0].shape
+        )
 
         for class_name, value in unnormalized_prob.items():
             unnormalized_prob[class_name] = value * (1 - self.none_class_weight)
@@ -173,7 +180,7 @@ class NoneClassUQ(additiveUQ):
         unnormalized_prob["None"] = self.none_class_weight * none_evaluated
 
         return unnormalized_prob
-    
+
     def evaluate(self, posterior):
         """
         Evaluates the pre-constructed None class probability for a popclass.Posterior object, returning p(sample parameter values | None class, model) for each sample in the provided posterior distribution.
@@ -189,27 +196,29 @@ class NoneClassUQ(additiveUQ):
 
         sample_bins, sample_coords = {}, {}
         posterior_samples = posterior.samples
-        
+
         # todo: will be shortened when/if posterior.marginal is changed to return
         # parameters in the specified order, following model.py and uq.py
         for counter, parameter in enumerate(posterior.parameter_labels):
-            sample_coords[parameter] = posterior_samples[:,counter]
-        
-        for counter, parameter in enumerate(self.parameters):
+            sample_coords[parameter] = posterior_samples[:, counter]
 
+        for counter, parameter in enumerate(self.parameters):
             sample_bins[parameter] = (
                 np.clip(
                     np.digitize(x=sample_coords[parameter], bins=self.grid[parameter]),
                     1,
-                    len(self.grid[parameter]-1),
+                    len(self.grid[parameter] - 1),
                 )
                 - 1
             )
-            
-        bin_idx = tuple(tuple(sample_bins[parameter].T) for parameter in self.parameters)
+
+        bin_idx = tuple(
+            tuple(sample_bins[parameter].T) for parameter in self.parameters
+        )
         eval_ = self.none_pdf_binned[bin_idx]
 
         return eval_
+
 
 def calculate_square_grid_coordinates(grid_size, bounds):
     """
