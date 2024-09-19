@@ -16,6 +16,10 @@ Launch examples in your browser with Binder:
    :titlesonly:
 
    examples/popsycle_model_example.ipynb
+<<<<<<< HEAD
+=======
+   examples/popclass_example_workflow.ipynb
+>>>>>>> c9b9432 (start posterior tutorial notebook)
 
 Converting and creating posterior objects
 -----------------------------------------
