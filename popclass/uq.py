@@ -176,11 +176,11 @@ class NoneClassUQ(additiveUQ):
     
     def evaluate(self, posterior):
         """
-        Evaluates 
+        Evaluates the pre-constructed None class probability for a popclass.Posterior object, returning p(sample parameter values | None class, model) for each sample in the provided posterior distribution.
         
         Args:
             posterior (popclass.Posterior):
-                
+                    popclass Posterior object containing samples.
             
         Returns:
             eval_ (numpy.ndarray):
