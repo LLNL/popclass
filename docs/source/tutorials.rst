@@ -10,7 +10,7 @@ Examples
    :titlesonly:
 
    examples/popsycle_model_example.ipynb
-   examples/popclass_tutorial.ipynb
+   examples/popclass_example_workflow.ipynb
 
 Converting and creating posterior objects
 -----------------------------------------
