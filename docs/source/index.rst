@@ -46,11 +46,3 @@ Contents
    references
    developer
    api
-
-Examples
---------
-
-.. toctree::
-   :titlesonly:
-
-   examples/popsycle_model_example.ipynb
