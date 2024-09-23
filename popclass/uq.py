@@ -19,7 +19,7 @@ class NoneClassUQ(additiveUQ):
     def __init__(
         self,
         bounds,
-        grid_size=int(1e3),
+        grid_size=int(1e2),
         kde=gaussian_kde,
         kde_kwargs={"bw_method": 0.4},
         population_model=None,
@@ -36,7 +36,7 @@ class NoneClassUQ(additiveUQ):
                 Dictionary containing the lower and upper bounds of the parameter space, with keys
                 matching the supplied ``parameters'' list. Format: {key : [lower_bound, upper_bound]}
             grid_size (int, optional):
-                number of bin edges per dimension. Default: 1e3.
+                number of bin edges per dimension. Default: 1e2.
             kde (scipy.gaussian_kde-like):
                 method to evaluate the density of population samples over the defined parameter subspace, used in building the None class. Default: gaussian_kde.
             kde_kwargs (dictionary, optional):
@@ -62,9 +62,12 @@ class NoneClassUQ(additiveUQ):
         self.none_class_weight = none_class_weight
         self.kde_kwargs = kde_kwargs
         self._build_grids()
+        
+        if self.parameters is None:
+                raise ValueError("No parameters to use supplied. None class cannot be created.")
 
         if self.base_model_kde is None:
-            if population_model is None:
+            if self.population_model is None:
                 raise ValueError("No pre-trained KDE or population samples supplied for building the None class PDF. None class cannot be created.")
 
             else:
