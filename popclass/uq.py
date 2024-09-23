@@ -65,7 +65,9 @@ class NoneClassUQ(additiveUQ):
 
         if self.base_model_kde is None:
             if population_model is None:
-                raise ValueError("No pre-trained KDE or population samples supplied for building the None class PDF. None class cannot be created.")
+                raise ValueError(
+                    "No pre-trained KDE or population samples supplied for building the None class PDF. None class cannot be created."
+                )
 
             else:
                 pop_model_samples = np.vstack(
@@ -76,9 +78,8 @@ class NoneClassUQ(additiveUQ):
                 )
                 base_model_kde = self.kde(pop_model_samples.T, **self.kde_kwargs)
                 self.base_model_kde = base_model_kde
-        
-        self._build_none_pdf_binned()
 
+        self._build_none_pdf_binned()
 
         return
 
@@ -123,8 +124,7 @@ class NoneClassUQ(additiveUQ):
             np.array([self.grid[p][1] - self.grid[p][0] for p in self.grid.keys()])
         ) * np.ones(self.grid_centers_raveled.shape[0])
         return
-        
-        
+
     def _build_none_pdf_binned(self):
         pop_model_eval_centers = self.base_model_kde.evaluate(
             self.grid_centers_raveled.T

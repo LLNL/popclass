@@ -121,7 +121,12 @@ def test_none_class_build_grids():
         population_samples=samples, class_weights=class_weights, parameters=parameters
     )
 
-    none_class = NoneClassUQ(population_model=population_model, parameters=parameters, bounds=bounds, grid_size=grid_size)
+    none_class = NoneClassUQ(
+        population_model=population_model,
+        parameters=parameters,
+        bounds=bounds,
+        grid_size=grid_size,
+    )
 
     # Check Shapes
     for key, bds in none_class.grid.items():

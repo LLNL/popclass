@@ -193,7 +193,14 @@ def plot_population_model(
 
 
 def plot_rel_prob_surfaces(
-    PopulationModel, parameters=None, plot_samples=False, bounds=None, N_bins=1000, create_none_class=None, none_kde=None, none_kde_kwargs={}
+    PopulationModel,
+    parameters=None,
+    plot_samples=False,
+    bounds=None,
+    N_bins=1000,
+    create_none_class=None,
+    none_kde=None,
+    none_kde_kwargs={},
 ):
     """
     Plots 2D relative probability surfaces (p(class | parameters, model)). A visualisation of probability the classifier would return, for points with exactly known parameters, of belonging to the given class, taking into account distributions and weights of all classes.
@@ -208,13 +215,13 @@ def plot_rel_prob_surfaces(
         bounds (array-like or None, optional) - pairs of upper and lower bounds for each parameter or None. If provided, should have a shape (N_dim, 2) where N_dim is equal to the number of parameters and has the same order. If bounds are not provided, they are automatically constructed to be 10% of the extent in samples beyond the minimum and maximum value found in samples for each parameter. Default: None.
 
         N_bins (int, optional) - Resolution of the grid to evaluate the KDEs on. Default: 1000.
-        
+
         create_none_class (popclass.NoneClassUQ-like or None, optional) - method to build the 2D None class probability distribution using the grid defined with bounds and N_bins. If None, only classes from PopulationModel are included in visualization. Default: None.
-        
-        none_kde (scipy.stats.gaussian_kde-like, optional) - method to evaluate the overall sample density in the process of building the None class. Passed as the ``kde'' argument when initializing the None class object. Default: 'gaussian_kde' 
-        
+
+        none_kde (scipy.stats.gaussian_kde-like, optional) - method to evaluate the overall sample density in the process of building the None class. Passed as the ``kde'' argument when initializing the None class object. Default: 'gaussian_kde'
+
         none_kde_kwargs (dictionary) - extra arguments for evaluating the overall sample density in the process of building the None class. Passed as the ``kde_kwargs'' argument when initializing the None class object. Default: {}.
-        
+
 
     Returns
     -------
@@ -254,41 +261,42 @@ def plot_rel_prob_surfaces(
 
             maps_2d.append(map_2d)
             weights.append(weight)
-        
+
         if create_none_class:
-            
             # construct a dictionary for bounds
             bounds_dict = {}
             for counter, parameter in enumerate(parameters):
                 bounds_dict[parameter] = bounds[counter]
-            
+
             # initialize none class
             none_class = create_none_class(
                 bounds=bounds_dict,
-                grid_size=N_bins+1, #:(
+                grid_size=N_bins + 1,  #:(
                 population_model=PopulationModel,
                 parameters=parameters,
                 kde=none_kde,
-                kde_kwargs=none_kde_kwargs
+                kde_kwargs=none_kde_kwargs,
             )
-            
-            #add cmap (no class name added)
+
+            # add cmap (no class name added)
             classes.append("None")
-            map_none = none_class.none_pdf_binned # hopefully???
-            
+            map_none = none_class.none_pdf_binned  # hopefully???
+
             maps_2d.append(map_none)
-            weights.append(none_class.none_class_weight/(1 - none_class.none_class_weight)) # accounting for others changing too
-        
+            weights.append(
+                none_class.none_class_weight / (1 - none_class.none_class_weight)
+            )  # accounting for others changing too
+
         maps_2d, weights = np.array(maps_2d), np.array(weights)
-        
+
         weighted_cmaps = (maps_2d.T * weights).T
         colormaps_normed = weighted_cmaps / np.sum(weighted_cmaps, axis=0)
 
         figs, axes = [], []
         for counter, class_name in enumerate(classes):
             fig, ax = plt.subplots()
-            
-            if class_name!="None":
+
+            if class_name != "None":
                 cmap = cmap_cycler[counter % 6]
 
                 if plot_samples:
@@ -307,8 +315,7 @@ def plot_rel_prob_surfaces(
                     ax.legend()
             else:
                 cmap = "Greys"
-                
-                
+
             im = ax.imshow(
                 colormaps_normed[counter],
                 origin="lower",
@@ -317,7 +324,7 @@ def plot_rel_prob_surfaces(
                 vmin=0.0,
                 vmax=1.0,
             )
-            
+
             divider = make_axes_locatable(ax)
             cax = divider.append_axes("right", size="5%", pad=0.05)
             cb = fig.colorbar(im, cax=cax, orientation="vertical")
