@@ -166,7 +166,8 @@ def test_none_class_build_grids():
         assert np.all(boundary == none_class.grid_centers[key])
     assert np.all(grid_mesh_centers == none_class.grid_mesh_centers)
     assert np.all(grid_centers_raveled == none_class.grid_centers_raveled)
-    
+
+
 def test_uq_input_errors():
     # define everything being complete
     bounds = {"A": [0, 1], "B": [1, 2], "C": [2, 3]}
@@ -178,14 +179,18 @@ def test_uq_input_errors():
         cname: norm.rvs(size=300, loc=1, scale=1).reshape((100, 3)) for cname in classes
     }
     class_weights = {"A": 0.3, "B": 0.7}
-    
+
     population_model = PopulationModel(
         population_samples=samples, class_weights=class_weights, parameters=parameters
     )
-    
+
     # provide no base kde or popmodel
     with pytest.raises(ValueError):
-        none_class = NoneClassUQ(parameters=parameters, bounds=bounds, grid_size=grid_size)
+        none_class = NoneClassUQ(
+            parameters=parameters, bounds=bounds, grid_size=grid_size
+        )
     # provide no parameters
     with pytest.raises(ValueError):
-        none_class = NoneClassUQ(population_model=population_model, bounds=bounds, grid_size=grid_size)
+        none_class = NoneClassUQ(
+            population_model=population_model, bounds=bounds, grid_size=grid_size
+        )
