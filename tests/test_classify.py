@@ -5,8 +5,9 @@ import numpy as np
 
 from popclass.classify import classify
 from popclass.model import AVAILABLE_MODELS
-from popclass.model import PopulationModel
+from popclass.model import PopulationModel, CustomKernelDensity
 from popclass.posterior import Posterior
+from popclass.uq import NoneClassUQ
 
 
 def test_full_example():
@@ -139,3 +140,78 @@ def test_class_probs_sum_to_unity():
         )
 
         assert abs(sum(classification.values()) - 1.0) < 0.00001
+
+def test_classify_star_with_uq():
+    """
+    test that, when classifying with the NoneClassUQ:
+    a high-prob star is classified as 'star'
+    """
+
+    NUM_POSTERIOR_SAMPLES = 10000
+
+    logtE_posterior_samples = np.random.normal(
+        loc=0.7, scale=0.00001, size=NUM_POSTERIOR_SAMPLES
+    )
+    logpiE_posterior_samples = np.random.normal(
+        loc=-0.65, scale=0.00001, size=NUM_POSTERIOR_SAMPLES
+    )
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
+    parameters = ["log10tE", "log10piE"]
+
+    posterior_samples = np.vstack(
+        [logtE_posterior_samples, logpiE_posterior_samples]
+    ).swapaxes(0, 1)
+    posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
+    inference_data = posterior.to_inference_data(prior_density)
+    popsycle = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    
+    bounds = {"log10tE": [-0.5, 4], "log10piE": [-3, 0]}
+    
+    none_class = NoneClassUQ(
+        population_model=popsycle, parameters=parameters, bounds=bounds, kde=CustomKernelDensity, kde_kwargs={'kernel': 'tophat', 'bandwidth': 0.4}
+    )
+    
+    classification = classify(
+        population_model=popsycle, inference_data=inference_data, parameters=parameters, additive_uq=none_class 
+    )
+
+    assert abs(1.0 - classification["star"]) < 0.01
+    assert classification["None"] < 0.01
+
+
+def test_classify_no_support_with_uq():
+    """
+    test that, when classifying with the NoneClassUQ:
+    an object in a region with no population support is classified as 'None'
+    """
+
+    NUM_POSTERIOR_SAMPLES = 10000
+
+    logtE_posterior_samples = np.random.normal(
+        loc=3, scale=0.00001, size=NUM_POSTERIOR_SAMPLES
+    )
+    logpiE_posterior_samples = np.random.normal(
+        loc=-0.1, scale=0.00001, size=NUM_POSTERIOR_SAMPLES
+    )
+    prior_density = 0.028 * np.ones(NUM_POSTERIOR_SAMPLES)
+    parameters = ["log10tE", "log10piE"]
+
+    posterior_samples = np.vstack(
+        [logtE_posterior_samples, logpiE_posterior_samples]
+    ).swapaxes(0, 1)
+    posterior = Posterior(samples=posterior_samples, parameter_labels=parameters)
+    inference_data = posterior.to_inference_data(prior_density)
+    popsycle = PopulationModel.from_library("popsycle_singles_sukhboldn20")
+    
+    bounds = {"log10tE": [-0.5, 4], "log10piE": [-3, 0]}
+    
+    none_class = NoneClassUQ(
+        population_model=popsycle, parameters=parameters, bounds=bounds, kde=CustomKernelDensity, kde_kwargs={'kernel': 'tophat', 'bandwidth': 0.4}
+    )
+    
+    classification = classify(
+        population_model=popsycle, inference_data=inference_data, parameters=parameters, additive_uq=none_class 
+    )
+
+    assert abs(1.0 - classification["None"]) < 0.01
+    assert classification["star"] < 0.01
