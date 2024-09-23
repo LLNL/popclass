@@ -45,7 +45,7 @@ def test_none_class_kde_build():
     """Test to make sure the total kde built for None class is accurate"""
     np.random.seed(seed=1)
     bounds = {"p1": [-10, 10], "p2": [-10, 10], "p3": [-10, 10]}
-    grid_size = int(1e2)
+    grid_size = int(1e1)
 
     classes = ["A", "B", "C"]
     nclasses = len(classes)
@@ -112,16 +112,16 @@ def test_none_class_build_grids():
     grid_centers_raveled = np.array([a.ravel() for a in grid_mesh_centers]).transpose()
 
     classes = ["A", "B"]
-    parameters = ["p1", "p2"]
+    parameters = ["p1", "p2", "p3"]
     samples = {
-        cname: norm.rvs(size=200, loc=1, scale=1).reshape((100, 2)) for cname in classes
+        cname: norm.rvs(size=300, loc=1, scale=1).reshape((100, 3)) for cname in classes
     }
     class_weights = {"A": 0.3, "B": 0.7}
     population_model = PopulationModel(
         population_samples=samples, class_weights=class_weights, parameters=parameters
     )
 
-    none_class = NoneClassUQ(bounds=bounds, grid_size=grid_size)
+    none_class = NoneClassUQ(population_model=population_model, parameters=parameters, bounds=bounds, grid_size=grid_size)
 
     # Check Shapes
     for key, bds in none_class.grid.items():

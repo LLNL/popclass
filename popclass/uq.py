@@ -19,7 +19,7 @@ class NoneClassUQ(additiveUQ):
     def __init__(
         self,
         bounds,
-        grid_size=int(1e2),
+        grid_size=int(1e3),
         kde=gaussian_kde,
         kde_kwargs={"bw_method": 0.4},
         population_model=None,
@@ -36,7 +36,7 @@ class NoneClassUQ(additiveUQ):
                 Dictionary containing the lower and upper bounds of the parameter space, with keys
                 matching the supplied ``parameters'' list. Format: {key : [lower_bound, upper_bound]}
             grid_size (int, optional):
-                number of bin edges per dimension. Default: 1e2.
+                number of bin edges per dimension. Default: 1e3.
             kde (scipy.gaussian_kde-like):
                 method to evaluate the density of population samples over the defined parameter subspace, used in building the None class. Default: gaussian_kde.
             kde_kwargs (dictionary, optional):
@@ -65,9 +65,7 @@ class NoneClassUQ(additiveUQ):
 
         if self.base_model_kde is None:
             if population_model is None:
-                warnings.warn(
-                    "No pre-trained KDE or population samples supplied for building the None class PDF. Evaluation functions cannot be used."
-                )
+                raise ValueError("No pre-trained KDE or population samples supplied for building the None class PDF. None class cannot be created.")
 
             else:
                 pop_model_samples = np.vstack(
@@ -78,7 +76,9 @@ class NoneClassUQ(additiveUQ):
                 )
                 base_model_kde = self.kde(pop_model_samples.T, **self.kde_kwargs)
                 self.base_model_kde = base_model_kde
-        print(self.base_model_kde)
+        
+        self._build_none_pdf_binned()
+
 
         return
 
@@ -123,6 +123,27 @@ class NoneClassUQ(additiveUQ):
             np.array([self.grid[p][1] - self.grid[p][0] for p in self.grid.keys()])
         ) * np.ones(self.grid_centers_raveled.shape[0])
         return
+        
+        
+    def _build_none_pdf_binned(self):
+        pop_model_eval_centers = self.base_model_kde.evaluate(
+            self.grid_centers_raveled.T
+        )
+        max_pop_model_eval_centers = np.amax(pop_model_eval_centers)
+
+        none_class_pdf_centers_unnormed = (
+            1.0 - pop_model_eval_centers / max_pop_model_eval_centers
+        )
+        none_class_pdf_normalization = np.sum(
+            none_class_pdf_centers_unnormed * self.grid_volumes
+        )
+        none_class_pdf_centers = (
+            none_class_pdf_centers_unnormed / none_class_pdf_normalization
+        )
+
+        self.none_pdf_binned = none_class_pdf_centers.reshape(
+            self.grid_mesh_centers[0].shape
+        )
 
     def apply_uq(self, unnormalized_prob, inference_data, population_model, parameters):
         """
@@ -146,25 +167,6 @@ class NoneClassUQ(additiveUQ):
             probability, unnormalized, with the appended ``None'' class and associated probability.
 
         """
-
-        pop_model_eval_centers = self.base_model_kde.evaluate(
-            self.grid_centers_raveled.T
-        )
-        max_pop_model_eval_centers = np.amax(pop_model_eval_centers)
-
-        none_class_pdf_centers_unnormed = (
-            1.0 - pop_model_eval_centers / max_pop_model_eval_centers
-        )
-        none_class_pdf_normalization = np.sum(
-            none_class_pdf_centers_unnormed * self.grid_volumes
-        )
-        none_class_pdf_centers = (
-            none_class_pdf_centers_unnormed / none_class_pdf_normalization
-        )
-
-        self.none_pdf_binned = none_class_pdf_centers.reshape(
-            self.grid_mesh_centers[0].shape
-        )
 
         for class_name, value in unnormalized_prob.items():
             unnormalized_prob[class_name] = value * (1 - self.none_class_weight)
