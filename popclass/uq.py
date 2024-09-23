@@ -62,7 +62,7 @@ class NoneClassUQ(additiveUQ):
         self.none_class_weight = none_class_weight
         self.kde_kwargs = kde_kwargs
         self._build_grids()
-        
+
         if self.parameters is None:
                 raise ValueError("No parameters to use supplied. None class cannot be created.")
 
