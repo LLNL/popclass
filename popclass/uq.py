@@ -64,11 +64,15 @@ class NoneClassUQ(additiveUQ):
         self._build_grids()
 
         if self.parameters is None:
-                raise ValueError("No parameters to use supplied. None class cannot be created.")
+            raise ValueError(
+                "No parameters to use supplied. None class cannot be created."
+            )
 
         if self.base_model_kde is None:
             if self.population_model is None:
-                raise ValueError("No pre-trained KDE or population samples supplied for building the None class PDF. None class cannot be created.")
+                raise ValueError(
+                    "No pre-trained KDE or population samples supplied for building the None class PDF. None class cannot be created."
+                )
 
             else:
                 pop_model_samples = np.vstack(
