@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pytest
 
+from popclass.model import CustomKernelDensity
 from popclass.model import PopulationModel
+from popclass.uq import NoneClassUQ
 from popclass.visualization import get_bounds
 from popclass.visualization import plot_population_model
 from popclass.visualization import plot_rel_prob_surfaces
-from popclass.uq import NoneClassUQ
-from popclass.model import CustomKernelDensity
 
 
 def test_get_bounds():
@@ -199,7 +199,8 @@ def test_rel_prob_dimensions():
         figs, axes = plot_rel_prob_surfaces(
             PopulationModel=popmodel, parameters=["log10tE", "log10piE", "f_blend_I"]
         )
-        
+
+
 def test_none_class_all_figures():
     """
     Check that the relative probability function works with the None class, and N+1 figures are returned, where N is the number of classes. (Same as test_rel_prob_all_figures, but with additive UQ and custom kernel density.)
@@ -208,7 +209,15 @@ def test_none_class_all_figures():
     classes = popmodel.classes
     parameters = ["log10tE", "log10piE"]
     plt.close()
-    figs, axes = plot_rel_prob_surfaces(PopulationModel=popmodel, parameters=parameters, bounds=None, N_bins = 20, create_none_class=NoneClassUQ, none_kde=CustomKernelDensity, none_kde_kwargs = {'kernel': 'tophat', 'bandwidth': 0.4})
+    figs, axes = plot_rel_prob_surfaces(
+        PopulationModel=popmodel,
+        parameters=parameters,
+        bounds=None,
+        N_bins=20,
+        create_none_class=NoneClassUQ,
+        none_kde=CustomKernelDensity,
+        none_kde_kwargs={"kernel": "tophat", "bandwidth": 0.4},
+    )
 
     assert len(figs) == len(classes) + 1
     assert len(axes) == len(classes) + 1
