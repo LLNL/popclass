@@ -196,9 +196,13 @@ def test_uq_input_errors():
         none_class = NoneClassUQ(
             population_model=population_model, bounds=bounds, grid_size=grid_size
         )
-        
-    #provide no kde object or method
+
+    # provide no kde object or method
     with pytest.raises(ValueError):
         none_class = NoneClassUQ(
-            population_model=population_model, parameters=parameters, bounds=bounds, grid_size=grid_size, kde=None
+            population_model=population_model,
+            parameters=parameters,
+            bounds=bounds,
+            grid_size=grid_size,
+            kde=None,
         )

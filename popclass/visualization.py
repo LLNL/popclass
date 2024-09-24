@@ -263,7 +263,6 @@ def plot_rel_prob_surfaces(
             weights.append(weight)
 
         if create_none_class:
-            
             bounds_dict = {}
             for counter, parameter in enumerate(parameters):
                 bounds_dict[parameter] = bounds[counter]
@@ -281,7 +280,9 @@ def plot_rel_prob_surfaces(
             map_none = none_class.none_pdf_binned
 
             maps_2d.append(map_none)
-            weights.append(none_class.none_class_weight/(1-none_class.none_class_weight))
+            weights.append(
+                none_class.none_class_weight / (1 - none_class.none_class_weight)
+            )
 
         maps_2d, weights = np.array(maps_2d), np.array(weights)
 

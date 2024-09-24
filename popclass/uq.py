@@ -75,13 +75,15 @@ class NoneClassUQ(additiveUQ):
                 )
 
             if self.kde is None:
-                raise ValueError("Density estimation method is None. None class cannot be created.")
-                
+                raise ValueError(
+                    "Density estimation method is None. None class cannot be created."
+                )
+
             pop_model_samples = np.vstack(
-            [
-                population_model.samples(class_name, self.parameters)
-                for class_name in population_model.classes
-            ]
+                [
+                    population_model.samples(class_name, self.parameters)
+                    for class_name in population_model.classes
+                ]
             )
             base_model_kde = self.kde(pop_model_samples.T, **self.kde_kwargs)
             self.base_model_kde = base_model_kde
