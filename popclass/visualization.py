@@ -218,7 +218,7 @@ def plot_rel_prob_surfaces(
 
         create_none_class (popclass.NoneClassUQ-like or None, optional) - method to build the 2D None class probability distribution using the grid defined with bounds and N_bins. If None, only classes from PopulationModel are included in visualization. Default: None.
 
-        none_kde (scipy.stats.gaussian_kde-like, optional) - method to evaluate the overall sample density in the process of building the None class. Passed as the ``kde'' argument when initializing the None class object. Default: 'gaussian_kde'
+        none_kde (scipy.stats.gaussian_kde-like, optional) - method to evaluate the overall sample density in the process of building the None class. Passed as the ``kde'' argument when initializing the None class object. Default: None.
 
         none_kde_kwargs (dictionary) - extra arguments for evaluating the overall sample density in the process of building the None class. Passed as the ``kde_kwargs'' argument when initializing the None class object. Default: {}.
 
@@ -263,29 +263,25 @@ def plot_rel_prob_surfaces(
             weights.append(weight)
 
         if create_none_class:
-            # construct a dictionary for bounds
+            
             bounds_dict = {}
             for counter, parameter in enumerate(parameters):
                 bounds_dict[parameter] = bounds[counter]
 
-            # initialize none class
             none_class = create_none_class(
                 bounds=bounds_dict,
-                grid_size=N_bins + 1,  #:(
+                grid_size=N_bins + 1,
                 population_model=PopulationModel,
                 parameters=parameters,
                 kde=none_kde,
                 kde_kwargs=none_kde_kwargs,
             )
 
-            # add cmap (no class name added)
             classes.append("None")
-            map_none = none_class.none_pdf_binned  # hopefully???
+            map_none = none_class.none_pdf_binned
 
             maps_2d.append(map_none)
-            weights.append(
-                none_class.none_class_weight / (1 - none_class.none_class_weight)
-            )  # accounting for others changing too
+            weights.append(none_class.none_class_weight/(1-none_class.none_class_weight))
 
         maps_2d, weights = np.array(maps_2d), np.array(weights)
 

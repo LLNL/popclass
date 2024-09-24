@@ -169,7 +169,9 @@ def test_none_class_build_grids():
 
 
 def test_uq_input_errors():
-    # define everything being complete
+    """
+    Test errors are returned if insufficient input for creating the None class is provided.
+    """
     bounds = {"A": [0, 1], "B": [1, 2], "C": [2, 3]}
 
     classes = ["A", "B"]
@@ -193,4 +195,10 @@ def test_uq_input_errors():
     with pytest.raises(ValueError):
         none_class = NoneClassUQ(
             population_model=population_model, bounds=bounds, grid_size=grid_size
+        )
+        
+    #provide no kde object or method
+    with pytest.raises(ValueError):
+        none_class = NoneClassUQ(
+            population_model=population_model, parameters=parameters, bounds=bounds, grid_size=grid_size, kde=None
         )
