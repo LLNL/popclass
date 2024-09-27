@@ -23,6 +23,10 @@ authors:
     orcid: 0000-0002-5910-3114
     affiliation: 1
     equal-contrib: true
+  - name: William A. Dawson
+    orcid: 0000-0003-0248-6123
+    affiliation: 1
+    equal-contrib: false
 
 affiliations:
  - name: Space Science Institute, Lawrence Livermore National Laboratory, 7000 East Ave., Livermore, CA 94550, USA
