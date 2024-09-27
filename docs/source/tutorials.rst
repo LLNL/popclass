@@ -11,36 +11,8 @@ Examples
 
    examples/popsycle_model_example.ipynb
    examples/popclass_example_workflow.ipynb
+   examples/posterior_interface.ipynb
 
-Converting and creating posterior objects
------------------------------------------
-
-``popclass`` includes convenience functions for ingesting common inference
-data objects.
-While an array of samples and associated parameter labels can be passed
-directly to ``popclass.Posterior``, we currently support conversion from
-the following output formats:
-
-* ArviZ
-
-To create a ``popclass.Posterior`` object from ArviZ:
-
-.. code-block:: python
-
-    from popclass.posterior import Posterior
-
-    post = Posterior.from_arviz(arviz_inference_data)
-
-
-Alternatively, ``Posterior`` can be initialized with an array of samples and
-a list of parameter labels.
-
-.. code-block:: python
-
-    samples = np.random.randn(1000, 2)
-    labels = ['log10tE', 'log10piE']
-
-    post = Posterior(samples, labels)
 
 Population model data format
 ----------------------------
@@ -154,30 +126,6 @@ The model can then be read in directly from the library via
     model_name = 'popsycle_singles_raithel18'
     population_model = PopulationModel.from_library(model_name)
 
-Using the classifier
---------------------
-In order to perform object classification, the user must specify *both* a
-``PopulationModel`` and an ``InferenceData`` object.
-The creation of the ``PopulationModel`` is as described above and the
-``InferenceData`` object can be created from an existing ``Posterior`` object
-by passing a prior density to the ``Posterior.to_InferenceData`` method:
-
-.. code-block:: python
-
-    from popclass.posterior import Posterior, InferenceData
-
-    # set a uniform prior for demonstration
-    num_samples = (1000)
-    prior = np.ones(num_samples)
-
-    # for the above posterior object
-    inference_data = post.to_InferenceData(prior)
-
-The ``InferenceData`` object can also be formed using the marginal distribution
-formed by ``popclass.Posterior.marginal()``.
-
-To run the classifier, the user must also pass the ``classify()`` function the
-parameters to use for classification.
 The models supplied by ``popclass`` include the following parameters:
 
 * 'log10tE'
