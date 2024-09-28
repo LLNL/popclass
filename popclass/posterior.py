@@ -22,7 +22,7 @@ class InferenceData:
 
         Args:
             posterior (popclass.Posterior):
-                A posterior object in popclass formatting convention, containing posterior 
+                A posterior object in popclass formatting convention, containing posterior
                 samples of the shape (number of samples, number of parameters)
             prior_density (array-like):
                 1D array representing the prior density with an expected shape of (number of samples,)
@@ -34,7 +34,7 @@ class InferenceData:
 class Posterior:
     """
     ``popclass`` object containing the user's posterior information.
-    This object can either be initialized from data arrays, or come from outside libraries in a 
+    This object can either be initialized from data arrays, or come from outside libraries in a
     compatible format. Acceptable formats from outside sources are listed below.
 
     **Supported Formats**:
@@ -49,12 +49,12 @@ class Posterior:
 
         Args:
             samples (array-like):
-                Posterior samples with a shape of (number of samples, number of parameters). 
-                Rows correspond to individual samples drawn from the posterior distribution, 
+                Posterior samples with a shape of (number of samples, number of parameters).
+                Rows correspond to individual samples drawn from the posterior distribution,
                 and columns correspond to specific parameters.
             parameter_labels (list[str]):
-                List of strings representing the labels of the parameters. 
-                There should be an equal number of labels to columns in samples representing 
+                List of strings representing the labels of the parameters.
+                There should be an equal number of labels to columns in samples representing
                 individual parameters (i.e. the number of parameters).
         """
         testnan = np.isnan(samples)
@@ -74,8 +74,8 @@ class Posterior:
                 Should be a subset of ``Posterior.parameter_labels()``.
 
         Returns:
-            New instance of the ``Posterior`` object only containing 
-            samples determined and ordered by `parameter_list`. 
+            New instance of the ``Posterior`` object only containing
+            samples determined and ordered by `parameter_list`.
         """
 
         _1, id_arr_labels, id_arr_list = np.intersect1d(
@@ -91,10 +91,10 @@ class Posterior:
     def parameters(self):
         """
         Defines an ordered list of parameters for the ``Posterior`` object.
-        
+
         Returns:
             parameters (list [str]):
-                Ordered list of parameters in the ``Posterior`` object.           
+                Ordered list of parameters in the ``Posterior`` object.
         """
         return self.parameter_labels
 
@@ -107,14 +107,14 @@ class Posterior:
                 Either a popclass ``Posterior`` or ``Posterior.marginal() `` object.
             prior_density (array-like):
                 1D array representing the prior density with an expected shape of (number of samples,).
-                Prior density corresponds to samples in posterior_object, as the number of entries must 
+                Prior density corresponds to samples in posterior_object, as the number of entries must
                 match the number of rows in the posterior samples array.
 
         Returns:
             popclass.InferenceData:
-                An ``InferenceData`` object that contains all the information needed 
-                to pass to a classifier.         
-        """ 
+                An ``InferenceData`` object that contains all the information needed
+                to pass to a classifier.
+        """
         return InferenceData(posterior=self, prior_density=prior_density)
 
     @classmethod
@@ -128,7 +128,7 @@ class Posterior:
 
         Returns:
             popclass.Posterior:
-                A ``popclass.Posterior`` object generated from the ArViz posterior.        
+                A ``popclass.Posterior`` object generated from the ArViz posterior.
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
@@ -148,7 +148,7 @@ class Posterior:
 
         Returns:
             popclass.Posterior:
-                A ``Posterior`` object with samples from the PyMultiNest analysis.        
+                A ``Posterior`` object with samples from the PyMultiNest analysis.
         """
         samples = pymultinest_analyzer_object.get_equal_weighted_posterior()
 
