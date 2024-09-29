@@ -124,6 +124,37 @@ def test_convert_arviz():
 
     assert np.allclose(test_samples, popclass_from_az_post.samples)
 
+def test_shape_check_from_arviz():
+    
+    # Case where samples = params
+    with pytest.raises(ValueError, 
+                        match = 'Number of samples in arviz array must be greater than number of parameters!'):
+        test_samples = np.random.rand(3, 3)
+        test_params = ["A", "B", "C"]
+        
+        post = {
+            test_params[0]: test_samples[0, :],
+            test_params[1]: test_samples[1, :],
+            test_params[2]: test_samples[2, :],
+        }
+        
+        az_post = az.convert_to_inference_data(post)
+        popclass_from_az_post = Posterior.from_arviz(az_post)
+        
+    # Case where samples < params
+    with pytest.raises(ValueError, 
+                        match = 'Number of samples in arviz array must be greater than number of parameters!'):
+        test_samples = np.random.rand(2, 3)
+        test_params = ["A", "B", "C"]
+        
+        post = {
+            test_params[0]: test_samples[0, :],
+            test_params[1]: test_samples[1, :],
+            test_params[2]: test_samples[1, :],   #read again for assignment
+        }
+        
+        az_post = az.convert_to_inference_data(post)
+        popclass_from_az_post = Posterior.from_arviz(az_post)
 
 def test_convert_pymultinest():
     """

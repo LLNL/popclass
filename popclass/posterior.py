@@ -145,8 +145,14 @@ class Posterior:
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
+
+        samples_array = np.array(samples).swapaxes(0, 1)
+
+        # Shape check
+        if samples_array.shape[0] <= samples_array.shape[1]:
+            raise ValueError('Number of samples in arviz array must be greater than number of parameters!')
         
-        return cls(np.array(samples).swapaxes(0, 1), labels)
+        return cls(samples_array, labels)
 
     @classmethod
     def from_pymultinest(cls, pymultinest_analyzer_object, parameter_labels):
