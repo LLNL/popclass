@@ -58,7 +58,7 @@ class Posterior:
                 individual parameters (i.e. the number of parameters).
 
         Raises:
-            ValueError: if the number of samples is less than the number of parameters.
+            ValueError: if the number of parameters is not less than the number of samples.
         """
         testnan = np.isnan(samples)
         if True in testnan:
@@ -84,7 +84,8 @@ class Posterior:
             New instance of the ``Posterior`` object only containing
             samples determined and ordered by `parameter_list`.
 
-        Raises: ValueError if the number of samples is less than the number of parameters.
+        Raises: 
+            ValueError: if the number of parameters is not less than the number of samples.
         """
 
         _1, id_arr_labels, id_arr_list = np.intersect1d(
@@ -96,7 +97,7 @@ class Posterior:
 
         # Shape check
         if marginal.samples.shape[0] <= marginal.samples.shape[1]:
-            raise ValueError('Number of samples in marginal must be greater than number of parameters!')
+            raise ValueError('Number of samples in marginal array must be greater than number of parameters!')
 
         return marginal
 
@@ -142,6 +143,9 @@ class Posterior:
         Returns:
             popclass.Posterior:
                 A ``popclass.Posterior`` object generated from the ArViz posterior.
+
+        Raises: 
+            ValueError: if the number of parameters is not less than the number of samples. 
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
@@ -169,8 +173,15 @@ class Posterior:
         Returns:
             popclass.Posterior:
                 A ``Posterior`` object with samples from the PyMultiNest analysis.
+
+        Raises:
+            ValueError: if the number of parameters is not less than the number of samples.
         """
         samples = pymultinest_analyzer_object.get_equal_weighted_posterior()
+
+        # Shape check
+        if samples.shape[0] <= samples.shape[1]:
+            raise ValueError('Number of samples in pymultinest array must be greater than number of parameters!')
 
         return Posterior(samples, parameter_labels)
 

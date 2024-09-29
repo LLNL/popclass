@@ -74,7 +74,13 @@ def test_shape_check_init():
     """
     Test that a ValueError is raised if the initial array shape does not match the expected. 
     """
-    
+    # Case where samples = params
+    with pytest.raises(ValueError, match = 'Number of samples must be greater than number of parameters!'):
+        test_samples = np.random.rand(3, 3)
+        test_params = ["A", "B", "C"]
+        post = Posterior(samples=test_samples, parameter_labels=test_params)
+        
+    # Case where samples < params
     with pytest.raises(ValueError, match = 'Number of samples must be greater than number of parameters!'):
         test_samples = np.random.rand(2, 3)
         test_params = ["A", "B", "C"]
@@ -125,7 +131,9 @@ def test_convert_arviz():
     assert np.allclose(test_samples, popclass_from_az_post.samples)
 
 def test_shape_check_from_arviz():
-    
+    """
+    Test that a ValueError is raised if the arviz array shape does not match the expected.
+    """
     # Case where samples = params
     with pytest.raises(ValueError, 
                         match = 'Number of samples in arviz array must be greater than number of parameters!'):
@@ -167,6 +175,12 @@ def test_convert_pymultinest():
 
     assert np.array_equal(test_samples, popclass_post.samples)
     assert np.array_equal(test_params, popclass_post.parameter_labels)
+
+#def test_shape_check_from_pymultinest():
+#    """
+#    Test that a ValueError is raised if the pymultinest array shape does not match the expected.
+#    """
+    
 
 
 def test_to_InferenceData():
