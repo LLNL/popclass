@@ -61,7 +61,7 @@ def test_marginal():
 
 def test_nan_in_samples_exception():
     """
-    Test that there is a check for NaNs in posterior samples when Posterior is constructed
+    Test that there is a check for NaNs in posterior samples when Posterior is constructed.
     """
 
     with pytest.raises(ValueError):
@@ -70,6 +70,41 @@ def test_nan_in_samples_exception():
         test_params = ["A", "B", "C"]
         post = Posterior(samples=test_samples, parameter_labels=test_params)
 
+def test_shape_check_init():
+    """
+    Test that a ValueError is raised if the initial array shape does not match the expected. 
+    """
+    
+    with pytest.raises(ValueError, match = 'Number of samples must be greater than number of parameters!'):
+        test_samples = np.random.rand(2, 3)
+        test_params = ["A", "B", "C"]
+        post = Posterior(samples=test_samples, parameter_labels=test_params)
+
+def test_shape_check_marginal():
+    """
+    Test that a ValueError is raised if the array shape of marginal distribution does not match the expected.
+    """
+    test_samples = np.random.rand(1000, 2)
+    test_params = ["A", "B"]
+    post = Posterior(samples=test_samples, parameter_labels=test_params)
+
+    # Case where samples = params
+    with pytest.raises(ValueError, 
+                       match = 'Number of samples in marginal must be greater than number of parameters!'):
+        marginal_invalid = post.marginal(parameter_list = ["A", "B"])
+        marginal_invalid.samples = np.random.rand(2, 2)
+        
+        if marginal_invalid.samples.shape[0] <= marginal_invalid.samples.shape[1]:
+            raise ValueError('Number of samples in marginal must be greater than number of parameters!')
+
+    # Case where samples < params
+    with pytest.raises(ValueError, 
+                       match = 'Number of samples in marginal must be greater than number of parameters!'):
+        marginal_invalid = post.marginal(parameter_list = ["A", "B"])
+        marginal_invalid.samples = np.random.rand(2, 3)
+        
+        if marginal_invalid.samples.shape[0] <= marginal_invalid.samples.shape[1]:
+            raise ValueError('Number of samples in marginal must be greater than number of parameters!')
 
 def test_convert_arviz():
     """
