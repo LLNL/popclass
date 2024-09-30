@@ -131,13 +131,13 @@ def test_convert_arviz():
     """
     Test that conversion from Arviz works.
     """
-    test_samples = np.random.rand(3, 1000)
+    test_samples = np.random.rand(1000,3)
     test_params = ["A", "B", "C"]
 
     post = {
-        test_params[0]: test_samples[0, :],
-        test_params[1]: test_samples[1, :],
-        test_params[2]: test_samples[2, :],
+        test_params[0]: test_samples[:, 0],
+        test_params[1]: test_samples[:, 1],
+        test_params[2]: test_samples[:, 2],
     }
 
     az_post = az.convert_to_inference_data(post)
