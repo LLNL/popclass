@@ -56,10 +56,19 @@ class Posterior:
                 List of strings representing the labels of the parameters.
                 There should be an equal number of labels to columns in samples representing
                 individual parameters (i.e. the number of parameters).
+
+        Raises:
+            ValueError: if the number of parameters is not less than the number of samples.
         """
         testnan = np.isnan(samples)
         if True in testnan:
             raise ValueError("Posterior samples cannot be NaN")
+
+        # Check that number of samples > number of parameters
+        if samples.shape[0] <= samples.shape[1]:
+            raise ValueError(
+                "Number of samples must be greater than number of parameters!"
+            )
 
         self.parameter_labels = parameter_labels
         self.samples = samples
@@ -76,6 +85,9 @@ class Posterior:
         Returns:
             New instance of the ``Posterior`` object only containing
             samples determined and ordered by `parameter_list`.
+
+        Raises:
+            ValueError: if the number of parameters is not less than the number of samples.
         """
 
         _1, id_arr_labels, id_arr_list = np.intersect1d(
@@ -84,6 +96,12 @@ class Posterior:
         marginal = copy.deepcopy(self)
         marginal.parameter_labels = list([parameter_list[i] for i in id_arr_list])
         marginal.samples = self.samples[:, id_arr_labels]
+
+        # Shape check
+        if marginal.samples.shape[0] <= marginal.samples.shape[1]:
+            raise ValueError(
+                "Number of samples in marginal array must be greater than number of parameters!"
+            )
 
         return marginal
 
@@ -129,10 +147,21 @@ class Posterior:
         Returns:
             popclass.Posterior:
                 A ``popclass.Posterior`` object generated from the ArViz posterior.
+
+        Raises:
+            ValueError: if the number of parameters is not less than the number of samples.
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
-        samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
-        return cls(np.array(samples).swapaxes(0, 1), labels)
+        samples = arviz_posterior_object.posterior.to_dataarray().to_numpy().squeeze()
+
+        samples_array = np.array(samples).swapaxes(0, 1)
+        # Shape check
+        if samples_array.shape[0] <= samples_array.shape[1]:
+            raise ValueError(
+                "Number of samples in arviz array must be greater than number of parameters!"
+            )
+
+        return cls(samples_array, labels)
 
     @classmethod
     def from_pymultinest(cls, pymultinest_analyzer_object, parameter_labels):
@@ -149,8 +178,17 @@ class Posterior:
         Returns:
             popclass.Posterior:
                 A ``Posterior`` object with samples from the PyMultiNest analysis.
+
+        Raises:
+            ValueError: if the number of parameters is not less than the number of samples.
         """
         samples = pymultinest_analyzer_object.get_equal_weighted_posterior()
+
+        # Shape check
+        if samples.shape[0] <= samples.shape[1]:
+            raise ValueError(
+                "Number of samples in pymultinest array must be greater than number of parameters!"
+            )
 
         return Posterior(samples, parameter_labels)
 
