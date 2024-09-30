@@ -7,7 +7,7 @@ tags:
   - black hole
 authors:
   - name: Greg Sallaberry
-    orcid: 0000-0000-0000-0000
+    orcid: 0009-0001-4859-5205
     equal-contrib: true
     affiliation: 1
   - name: Zofia Kaczmarek
