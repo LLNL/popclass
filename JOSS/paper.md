@@ -27,12 +27,17 @@ authors:
     orcid: 0000-0003-0248-6123
     affiliation: 1
     equal-contrib: false
+  - name: Caitlin G. Begbie 
+    orcid: 0000-0000-0000-0000
+    affiliation: 3
 
 affiliations:
  - name: Space Science Institute, Lawrence Livermore National Laboratory, 7000 East Ave., Livermore, CA 94550, USA
    index: 1
  - name: Zentrum fur Astronomie der Universitat Heidelberg, Astronomisches Rechen-Institut, Monchhofstr. 12-14, 69120 Heidelberg, Germany
    index: 2
+ - name: University of California, Berkeley, Astronomy Department, Berkeley, CA 94720, USA
+   index: 3
 
 date: 13 August 2017
 bibliography: paper.bib
@@ -123,9 +128,10 @@ Space Science Institute's Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
 Academic Engagement Office. This work was prepared as an account of
 work sponsored by an agency of the United States
-Government. Neither the United States Government nor Lawrence Livermore National Security,
-LLC, nor any of their employees makes any warranty, expressed or implied, or assumes any
-legal liability or responsibility for the accuracy, completeness, or usefulness of any
+Government. Neither the United States Government nor Lawrence Livermore 
+National Security,
+LLC, nor any of their employees makes any warranty, 
+expressed or implied, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any
 information, apparatus, product, or process disclosed, or represents that its use would
 not infringe privately owned rights. Reference herein to any specific commercial product,
 process, or service by trade name, trademark, manufacturer, or otherwise does not necessarily
