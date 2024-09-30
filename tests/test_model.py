@@ -7,12 +7,14 @@ import os
 import asdf
 import numpy as np
 import pytest
-from scipy.stats import gaussian_kde, multivariate_normal,norm
+from scipy.stats import gaussian_kde
+from scipy.stats import multivariate_normal
+from scipy.stats import norm
 
 from popclass.model import AVAILABLE_MODELS
-from popclass.model import PopulationModel
-from popclass.model import MultivariateGaussianKernel
 from popclass.model import CustomKernelDensity
+from popclass.model import MultivariateGaussianKernel
+from popclass.model import PopulationModel
 from popclass.model import validate_asdf_population_model
 from popclass.posterior import Posterior
 
@@ -216,11 +218,13 @@ def test_evaluate_transpose():
                 key, parameter, np.array([[2]])
             ) == model2.evaluate_density(key, parameter, np.array([[2]]))
 
+
 def test_MultivariateGaussianKernel():
-    mean = [0,1]
-    cov = [ [ 1,.1],[.1,1]]
-    data = np.array(multivariate_normal.rvs(size=10000, mean=mean,cov=cov))
+    mean = [0, 1]
+    cov = [[1, 0.1], [0.1, 1]]
+    data = np.array(multivariate_normal.rvs(size=10000, mean=mean, cov=cov))
     custom_kernel = MultivariateGaussianKernel(data.T)
-    vals = np.array([ 2,-2])
-    assert round(custom_kernel.evaluate(vals),3) == round(multivariate_normal.pdf(vals, mean=mean,cov=cov),3)
-    
+    vals = np.array([2, -2])
+    assert round(custom_kernel.evaluate(vals), 3) == round(
+        multivariate_normal.pdf(vals, mean=mean, cov=cov), 3
+    )
