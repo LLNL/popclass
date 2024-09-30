@@ -152,10 +152,9 @@ class Posterior:
             ValueError: if the number of parameters is not less than the number of samples.
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
-        samples = arviz_posterior_object.posterior.to_dataarray().to_numpy()
+        samples = arviz_posterior_object.posterior.to_dataarray().to_numpy().squeeze()
 
         samples_array = np.array(samples).swapaxes(0, 1)
-
         # Shape check
         if samples_array.shape[0] <= samples_array.shape[1]:
             raise ValueError(
