@@ -176,12 +176,30 @@ def test_convert_pymultinest():
     assert np.array_equal(test_samples, popclass_post.samples)
     assert np.array_equal(test_params, popclass_post.parameter_labels)
 
-#def test_shape_check_from_pymultinest():
-#    """
-#    Test that a ValueError is raised if the pymultinest array shape does not match the expected.
-#    """
-    
-
+def test_shape_check_from_pymultinest():
+    """
+    Test that a ValueError is raised if the pymultinest array shape does not match the expected.
+    """
+    # Case where samples = params
+    class EqualAnalyzer:
+        def get_equal_weighted_posterior(self):
+            return np.random.rand(3, 3)
+            
+    with pytest.raises(ValueError, 
+                       match = 'Number of samples in pymultinest array must be greater than number of parameters!'):
+        test_params = ["A", "B", "C"]
+        analyzer = EqualAnalyzer()
+        Posterior.from_pymultinest(analyzer, test_params)
+    # Case where samples < params
+    class LesserAnalyzer:
+        def get_equal_weighted_posterior(self):
+            return np.random.rand(2, 3)
+            
+    with pytest.raises(ValueError, 
+                       match = 'Number of samples in pymultinest array must be greater than number of parameters!'):
+        test_params = ["A", "B", "C"]
+        analyzer = LesserAnalyzer()
+        Posterior.from_pymultinest(analyzer, test_params)
 
 def test_to_InferenceData():
     """
