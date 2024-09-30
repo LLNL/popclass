@@ -27,7 +27,7 @@ authors:
     orcid: 0000-0003-0248-6123
     affiliation: 1
     equal-contrib: false
-  - name: Caitlin G. Begbie 
+  - name: Caitlin G. Begbie
     orcid: 0000-0000-0000-0000
     affiliation: 3
 
@@ -128,9 +128,9 @@ Space Science Institute's Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
 Academic Engagement Office. This work was prepared as an account of
 work sponsored by an agency of the United States
-Government. Neither the United States Government nor Lawrence Livermore 
+Government. Neither the United States Government nor Lawrence Livermore
 National Security,
-LLC, nor any of their employees makes any warranty, 
+LLC, nor any of their employees makes any warranty,
 expressed or implied, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any
 information, apparatus, product, or process disclosed, or represents that its use would
 not infringe privately owned rights. Reference herein to any specific commercial product,
