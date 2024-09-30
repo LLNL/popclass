@@ -131,7 +131,7 @@ def test_convert_arviz():
     """
     Test that conversion from Arviz works.
     """
-    test_samples = np.random.rand(1000,3)
+    test_samples = np.random.rand(1000, 3)
     test_params = ["A", "B", "C"]
 
     post = {
