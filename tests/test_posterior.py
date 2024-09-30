@@ -70,21 +70,27 @@ def test_nan_in_samples_exception():
         test_params = ["A", "B", "C"]
         post = Posterior(samples=test_samples, parameter_labels=test_params)
 
+
 def test_shape_check_init():
     """
-    Test that a ValueError is raised if the initial array shape does not match the expected. 
+    Test that a ValueError is raised if the initial array shape does not match the expected.
     """
     # Case where samples = params
-    with pytest.raises(ValueError, match = 'Number of samples must be greater than number of parameters!'):
+    with pytest.raises(
+        ValueError, match="Number of samples must be greater than number of parameters!"
+    ):
         test_samples = np.random.rand(3, 3)
         test_params = ["A", "B", "C"]
         post = Posterior(samples=test_samples, parameter_labels=test_params)
-        
+
     # Case where samples < params
-    with pytest.raises(ValueError, match = 'Number of samples must be greater than number of parameters!'):
+    with pytest.raises(
+        ValueError, match="Number of samples must be greater than number of parameters!"
+    ):
         test_samples = np.random.rand(2, 3)
         test_params = ["A", "B", "C"]
         post = Posterior(samples=test_samples, parameter_labels=test_params)
+
 
 def test_shape_check_marginal():
     """
@@ -95,22 +101,31 @@ def test_shape_check_marginal():
     post = Posterior(samples=test_samples, parameter_labels=test_params)
 
     # Case where samples = params
-    with pytest.raises(ValueError, 
-                       match = 'Number of samples in marginal must be greater than number of parameters!'):
-        marginal_invalid = post.marginal(parameter_list = ["A", "B"])
+    with pytest.raises(
+        ValueError,
+        match="Number of samples in marginal must be greater than number of parameters!",
+    ):
+        marginal_invalid = post.marginal(parameter_list=["A", "B"])
         marginal_invalid.samples = np.random.rand(2, 2)
-        
+
         if marginal_invalid.samples.shape[0] <= marginal_invalid.samples.shape[1]:
-            raise ValueError('Number of samples in marginal must be greater than number of parameters!')
+            raise ValueError(
+                "Number of samples in marginal must be greater than number of parameters!"
+            )
 
     # Case where samples < params
-    with pytest.raises(ValueError, 
-                       match = 'Number of samples in marginal must be greater than number of parameters!'):
-        marginal_invalid = post.marginal(parameter_list = ["A", "B"])
+    with pytest.raises(
+        ValueError,
+        match="Number of samples in marginal must be greater than number of parameters!",
+    ):
+        marginal_invalid = post.marginal(parameter_list=["A", "B"])
         marginal_invalid.samples = np.random.rand(2, 3)
-        
+
         if marginal_invalid.samples.shape[0] <= marginal_invalid.samples.shape[1]:
-            raise ValueError('Number of samples in marginal must be greater than number of parameters!')
+            raise ValueError(
+                "Number of samples in marginal must be greater than number of parameters!"
+            )
+
 
 def test_convert_arviz():
     """
@@ -130,39 +145,45 @@ def test_convert_arviz():
 
     assert np.allclose(test_samples, popclass_from_az_post.samples)
 
+
 def test_shape_check_from_arviz():
     """
     Test that a ValueError is raised if the arviz array shape does not match the expected.
     """
     # Case where samples = params
-    with pytest.raises(ValueError, 
-                        match = 'Number of samples in arviz array must be greater than number of parameters!'):
+    with pytest.raises(
+        ValueError,
+        match="Number of samples in arviz array must be greater than number of parameters!",
+    ):
         test_samples = np.random.rand(3, 3)
         test_params = ["A", "B", "C"]
-        
+
         post = {
             test_params[0]: test_samples[0, :],
             test_params[1]: test_samples[1, :],
             test_params[2]: test_samples[2, :],
         }
-        
+
         az_post = az.convert_to_inference_data(post)
         popclass_from_az_post = Posterior.from_arviz(az_post)
-        
+
     # Case where samples < params
-    with pytest.raises(ValueError, 
-                        match = 'Number of samples in arviz array must be greater than number of parameters!'):
+    with pytest.raises(
+        ValueError,
+        match="Number of samples in arviz array must be greater than number of parameters!",
+    ):
         test_samples = np.random.rand(2, 3)
         test_params = ["A", "B", "C"]
-        
+
         post = {
             test_params[0]: test_samples[0, :],
             test_params[1]: test_samples[1, :],
-            test_params[2]: test_samples[1, :],   #read again for assignment
+            test_params[2]: test_samples[1, :],  # read again for assignment
         }
-        
+
         az_post = az.convert_to_inference_data(post)
         popclass_from_az_post = Posterior.from_arviz(az_post)
+
 
 def test_convert_pymultinest():
     """
@@ -176,30 +197,38 @@ def test_convert_pymultinest():
     assert np.array_equal(test_samples, popclass_post.samples)
     assert np.array_equal(test_params, popclass_post.parameter_labels)
 
+
 def test_shape_check_from_pymultinest():
     """
     Test that a ValueError is raised if the pymultinest array shape does not match the expected.
     """
+
     # Case where samples = params
     class EqualAnalyzer:
         def get_equal_weighted_posterior(self):
             return np.random.rand(3, 3)
-            
-    with pytest.raises(ValueError, 
-                       match = 'Number of samples in pymultinest array must be greater than number of parameters!'):
+
+    with pytest.raises(
+        ValueError,
+        match="Number of samples in pymultinest array must be greater than number of parameters!",
+    ):
         test_params = ["A", "B", "C"]
         analyzer = EqualAnalyzer()
         Posterior.from_pymultinest(analyzer, test_params)
+
     # Case where samples < params
     class LesserAnalyzer:
         def get_equal_weighted_posterior(self):
             return np.random.rand(2, 3)
-            
-    with pytest.raises(ValueError, 
-                       match = 'Number of samples in pymultinest array must be greater than number of parameters!'):
+
+    with pytest.raises(
+        ValueError,
+        match="Number of samples in pymultinest array must be greater than number of parameters!",
+    ):
         test_params = ["A", "B", "C"]
         analyzer = LesserAnalyzer()
         Posterior.from_pymultinest(analyzer, test_params)
+
 
 def test_to_InferenceData():
     """

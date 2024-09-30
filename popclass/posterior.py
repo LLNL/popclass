@@ -66,7 +66,9 @@ class Posterior:
 
         # Check that number of samples > number of parameters
         if samples.shape[0] <= samples.shape[1]:
-            raise ValueError('Number of samples must be greater than number of parameters!')
+            raise ValueError(
+                "Number of samples must be greater than number of parameters!"
+            )
 
         self.parameter_labels = parameter_labels
         self.samples = samples
@@ -84,7 +86,7 @@ class Posterior:
             New instance of the ``Posterior`` object only containing
             samples determined and ordered by `parameter_list`.
 
-        Raises: 
+        Raises:
             ValueError: if the number of parameters is not less than the number of samples.
         """
 
@@ -97,7 +99,9 @@ class Posterior:
 
         # Shape check
         if marginal.samples.shape[0] <= marginal.samples.shape[1]:
-            raise ValueError('Number of samples in marginal array must be greater than number of parameters!')
+            raise ValueError(
+                "Number of samples in marginal array must be greater than number of parameters!"
+            )
 
         return marginal
 
@@ -144,8 +148,8 @@ class Posterior:
             popclass.Posterior:
                 A ``popclass.Posterior`` object generated from the ArViz posterior.
 
-        Raises: 
-            ValueError: if the number of parameters is not less than the number of samples. 
+        Raises:
+            ValueError: if the number of parameters is not less than the number of samples.
         """
         labels = list(arviz_posterior_object.posterior.data_vars.keys())
         samples = list(arviz_posterior_object.posterior.to_dataarray().to_numpy())
@@ -154,8 +158,10 @@ class Posterior:
 
         # Shape check
         if samples_array.shape[0] <= samples_array.shape[1]:
-            raise ValueError('Number of samples in arviz array must be greater than number of parameters!')
-        
+            raise ValueError(
+                "Number of samples in arviz array must be greater than number of parameters!"
+            )
+
         return cls(samples_array, labels)
 
     @classmethod
@@ -181,7 +187,9 @@ class Posterior:
 
         # Shape check
         if samples.shape[0] <= samples.shape[1]:
-            raise ValueError('Number of samples in pymultinest array must be greater than number of parameters!')
+            raise ValueError(
+                "Number of samples in pymultinest array must be greater than number of parameters!"
+            )
 
         return Posterior(samples, parameter_labels)
 
