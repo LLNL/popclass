@@ -8,6 +8,7 @@ import asdf
 import numpy as np
 import pkg_resources
 from scipy.stats import gaussian_kde
+from scipy.stats import multivariate_normal
 from sklearn.neighbors import KernelDensity
 
 AVAILABLE_MODELS = [
@@ -196,6 +197,31 @@ class PopulationModel:
         }
         af = asdf.AsdfFile(tree)
         af.write_to(path)
+
+
+class MultivariateGaussianKernel:
+    """An example of defining a custom kernel for a PopulationModel. Wraps scipy.stats.multivariate_normal to conform to the template needed by PopulationModel and classify."""
+
+    def __init__(self, data):
+        """Initialization.
+
+        Args:
+            data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
+        Returns:
+            None
+        """
+        self.mean = np.mean(data, axis=1)
+        self.cov = np.cov(data)
+
+    def evaluate(self, pts):
+        """Evaluation method for calculating the pdf of the kernel at a set of points.
+
+        Args:
+            pts (numpy.array): array of points to evaluate the density on. Shape: [# dimensions, # of points].
+        Returns:
+            evaluated_density (numpy.array): the probability density values at each of the corresponding points.
+        """
+        return multivariate_normal.pdf(pts.T, mean=self.mean, cov=self.cov)
 
 
 def validate_asdf_population_model(asdf_object):
