@@ -2,6 +2,7 @@ sphinx
 sphinx_rtd_theme
 sphinxcontrib-bibtex
 nbsphinx
+numpy
 astropy
 jupyter
 jupyterlab
@@ -10,4 +11,3 @@ scipy
 matplotlib
 pandas
 popclass
-numpy

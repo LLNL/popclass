@@ -8,6 +8,7 @@ import asdf
 import numpy as np
 import pkg_resources
 from scipy.stats import gaussian_kde, multivariate_normal
+from sklearn.neighbors import KernelDensity
 
 AVAILABLE_MODELS = [
     "popsycle_singles_raithel18",
@@ -27,6 +28,7 @@ class PopulationModel:
         class_weights,
         parameters,
         density_estimator=gaussian_kde,
+        density_kwargs={},
     ):
         """
         Initialize PopulationModel.
@@ -48,6 +50,7 @@ class PopulationModel:
         self._class_weights = class_weights
         self._population_samples = population_samples
         self._density_estimator = density_estimator
+        self._density_kwargs = density_kwargs
         self._parameters = parameters
 
     @classmethod
@@ -174,7 +177,7 @@ class PopulationModel:
             density_evaluation (np.ndarray)
         """
         class_samples = self.samples(class_name, parameters).swapaxes(0, 1)
-        kernel = self._density_estimator(class_samples)
+        kernel = self._density_estimator(class_samples, **self._density_kwargs)
         return kernel.evaluate(points.swapaxes(0, 1))
 
     def to_asdf(self, path, model_name):
@@ -244,3 +247,30 @@ def validate_asdf_population_model(asdf_object):
     else:
         valid = False
     return valid
+
+
+class CustomKernelDensity:
+    """An example of defining a custom kernel for a PopulationModel. Wraps sklearn.neighbors.KernelDensity to conform to the template needed by PopulationModel and classify."""
+
+    def __init__(self, data, **kwargs):
+        """Initialization.
+        Args:
+            data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
+            kernel_type (str): matches 'kernel' argument of KernelDensity. Default: "tophat".
+            bandwidth (float): matches 'bandwidth' argument of KernelDensity. Default: 0.4.
+        Returns:
+            None
+        """
+        self.data = data
+        self.density_kwargs = kwargs
+
+    def evaluate(self, pts):
+        """Evaluation method for calculating the pdf of the kernel at a set of points.
+
+        Args:
+            pts (numpy.array): array of points to evaluate the density on. Shape: [# dimensions, # of points].
+        Returns:
+            evaluated_density (numpy.array): the probability density values at each of the corresponding points.
+        """
+        kernel = KernelDensity(**self.density_kwargs).fit(self.data.T)
+        return np.exp(kernel.score_samples(pts.T))
