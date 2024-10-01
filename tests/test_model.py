@@ -30,10 +30,12 @@ def test_model_saving():
     population_samples = {key: population_samples_raw for key in class_names}
     class_weights = [0.5, 0.5]
     parameters = ["1", "2"]
+    citation = ["10.3847/1538-4357/ab5fd3", "10.3847/1538-4357/aca09d"]
     test_model = PopulationModel(
         population_samples=population_samples,
         class_weights=class_weights,
         parameters=parameters,
+        citation=citation,
     )
     output_fp = os.path.dirname(os.path.realpath(__file__)) + "/tmp.asdf"
     test_model.to_asdf(output_fp, "tmp")
@@ -73,6 +75,7 @@ def test_load_model():
 
     assert model_from_asdf.classes == model_from_library.classes
     assert model_from_asdf.parameters == model_from_library.parameters
+    assert model_from_asdf.citation == model_from_library.citation
 
     parameters = model_from_asdf.parameters
 
@@ -110,6 +113,22 @@ def test_props():
         assert list(model_from_library.parameters) == test_params
 
 
+def test_citation():
+    """
+    Test that the citations of the models match the expected.
+    """
+    models = [
+        "popsycle_singles_sukhboldn20",
+        "popsycle_singles_spera15",
+        "popsycle_singles_raithel18",
+    ]
+    test_citation = ["10.3847/1538-4357/ab5fd3", "10.3847/1538-4357/aca09d"]
+
+    for model in models:
+        model_from_library = PopulationModel.from_library(model_name=model)
+        assert model_from_library.citation == test_citation
+
+
 def test_valid_asdf_file():
     """
     Test is validator is working.
@@ -131,11 +150,14 @@ def test_valid_asdf_file():
         "white_dwarf": 0.12100611828687967,
     }
 
+    valid_citation = ["10.3847/1538-4357/ab5fd3", "10.3847/1538-4357/aca09d"]
+
     valid_tree = {
         "class_data": class_data,
         "parameters": parameters,
         "class_weights": class_weights,
         "model_name": "popsycle_singles_sukhboldn20",
+        "citation": valid_citation,
     }
 
     invalid_tree = {
