@@ -24,4 +24,3 @@ To check that it has built correctly, run the test suite:
 .. code-block:: console
 
     docker run popclass:latest pytest tests
-
