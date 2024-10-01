@@ -130,12 +130,18 @@ def test_valid_asdf_file():
         "star": 0.8531611148878314,
         "white_dwarf": 0.12100611828687967,
     }
+    
+    valid_citation = [
+        "10.3847/1538-4357/ab5fd3",
+        "10.3847/1538-4357/aca09d"
+    ]
 
     valid_tree = {
         "class_data": class_data,
         "parameters": parameters,
         "class_weights": class_weights,
         "model_name": "popsycle_singles_sukhboldn20",
+        "citation": valid_citation,
     }
 
     invalid_tree = {
@@ -143,12 +149,22 @@ def test_valid_asdf_file():
         "class_weights": class_weights,
         "model_name": "popsycle_singles_sukhboldn20",
     }
+    
+    invalid_tree_bad_citation = {
+        "class_data": class_data,
+        "parameters": parameters,
+        "class_weights": class_weights,
+        "model_name": "popsycle_singles_sukhboldn20",
+        "citation": "bad test string!",
+    }
 
     valid_file = asdf.AsdfFile(valid_tree)
     invalid_file = asdf.AsdfFile(invalid_tree)
+    invalid_file_bad_citation = asdf.AsdfFile(invalid_tree_bad_citation)
 
     assert validate_asdf_population_model(valid_file) is True
     assert validate_asdf_population_model(invalid_file) is False
+    assert validate_asdf_population_model(invalid_file_bad_citation) is False
 
 
 def test_all_population_model_files_are_valid():
