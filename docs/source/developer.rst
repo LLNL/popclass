@@ -16,7 +16,7 @@ To build the container:
 .. code-block:: console
 
     cd popclass
-    docker build ./
+    docker build ./ -t popclass:latest
 
 This will build the Docker image.
 To check that it has built correctly, run the test suite:
