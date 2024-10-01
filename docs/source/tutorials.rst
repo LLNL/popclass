@@ -58,6 +58,9 @@ root (AsdfObject)
 │     └─software (Software)
 │       ├─name (str): asdf
 │       └─version (str): 3.3.0
+├─citation (list)
+│ ├─[0] (str): "10.3847/1538-4357/ab5fd3"
+│ ├─[1] (str): "10.3847/1538-4357/aca09d"
 ├─class_data (dict)
 │ ├─black_hole (NDArrayType): shape=(17, 4), dtype=float64
 │ ├─neutron_star (NDArrayType): shape=(21, 4), dtype=float64
@@ -92,6 +95,7 @@ mock class data.
                   "white dwarf": np.random.randn(178,4)}
 
     model_name = 'popsycle_singles_sukhboldn20'
+    citation = ["10.3847/1538-4357/ab5fd3", "10.3847/1538-4357/aca09d"]
     class_weights = {
                     "black_hole": 0.011556764106050306,
                     "neutron_star": 0.014276002719238613,
@@ -103,7 +107,8 @@ mock class data.
         "class_data": class_data,
         "parameters": parameters,
         "class_weights": class_weights,
-        "model_name": "popsycle_singles_imfr_sukhboldn20"
+        "model_name": "popsycle_singles_imfr_sukhboldn20",
+        "citation": citation
     }
 
     af = asdf.AsdfFile(tree)
