@@ -28,7 +28,7 @@ class PopulationModel:
         population_samples,
         class_weights,
         parameters,
-        citation = None,
+        citation=None,
         density_estimator=gaussian_kde,
         density_kwargs={},
     ):
@@ -82,7 +82,7 @@ class PopulationModel:
             population_samples=population_samples,
             parameters=parameters,
             class_weights=class_weights,
-            citation = citation,
+            citation=citation,
         )
 
     @classmethod
@@ -252,7 +252,13 @@ def validate_asdf_population_model(asdf_object):
     Returns:
         True if asdf is valid. False otherwise.
     """
-    valid_key_set = ["model_name", "class_weights", "parameters", "class_data", "citation"]
+    valid_key_set = [
+        "model_name",
+        "class_weights",
+        "parameters",
+        "class_data",
+        "citation",
+    ]
     keys_present = [name in asdf_object for name in valid_key_set]
 
     if all(keys_present):
@@ -263,11 +269,13 @@ def validate_asdf_population_model(asdf_object):
             data.shape[1] == number_of_parameters
             for data in asdf_object["class_data"].values()
         ]
-        
+
         # Validating the citation field
         citation = asdf_object["citation"]
-        valid_citation = isinstance(citation, list) and all(isinstance(doi, str) for doi in citation)
-        
+        valid_citation = isinstance(citation, list) and all(
+            isinstance(doi, str) for doi in citation
+        )
+
         valid = all(valid_class_data_dim) and valid_citation
     else:
         valid = False

@@ -35,7 +35,7 @@ def test_model_saving():
         population_samples=population_samples,
         class_weights=class_weights,
         parameters=parameters,
-        citation = citation,
+        citation=citation,
     )
     output_fp = os.path.dirname(os.path.realpath(__file__)) + "/tmp.asdf"
     test_model.to_asdf(output_fp, "tmp")
@@ -112,6 +112,7 @@ def test_props():
         assert list(model_from_library.classes) == class_list
         assert list(model_from_library.parameters) == test_params
 
+
 def test_citation():
     """
     Test that the citations of the models match the expected.
@@ -122,7 +123,7 @@ def test_citation():
         "popsycle_singles_raithel18",
     ]
     test_citation = ["10.3847/1538-4357/ab5fd3", "10.3847/1538-4357/aca09d"]
-    
+
     for model in models:
         model_from_library = PopulationModel.from_library(model_name=model)
         assert model_from_library.citation == test_citation
@@ -148,11 +149,8 @@ def test_valid_asdf_file():
         "star": 0.8531611148878314,
         "white_dwarf": 0.12100611828687967,
     }
-    
-    valid_citation = [
-        "10.3847/1538-4357/ab5fd3",
-        "10.3847/1538-4357/aca09d"
-    ]
+
+    valid_citation = ["10.3847/1538-4357/ab5fd3", "10.3847/1538-4357/aca09d"]
 
     valid_tree = {
         "class_data": class_data,
