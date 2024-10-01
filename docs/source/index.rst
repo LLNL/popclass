@@ -42,7 +42,7 @@ Contents
    library
    acknowledgements
    contributing
+   developer
    changelog
    references
-   developer
    api

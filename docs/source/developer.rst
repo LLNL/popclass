@@ -3,7 +3,10 @@ Developer Guide
 ===============
 
 In order to help develop popclass, the library should be installed from source.
-See `Installation`_ for installation steps.
+
+.. code-block:: console
+
+    git clone https://github.com/LLNL/popclass.git
 
 Working in the Dev Container
 ----------------------------
@@ -23,4 +26,4 @@ To check that it has built correctly, run the test suite:
 
 .. code-block:: console
 
-    docker run popclass:latest pytest tests
+    docker run -it -v "./:/popclass" popclass:latest bash -c "cd popclass/ && pytest -v"
