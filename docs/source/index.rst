@@ -36,13 +36,13 @@ Contents
    :maxdepth: 1
 
    installation
-   gettingstarted
+   getting_started.ipynb
    background
    tutorials
    library
    acknowledgements
    contributing
+   developer
    changelog
    references
-   developer
    api
