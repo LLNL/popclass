@@ -50,17 +50,17 @@ aas-journal:
 
 # Summary
 
-`popclass` is a Python library that provides a flexible, probabilistic framework for classifying 
-the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive 
-foreground object - the lens (e.g., a star, white dwarf or a black hole) passes infront of and 
-deflects the light from a distant background star. This causes an apparant brightening, and shift 
-in position, of the background source. In most cases, characteristics of the microlensing 
+`popclass` is a Python library that provides a flexible, probabilistic framework for classifying
+the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive
+foreground object - the lens (e.g., a star, white dwarf or a black hole) passes infront of and
+deflects the light from a distant background star. This causes an apparant brightening, and shift
+in position, of the background source. In most cases, characteristics of the microlensing
 signal do not contain enough information to definitively identity the lens type. However, different
-lens types (e,g., Stars vs black holes) can lie in different but overlapping regions of 
+lens types (e,g., Stars vs black holes) can lie in different but overlapping regions of
 the characteristics of the microlensing signal. For examples, black holes tend to be more massive than
-stars and therefore cause microlensing signals that are longer. 
+stars and therefore cause microlensing signals that are longer.
 
-`popclass` allows a user to match characteristics of a microlensing signal to a simulation of the 
+`popclass` allows a user to match characteristics of a microlensing signal to a simulation of the
 Galaxy to calculate lens class probabilities for an event. The user can flexabli
 
 The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
