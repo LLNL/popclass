@@ -63,7 +63,6 @@ stars and therefore cause microlensing signals that are longer.
 `popclass` allows a user to match characteristics of a microlensing signal to a simulation of the 
 Galaxy to calculate lens class probabilities for an event. The user can flexabli
 
-
 The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
 At base level, the library solves the following:
 
