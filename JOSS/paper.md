@@ -68,7 +68,7 @@ any microlensing signal characteristics and specific their own Galactic model. `
 comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] for microlensing
 signal constraints, pre-loaded Galactic models, plotting functionality, and uncertainty
 quantification methods that can be included in the classification calculation. The probabilistic
-framework for popclass was developed in @Perkins2024, used in @Fardeen2024 
+framework for popclass was developed in @Perkins2024, used in @Fardeen2024
 and has be applied to classify microlensing events in @Kaczmarek2024 .
 
 # Statement of need
@@ -78,8 +78,8 @@ will trigger a delude of tens-of-thousands of microlensing events per year [e.g.
 by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive
 follow-up observations such as space-based astrometry [e.g., @Sahu2022] or ground-based adaptive optics imaging [e.g., @Terry2022]  to confirm their nature.
 
-Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate 
-lens mass-distance constraints using microlensing event light curve and additional auxiliary information 
+Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate
+lens mass-distance constraints using microlensing event light curve and additional auxiliary information
 (e.g., source proper motions, distances, color, or finite source effects). Using axillary information makes these
 current methods powerful but limits them to only be effective for events with the available auxiliary data. Moreover,
 no current software tools explicitly predict lens type and always assumes a fixed Galactic model. `popclass` fills the
