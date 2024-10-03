@@ -73,7 +73,8 @@ and uncertainty quantification methods that can be included in the classificatio
 
 The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
 will come with a deludge of the dections of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019].
-To miximize the science output of this event stream it is critical to identify 
+To miximize the science output of this event stream it is critical to identify events which has a high proablity of being
+caused by interesting lens types such as isolated black holes [@Sahu2022; @Lam2022].  
 
 In the current climate of observational astronomy, with the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015] soon to see first light, selection of interesting targets becomes key to maximizing science output.
 In the realm of time-domain astronomy and transients, it is important to be able to quickly identify targets for follow-up imaging with confidence that the selected object is an appropriate use of resources.
@@ -102,37 +103,16 @@ Using Bayes' theorem we can write,
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
 Assuming that our set of considered lens classes is complete, and using importance sampling [@Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
-drawn under some prior, $\pi(\theta)$, obtained from fitting a microlensing signal,
+drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters $\theta=[t_{E}, \pi_{E}, \text{...}]$ of the microlensing signal,
 
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
     \times \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})}$$.
 
 This allows us to we leverage previously calculated posterior samples to perform lens classification for a single event in 
-the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ can be calculated by using kernel 
-density estimation in `popclass` over the single event observable space using a simulated catalog of microlensing events 
+the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ is calculated by via kernel 
+density estimation in `popclass` using a simulated catalog of microlensing events 
 from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before 
 any data is seen, which is just set by relative number of expected events predicted by the Galactic model $\mathcal{G}$.
-
-
-$$p(\boldsymbol{d} | \mathcal{G}) = \sum_{\text{class}_L\in\text{classes}} p(\text{class}_L|\mathcal{G}) p(\boldsymbol{d}|\text{class}_L, \mathcal{G}).$$
-
-We can now write the equations in a form that can be computed by introducing parameters of
-the microlensing light curve $\theta=[t_{E}, \pi_{E}, \text{...}]$,
-
-$$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
-    \times \int p(\boldsymbol{d}| \theta ) p(\theta |\text{class}_L, \mathcal{G})d\theta.$$
-
-We can compute the integral on the right hand side by importance sampling if we have $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
-drawn under some prior, $\pi(\theta)$, with wide support [@Hogg2010],
-
-$$ \int p(d | \theta) p(\theta | \text{class}_L, \mathcal{G}) d\theta \approx \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})} $$
-
-This allows us to we leverage previously calculated posterior samples to perform
-lens classification for a single event in the context of a Galactic model. The term
-$p(\theta_c | \text{class}_ L, \mathcal{G})$ can be calculated by using kernel density estimation over the single event observable space (e.g., $t_{E}-\pi_{E}$) using a simulated catalog of microlensing events from $\mathcal{G}$.
-$p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs
-to each class before any data is seen, which is just set by relative number of expected
-events predicted by the Galactic model $\mathcal{G}$.
 
 # Acknowledgements
 
