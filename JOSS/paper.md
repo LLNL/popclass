@@ -75,7 +75,7 @@ The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace
 will come with a deludge of the dections of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019].
 <<<<<<< HEAD
 To miximize the science output of this event stream it is critical to identify events which has a high proablity of being
-caused by interesting lens types such as isolated black holes [@Sahu2022; @Lam2022].  
+caused by interesting lens types such as isolated black holes [@Sahu2022; @Lam2022].
 =======
 To miximize the science output of this event stream it is critical to identify
 >>>>>>> 19371f61b183b26bd692ed033c9fdd5a9880cdc0
