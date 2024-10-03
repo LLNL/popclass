@@ -75,14 +75,14 @@ The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace
 will trigger a deludge of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019].
 To miximize the science output of this event stream it is critical to identify events that have a high proablity of being
 caused by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive follow-up
-observations such as space based astrometry [@Sahu2022] or ground based adaptic optics imaging [@Terry2022] to confirm their nature. 
+observations such as space based astrometry [@Sahu2022] or ground based adaptic optics imaging [@Terry2022] to confirm their nature.
 
-Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate lens 
-mass-distance constraints using microlensing event lightcurve and additional auxillary information 
+Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate lens
+mass-distance constraints using microlensing event lightcurve and additional auxillary information
 (e.g. source proper motions,distances, color, or finite source effect). Using axillary information makes these current
-methods powerful but limits them to only be effective for events with the available auxillary data. 
+methods powerful but limits them to only be effective for events with the available auxillary data.
 Moreoever, no current software tools explicitly predict lens type and always assumes a fixed Galactic model.
-`popclass` fills the need for a flexiable microlensing classification software package that can be broadly 
+`popclass` fills the need for a flexiable microlensing classification software package that can be broadly
 applied to classify all events from the Vera C. Rubin Observatory and  _Nancy Grace Roman Space Telescope_
 and can be used with any Galactic model in the form of a simuation.
 
