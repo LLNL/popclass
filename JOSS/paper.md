@@ -58,8 +58,9 @@ in position, of the background source. In most cases, characteristics of the mic
 signal do not contain enough information to definitively identity the lens type. However, different
 lens types (e,g., Stars vs black holes) can lie in different but overlapping regions of
 the characteristics of the microlensing signal. For examples, black holes tend to be more massive than
-stars and therefore cause microlensing signals that are longer.
-
+stars and therefore cause microlensing signals that are longer. Current Galactic models allow the simulation
+of where differnt lens types lie in the observational space and can therfore be leveraged to classify
+an event [@Lam2020].
 
 `popclass` allows a user to match characteristics of a microlensing signal to a simulation of the 
 Galaxy to calculate lens class probabilities for an event. The user can flexibly use constraints
@@ -67,17 +68,6 @@ on any microlensing signal characteristics and specific their own Galactic simul
 `popclass` also comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] 
 for microlesning signal constraints, pre-loaded Galactic simulations, plotting fuctionality, 
 and uncertainty quantification methods that can be included in the classification calculation.
-
-
-The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
-At base level, the library solves the following:
-
-$$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}$$
-
-\- the probability that an event belongs to class L given microlensing event light curve data $\boldsymbol{d}$ and a galactic model $\mathcal{G}$.
-
-The library includes several models containing information on several key parameters which may be useful for lens classification ($\log_{10}t_E$, $\log_{10}\pi_E$, $\log_{10}\theta_E$, and $f_{\rm{blend}}$), but allows the user to provide their own model file so long as it is consistent with the supplied posterior at each step of analysis.
-`popclass` also supplies tools for visualizing population models (in multi-dimensional parameter space) alongside the supplied posterior samples (FIGURE?).
 
 # Statement of need
 In the current climate of observational astronomy, with the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015] soon to see first light, selection of interesting targets becomes key to maximizing science output.
