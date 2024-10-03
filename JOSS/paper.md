@@ -72,25 +72,19 @@ and uncertainty quantification methods that can be included in the classificatio
 # Statement of need
 
 The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
-will come with a deludge of the dections of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019].
-<<<<<<< HEAD
-To miximize the science output of this event stream it is critical to identify events which has a high proablity of being
-caused by interesting lens types such as isolated black holes [@Sahu2022; @Lam2022].  
-=======
-To miximize the science output of this event stream it is critical to identify
->>>>>>> 19371f61b183b26bd692ed033c9fdd5a9880cdc0
+will trigger a deludge of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019].
+To miximize the science output of this event stream it is critical to identify events that have a high proablity of being
+caused by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive follow-up
+observations such as space based astrometry [@Sahu2022] or ground based adaptic optics imaging [@Terry2022] to confirm their nature. 
 
-In the current climate of observational astronomy, with the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015] soon to see first light, selection of interesting targets becomes key to maximizing science output.
-In the realm of time-domain astronomy and transients, it is important to be able to quickly identify targets for follow-up imaging with confidence that the selected object is an appropriate use of resources.
-Use of the classifier is not computationally intensive; the code creates kernel density estimates via `scipy` [@Virtanen2020], but otherwise relies on Galactic model simulations and event parameter fitting to have been run prior.
-
-With the recent discovery of the first confirmed isolated stellar-origin black hole [@Sahu2022; @Lam2022], the search for microlensing dark remnants is a timely topic. While other codes for inferring lens properties - such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] - have recently been made public and have yielded successful mass determinations and dark remnant candidates, their strengths lie in incorporating additional follow-up information (e.g. source proper motions and distances, multiband photometry or spectroscopy, finite source effect). We provide a complimentary method that is flexible, lightweight and does not require any information beyond that easily obtainable from the event light curve (e.g. $\log_{10} t_{\rm E} - \log_{10}\pi_{\rm E}$ posterior distributions). Our method also assesses the inherent uncertainty of its classifications, which is crucial in cases of low information content or missing populations [@Kaczmarek2024]. Those qualities make our classifier a perfect tool to apply to wide databases and filter promising events for follow-up, which is specifically desirable in the era of microlensing databases containing $\sim 10^4$ events. Furthermore, we provide tools to quantify and visualize intrinsic uncertainty over a parameter space given a Galactic model, which will also aid in making follow-up decisions - e.g. to free up resources for other events rather than further constraining an event posterior, if tighter constraints cannot decrease its classification uncertainty.
-
-We aim to make `popclass` maximally flexible and user-friendly. All astrophysical assumptions come from the Galactic model, which can be freely modified by the user either by injecting additional populations or by providing a new set of population samples altogether. We use the Advanced Scientific Data Format (ASDF) [@Greenfield2015], which is set to become a new standard for astronomical data, as a default solution for storing population models. In case of posteriors, we provide a convenient interface to commonly used Bayesian inference libraries, such as `dynesty` [@Speagle2020], `pymultinest` [@Buchner2016] or `ArviZ` [@arviz_2019], as well as microlensing-specific libraries such as BAGLE[^1], so that their output can be directly read by `popclass`. The parameter set is also modifiable to adjust to the science case, both within and outside of microlensing. A natural example is a straightforward extension to astrometry by incorporating the event's angular scale $\theta_{\rm E}$, which is particularly important for the upcoming _Roman Space Telescope_ data. Generally, `popclass` can be applied to any problem where a posterior distribution is to be classified given simulated samples of target classes in a given parameter space.
-
-(current and expected use cases: please fill!)
-
-[^1]:[https://github.com/MovingUniverseLab/BAGLE_Microlensing](https://github.com/MovingUniverseLab/BAGLE_Microlensing)
+Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate lens 
+mass-distance constraints using microlensing event lightcurve and additional auxillary information 
+(e.g. source proper motions,distances, color, or finite source effect). Using axillary information makes these current
+methods powerful but limits them to only be effective for events with the available auxillary data. 
+Moreoever, no current software tools explicitly predict lens type and always assumes a fixed Galactic model.
+`popclass` fills the need for a flexiable microlensing classification software package that can be broadly 
+applied to classify all events from the Vera C. Rubin Observatory and  _Nancy Grace Roman Space Telescope_
+and can be used with any Galactic model in the form of a simuation.
 
 # Method
 
