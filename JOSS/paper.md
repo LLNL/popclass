@@ -107,9 +107,9 @@ drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters se
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
     \times \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})}$$.
 
-This allows us to we leverage previously calculated posterior samples to perform lens classification for a single event in
+This allows us to leverage previously calculated posterior samples to perform lens classification for a single event in
 the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ is calculated using kernel
-density estimation in `popclass` over the $\theta$ with a simulated catalog of microlensing events
+density estimation in `popclass` over $\theta$ with a simulated catalog of microlensing events
 from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before
 any data is seen, which is just set by relative number of expected events predicted by the Galactic model $\mathcal{G}$.
 
