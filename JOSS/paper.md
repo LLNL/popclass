@@ -50,48 +50,50 @@ aas-journal:
 
 # Summary
 
-`popclass` is a Python library that provides a flexible, probabilistic framework for classifying
-the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive
-foreground object - the lens (e.g., a star, white dwarf or a black hole) passes infront of and
-deflects the light from a distant background star. This causes an apparant brightening, and shift
-in position, of the background source. In most cases, characteristics of the microlensing
-signal do not contain enough information to definitively identity the lens type. However, different
-lens types (e,g., Stars vs black holes) can lie in different but overlapping regions of
-the characteristics of the microlensing signal. For examples, black holes tend to be more massive than
-stars and therefore cause microlensing signals that are longer. Current Galactic models allow the simulation
-of where differnt lens types lie in the observational space and can therefore be leveraged to classify
-an event [@Lam2020].
+`popclass` is a Python library that provides a flexible, probabilistic framework for classifying 
+the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive 
+foreground object - the lens (e.g., a star, white dwarf or a black hole) passes in front of and 
+deflects the light from a distant background star. This causes an apparent brightening, and shift
+in position, of the background source. In most cases, characteristics of the microlensing signal 
+do not contain enough information to definitively identity the lens type. However, different lens 
+types (e.g., stars vs black holes) can lie in different but overlapping regions of the characteristics
+of the microlensing signal. For examples, black holes tend to be more massive than stars and 
+therefore cause microlensing signals that are longer. Current Galactic model simulations allow 
+the prediction of where different lens types lie in the observational space and can therefore be
+ leveraged to classify an event [@Lam2020].
 
-`popclass` allows a user to match characteristics of a microlensing signal to a simulation of the
-Galaxy to calculate lens class probabilities for an event. The user can flexibly use constraints
-on any microlensing signal characteristics and specific their own Galactic simulation.
-`popclass` also comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016]
-for microlesning signal constraints, pre-loaded Galactic simulations, plotting fuctionality,
-and uncertainty quantification methods that can be included in the classification calculation.
+`popclass` allows a user to match characteristics of a microlensing signal to a simulation of the 
+Galaxy to calculate lens type probabilities for an event. The user can flexibly use constraints on
+any microlensing signal characteristics and specific their own Galactic simulation. `popclass` also
+comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] for microlensing
+signal constraints, pre-loaded Galactic simulations, plotting functionality, and uncertainty 
+quantification methods that can be included in the classification calculation.
+
 
 # Statement of need
 
-The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
-will trigger a deludge of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019].
-To miximize the science output of this event stream it is critical to identify events that have a high proablity of being
-caused by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive follow-up
-observations such as space based astrometry [@Sahu2022] or ground based adaptic optics imaging [@Terry2022] to confirm their nature.
+The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015] 
+will trigger a delude of tens-of-thousands of microlensing events per year [@Abrams2023;@Penny2019]. To maximize the 
+science output of this event stream it is critical to identify events that have a high probability of being caused 
+by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive 
+follow-up observations such as space-based astrometry [@Sahu2022] or ground-based adaptive optics imaging [@Terry2022] 
+to confirm their nature. 
 
-Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate lens
-mass-distance constraints using microlensing event lightcurve and additional auxillary information
-(e.g. source proper motions,distances, color, or finite source effect). Using axillary information makes these current
-methods powerful but limits them to only be effective for events with the available auxillary data.
-Moreoever, no current software tools explicitly predict lens type and always assumes a fixed Galactic model.
-`popclass` fills the need for a flexiable microlensing classification software package that can be broadly
-applied to classify all events from the Vera C. Rubin Observatory and  _Nancy Grace Roman Space Telescope_
-and can be used with any Galactic model in the form of a simuation.
+Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate 
+lens mass-distance constraints using microlensing event light curve and additional auxiliary information 
+(e.g. source proper motions, distances, color, or finite source effect). Using axillary information makes these
+current methods powerful but limits them to only be effective for events with the available auxiliary data. Moreover,
+no current software tools explicitly predict lens type and always assumes a fixed Galactic model. `popclass` fills the
+need for a flexible microlensing classification software package that can be broadly applied to classify all events 
+from the Vera C. Rubin Observatory and  _Nancy Grace Roman Space Telescope_ and can be used with any Galactic model 
+in the form of a simulation.
 
 # Method
 
 `popclass` relies on the general Bayesian classification framework detailed in [@Perkins2024]. Consider the data from a
 single microlensing event $\boldsymbol{d}$, and a model of the Galaxy $\mathcal{G}$. `popclass`
 calculates the probability that the lens of the events belongs to each lens class, $\text{class}_L$, where
-$\text{class}_L\in\text{classes}$ and, for exmaple,
+$\text{class}_L\in\text{classes}$ and, for example,
 $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, `popclass` calculates
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.$$
@@ -114,7 +116,8 @@ any data is seen, which is just set by relative number of expected events predic
 
 # Acknowledgements
 
-This work was performed under the auspices of the U.S.
+`popclass` depends on numpy [@Harris2020], scipy [@Virtanen2020], asdf [@Greenfield2015], matplotlib [@Hunter2007], and scikit-learn [@sklearn_api].
+  This work was performed under the auspices of the U.S.
 Department of Energy by Lawrence Livermore National
 Laboratory (LLNL) under Contract DE-AC52-07NA27344.
 The theoretical foundation of this work was established
