@@ -61,7 +61,11 @@ the characteristics of the microlensing signal. For examples, black holes tend t
 stars and therefore cause microlensing signals that are longer. 
 
 `popclass` allows a user to match characteristics of a microlensing signal to a simulation of the 
-Galaxy to calculate lens class probabilities for an event. The user can flexabli
+Galaxy to calculate lens class probabilities for an event. The user can flexibly use constraints
+on any microlensing signal characteristics and specific their own Galactic simulation.
+`popclass` also comes with an interface to arviz and pymultinest for microlesning signal 
+constraints, pre-loaded Galactic simulations, plotting fuctionality, and uncertainty 
+quantification methods that can be included in the classification calculation.
 
 The primary and first intended use case is in classifying microlensing events based on the event posterior and subject to a pre-specified galactic model.
 At base level, the library solves the following:
