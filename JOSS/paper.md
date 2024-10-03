@@ -89,9 +89,9 @@ and can be used with any Galactic model in the form of a simuation.
 # Method
 
 `popclass` relies on the general Bayesian classification framework detailed in [@Perkins2024]. Consider the data from a
-single microlensing event light curve $\boldsymbol{d}$, using a model of the Galaxy $\mathcal{G}$, `popclass`
+single microlensing event $\boldsymbol{d}$, and a model of the Galaxy $\mathcal{G}$. `popclass`
 calculates the probability that the lens of the events belongs to each lens class, $\text{class}_L$, where
-$\text{class}_L\in\text{classes}$ and for exmaple,
+$\text{class}_L\in\text{classes}$ and, for exmaple,
 $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, `popclass` calculates
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.$$
@@ -101,7 +101,7 @@ Using Bayes' theorem we can write,
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
 Assuming that our set of considered lens classes is complete, and using importance sampling [@Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
-drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters $\theta=[t_{E}, \pi_{E}, \text{...}]$ of the microlensing signal,
+drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters set of microlensing signal parameters (e.g., $\theta=[t_{E}, \pi_{E}, \text{...}]$),
 
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
     \times \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})}$$.
