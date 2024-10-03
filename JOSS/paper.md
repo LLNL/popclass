@@ -50,9 +50,9 @@ aas-journal:
 
 # Summary
 
-`popclass` is a python package that provides a flexible, probabilistic framework for classifying 
-the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive 
-foreground object - the lens (e.g., a star, white dwarf or a black hole) passes in front of and 
+`popclass` is a python package that provides a flexible, probabilistic framework for classifying
+the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive
+foreground object - the lens (e.g., a star, white dwarf or a black hole) passes in front of and
 deflects the light from a distant background star. This causes an apparent brightening, and shift
 in position, of the background source. In most cases, characteristics of the microlensing signal
 do not contain enough information to definitively identity the lens type. However, different lens
@@ -66,17 +66,17 @@ the prediction of where different lens types lie in the observational space and 
 Galaxy to calculate lens type probabilities for an event. The user can flexibly use constraints on
 any microlensing signal characteristics and specific their own Galactic model. `popclass` also
 comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] for microlensing
-signal constraints, pre-loaded Galactic models, plotting functionality, and uncertainty 
+signal constraints, pre-loaded Galactic models, plotting functionality, and uncertainty
 quantification methods that can be included in the classification calculation. The probabilistic
 framework for popclass was developed in @Perkins2024, used in @Fardeen2024 
 and has be applied to classify microlensing events in @Kaczmarek2024 .
 
 # Statement of need
 
-The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015] 
-will trigger a delude of tens-of-thousands of microlensing events per year [e.g., @Abrams2023;@Penny2019]. To maximize the science output of this event stream it is critical to identify events that have a high probability of being caused 
-by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive 
-follow-up observations such as space-based astrometry [e.g., @Sahu2022] or ground-based adaptive optics imaging [e.g., @Terry2022]  to confirm their nature. 
+The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
+will trigger a delude of tens-of-thousands of microlensing events per year [e.g., @Abrams2023;@Penny2019]. To maximize the science output of this event stream it is critical to identify events that have a high probability of being caused
+by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive
+follow-up observations such as space-based astrometry [e.g., @Sahu2022] or ground-based adaptive optics imaging [e.g., @Terry2022]  to confirm their nature.
 
 Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate 
 lens mass-distance constraints using microlensing event light curve and additional auxiliary information 
