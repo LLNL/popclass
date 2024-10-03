@@ -68,8 +68,8 @@ any microlensing signal characteristics and specific their own Galactic model. `
 comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] for microlensing
 signal constraints, pre-loaded Galactic models, plotting functionality, and uncertainty 
 quantification methods that can be included in the classification calculation. The probabilistic
-framework for popclass was developed in @Perkins2023 and has be applied to microlensing data
-in @Kaczmarek2024 .
+framework for popclass was developed in @Perkins2024, used in @Fardeen2024 
+and has be applied to classify microlensing events in @Kaczmarek2024 .
 
 # Statement of need
 
@@ -80,7 +80,7 @@ follow-up observations such as space-based astrometry [e.g., @Sahu2022] or groun
 
 Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate 
 lens mass-distance constraints using microlensing event light curve and additional auxiliary information 
-(e.g. source proper motions, distances, color, or finite source effects). Using axillary information makes these
+(e.g., source proper motions, distances, color, or finite source effects). Using axillary information makes these
 current methods powerful but limits them to only be effective for events with the available auxiliary data. Moreover,
 no current software tools explicitly predict lens type and always assumes a fixed Galactic model. `popclass` fills the
 need for a flexible microlensing classification software package that can be broadly applied to classify all events
@@ -101,15 +101,15 @@ Using Bayes' theorem we can write,
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
-Assuming that our set of considered lens classes is complete, and using importance sampling [e.g., @Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
-drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters set of microlensing signal parameters (e.g., $\theta=[t_{E}, \pi_{E}, \text{...}]$),
+Assuming that our set of considered lens classes is complete, $p(\boldsymbol{d}| \mathcal{G})$ is a normalization factor chosen such that all lens class probabilities sum to unity. Using importance sampling [e.g., @Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
+drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters set of microlensing signal parameters, $\theta$,
 
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
     \times \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})}$$.
 
 This allows us to we leverage previously calculated posterior samples to perform lens classification for a single event in
-the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ can be calculated by using kernel
-density estimation in `popclass` over the single event observable space using a simulated catalog of microlensing events
+the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ is calculated using kernel
+density estimation in `popclass` over the $\theta$ with a simulated catalog of microlensing events
 from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before
 any data is seen, which is just set by relative number of expected events predicted by the Galactic model $\mathcal{G}$.
 
