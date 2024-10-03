@@ -62,11 +62,11 @@ stars and therefore cause microlensing signals that are longer. Current Galactic
 of where differnt lens types lie in the observational space and can therfore be leveraged to classify
 an event [@Lam2020].
 
-`popclass` allows a user to match characteristics of a microlensing signal to a simulation of the 
+`popclass` allows a user to match characteristics of a microlensing signal to a simulation of the
 Galaxy to calculate lens class probabilities for an event. The user can flexibly use constraints
 on any microlensing signal characteristics and specific their own Galactic simulation.
-`popclass` also comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] 
-for microlesning signal constraints, pre-loaded Galactic simulations, plotting fuctionality, 
+`popclass` also comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016]
+for microlesning signal constraints, pre-loaded Galactic simulations, plotting fuctionality,
 and uncertainty quantification methods that can be included in the classification calculation.
 
 # Statement of need
