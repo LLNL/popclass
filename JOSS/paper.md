@@ -134,8 +134,6 @@ $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs
 to each class before any data is seen, which is just set by relative number of expected
 events predicted by the Galactic model $\mathcal{G}$.
 
-# Figures
-
 # Acknowledgements
 
 This work was performed under the auspices of the U.S.
