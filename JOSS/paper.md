@@ -34,7 +34,7 @@ authors:
 affiliations:
  - name: Space Science Institute, Lawrence Livermore National Laboratory, 7000 East Ave., Livermore, CA 94550, USA
    index: 1
- - name: Zentrum fur Astronomie der Universitat Heidelberg, Astronomisches Rechen-Institut, Monchhofstr. 12-14, 69120 Heidelberg, Germany
+ - name: Zentrum f&uuml;r Astronomie der Universit&auml;t Heidelberg, Astronomisches Rechen-Institut, M&ouml;nchhofstr. 12-14, 69120 Heidelberg, Germany
    index: 2
  - name: University of California, Berkeley, Astronomy Department, Berkeley, CA 94720, USA
    index: 3
