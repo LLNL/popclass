@@ -26,3 +26,9 @@ visualization
 
 .. automodule:: popclass.visualization
    :members:
+
+uncertainty quantification
+--------------------------
+
+.. automodule:: popclass.uq
+   :members:
