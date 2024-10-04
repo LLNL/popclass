@@ -113,6 +113,12 @@ density estimation in `popclass` over $\theta$ with a simulated catalog of micro
 from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before
 any data is seen, which is just set by relative number of expected events predicted by the Galactic model $\mathcal{G}$.
 
+# Figures
+
+![Left: posterior distribution of an event in log10(timescale)-log10(parallax) space, overlaid on 'star', 'white dwarf', 'neutron star' and 'black hole' contours. Right: bars showing probabilities of that event belonging to each of the lens populations.](lens_class.png)
+
+Example of popclass classifying a microlensing event with a given posterior distribution in $\log_{10} t_{\rm E}$ - $\log_{10} \pi_{\rm E}$ space. Left panel shows a population simulation used to classify the event. Right panel shows the output lens classification from popclass, which is calculated by combining the event posterior information with the simulation.
+
 # Acknowledgements
 
 `popclass` depends on numpy [@Harris2020], scipy [@Virtanen2020], asdf [@Greenfield2015], matplotlib [@Hunter2007], and scikit-learn [@sklearn_api].
