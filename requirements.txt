@@ -4,9 +4,11 @@ scipy
 pytest
 asdf
 matplotlib
+scikit-learn
 sphinx
 sphinx_rtd_theme
 sphinxcontrib-bibtex
+nbsphinx
 arviz
 dynesty
 pymultinest

@@ -8,6 +8,8 @@ import asdf
 import numpy as np
 import pkg_resources
 from scipy.stats import gaussian_kde
+from scipy.stats import multivariate_normal
+from sklearn.neighbors import KernelDensity
 
 AVAILABLE_MODELS = [
     "popsycle_singles_raithel18",
@@ -26,7 +28,9 @@ class PopulationModel:
         population_samples,
         class_weights,
         parameters,
+        citation=None,
         density_estimator=gaussian_kde,
+        density_kwargs={},
     ):
         """
         Initialize PopulationModel.
@@ -40,6 +44,8 @@ class PopulationModel:
             parameters (list(str)):
                 list of parameter names sets the order for the second dimension
                 in population_samples.
+            citation (list):
+                list of DOI entries for citing the model.
             density_estimator: (scipy.stats.gaussian_kde like):
                 Kernel density estimator used to compute density from
                 population data.
@@ -48,7 +54,9 @@ class PopulationModel:
         self._class_weights = class_weights
         self._population_samples = population_samples
         self._density_estimator = density_estimator
+        self._density_kwargs = density_kwargs
         self._parameters = parameters
+        self._citation = citation
 
     @classmethod
     def from_asdf(cls, path):
@@ -68,11 +76,13 @@ class PopulationModel:
             population_samples = tree["class_data"]
             parameters = tree["parameters"]
             class_weights = tree["class_weights"]
+            citation = tree["citation"]
 
         return cls(
             population_samples=population_samples,
             parameters=parameters,
             class_weights=class_weights,
+            citation=citation,
         )
 
     @classmethod
@@ -136,6 +146,16 @@ class PopulationModel:
         return self._parameters
 
     @property
+    def citation(self):
+        """
+        Return the citation of the population model.
+
+        Returns:
+            List of DOI entries corresponding to cite the model.
+        """
+        return self._citation
+
+    @property
     def classes(self):
         """
         Return all classes available in the population model.
@@ -174,7 +194,7 @@ class PopulationModel:
             density_evaluation (np.ndarray)
         """
         class_samples = self.samples(class_name, parameters).swapaxes(0, 1)
-        kernel = self._density_estimator(class_samples)
+        kernel = self._density_estimator(class_samples, **self._density_kwargs)
         return kernel.evaluate(points.swapaxes(0, 1))
 
     def to_asdf(self, path, model_name):
@@ -190,9 +210,35 @@ class PopulationModel:
             "parameters": self._parameters,
             "class_weights": self._class_weights,
             "model_name": model_name,
+            "citation": self._citation,
         }
         af = asdf.AsdfFile(tree)
         af.write_to(path)
+
+
+class MultivariateGaussianKernel:
+    """An example of defining a custom kernel for a PopulationModel. Wraps scipy.stats.multivariate_normal to conform to the template needed by PopulationModel and classify."""
+
+    def __init__(self, data):
+        """Initialization.
+
+        Args:
+            data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
+        Returns:
+            None
+        """
+        self.mean = np.mean(data, axis=1)
+        self.cov = np.cov(data)
+
+    def evaluate(self, pts):
+        """Evaluation method for calculating the pdf of the kernel at a set of points.
+
+        Args:
+            pts (numpy.array): array of points to evaluate the density on. Shape: [# dimensions, # of points].
+        Returns:
+            evaluated_density (numpy.array): the probability density values at each of the corresponding points.
+        """
+        return multivariate_normal.pdf(pts.T, mean=self.mean, cov=self.cov)
 
 
 def validate_asdf_population_model(asdf_object):
@@ -206,7 +252,13 @@ def validate_asdf_population_model(asdf_object):
     Returns:
         True if asdf is valid. False otherwise.
     """
-    valid_key_set = ["model_name", "class_weights", "parameters", "class_data"]
+    valid_key_set = [
+        "model_name",
+        "class_weights",
+        "parameters",
+        "class_data",
+        "citation",
+    ]
     keys_present = [name in asdf_object for name in valid_key_set]
 
     if all(keys_present):
@@ -217,7 +269,41 @@ def validate_asdf_population_model(asdf_object):
             data.shape[1] == number_of_parameters
             for data in asdf_object["class_data"].values()
         ]
-        valid = all(valid_class_data_dim)
+
+        # Validating the citation field
+        citation = asdf_object["citation"]
+        valid_citation = isinstance(citation, list) and all(
+            isinstance(doi, str) for doi in citation
+        )
+
+        valid = all(valid_class_data_dim) and valid_citation
     else:
         valid = False
     return valid
+
+
+class CustomKernelDensity:
+    """An example of defining a custom kernel for a PopulationModel. Wraps sklearn.neighbors.KernelDensity to conform to the template needed by PopulationModel and classify."""
+
+    def __init__(self, data, **kwargs):
+        """Initialization.
+        Args:
+            data (numpy.array): shape [# dims, # samples]. Same as scipy.stats.gaussian_kde
+            kernel_type (str): matches 'kernel' argument of KernelDensity. Default: "tophat".
+            bandwidth (float): matches 'bandwidth' argument of KernelDensity. Default: 0.4.
+        Returns:
+            None
+        """
+        self.data = data
+        self.density_kwargs = kwargs
+
+    def evaluate(self, pts):
+        """Evaluation method for calculating the pdf of the kernel at a set of points.
+
+        Args:
+            pts (numpy.array): array of points to evaluate the density on. Shape: [# dimensions, # of points].
+        Returns:
+            evaluated_density (numpy.array): the probability density values at each of the corresponding points.
+        """
+        kernel = KernelDensity(**self.density_kwargs).fit(self.data.T)
+        return np.exp(kernel.score_samples(pts.T))
