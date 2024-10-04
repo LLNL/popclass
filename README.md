@@ -2,10 +2,10 @@
 
 [![Documentation Status](https://readthedocs.org/projects/popclass/badge/?version=latest)](https://popclass.readthedocs.io/en/latest/?badge=latest) ![Tests](https://github.com/LLNL/popclass/actions/workflows/test.yml/badge.svg) [![codecov](https://codecov.io/gh/LLNL/popclass/graph/badge.svg?token=A4DAAGSE2V)](https://codecov.io/gh/LLNL/popclass) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/LLNL/popclass/main.svg)](https://results.pre-commit.ci/latest/github/LLNL/popclass/main) ![PyPI](https://img.shields.io/pypi/v/popclass?label=pypi%20package) [![conda-forge](https://anaconda.org/conda-forge/popclass/badges/version.svg)](https://anaconda.org/conda-forge/popclass)
 
-popclass is a python package that allows flexible, probabilistic classification of 
-the lens of a microlensing event given the event's posterior distribution and a model of 
-the Galaxy. popclass provides the bridge between Galactic simulation and lens classification, 
-an interface to common Bayesian inference libraries, and the ability for users to flexibly 
+popclass is a python package that allows flexible, probabilistic classification of
+the lens of a microlensing event given the event's posterior distribution and a model of
+the Galaxy. popclass provides the bridge between Galactic simulation and lens classification,
+an interface to common Bayesian inference libraries, and the ability for users to flexibly
 specify their own Galactic model and classification parameters.
 
 For more details on the project please including the installation, contributing, and the getting started guide see the [documentation](https://popclass.readthedocs.io).
