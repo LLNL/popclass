@@ -117,7 +117,7 @@ any data is seen, which is just set by relative number of expected events predic
 
 ![Left: posterior distribution of an event in log10(timescale)-log10(parallax) space, overlaid on 'star', 'white dwarf', 'neutron star' and 'black hole' contours. Right: bars showing probabilities of that event belonging to each of the lens populations.](lens_class.png)
 
-Example of popclass classifying a microlensing event with a given posterior distribution in $\log_{10} t_{\rm E}$ - $\log_{10} \pi_{\rm E}$ space. Left panel shows a population simulation used to classify the event. Right panel shows the output lens classification from popclass, which is calculated by combining the event posterior information with the simulation.
+Example of popclass classifying a microlensing event with a given posterior distribution in $\log_{10} t_{\rm E}$ - $\log_{10} \pi_{\rm E}$ space. Left: solid contours represent the KDE of the simulated lens populations used to classify the event, while shaded contours represent an inferred event posterior distribution. Right: output lens classification from popclass, which is calculated by combining the inference data with the simulation.
 
 # Acknowledgements
 
