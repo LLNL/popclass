@@ -115,7 +115,7 @@ any data is seen, which is just set by relative number of expected events predic
 
 # Figures
 
-![Example of popclass classifying a microlensing event with a given posterior distribution in $\log_{10} t_{\rm E}$ - $\log_{10} \pi_{\rm E}$ space. Left: solid contours represent the KDE of the simulated lens populations used to classify the event, while shaded contours represent an inferred event posterior distribution. Right: output lens classification from popclass, which is calculated by combining the inference data with the simulation.] (lens_class.png)
+![Example of popclass classifying a microlensing event with a given posterior distribution in $\log_{10} t_{\rm E}$ - $\log_{10} \pi_{\rm E}$ space. Left: solid contours represent the KDE of the simulated lens populations used to classify the event, while shaded contours represent an inferred event posterior distribution. Right: output lens classification from popclass, which is calculated by combining the inference data with the simulation.](lens_class.png)
 
 # Acknowledgements
 
