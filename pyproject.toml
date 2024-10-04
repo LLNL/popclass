@@ -17,7 +17,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
 ]
-dependencies = ["scipy", "numpy", "asdf", "matplotlib", "sklearn"]
+dependencies = ["scipy", "numpy", "asdf", "matplotlib", "scikit-learn"]
 
 [tool.setuptools.packages.find]
 where = ["popclass/data"]
