@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "popclass"
-version = "0.1.2"
-description = "A python package for classifying microlensing events"
+version = "0.2.0"
+description = "A python package that allows flexable, probabilistic classification of a microlensing event"
 authors = [{ name = "Greg Sallaberry, Scott E. Perkins, Peter McGill, Zofia Kaczmarek, William A. Dawson", email = "mcgill5@llnl.gov" }]
 readme = "README.md"
 requires-python = ">=3.8"
@@ -17,7 +17,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
 ]
-dependencies = ["scipy", "numpy", "asdf", "matplotlib"]
+dependencies = ["scipy", "numpy", "asdf", "matplotlib", "sklearn"]
 
 [tool.setuptools.packages.find]
 where = ["popclass/data"]
