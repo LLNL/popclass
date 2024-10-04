@@ -69,7 +69,7 @@ comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016
 signal constraints, pre-loaded Galactic models, plotting functionality, and uncertainty
 quantification methods that can be included in the classification calculation. The probabilistic
 framework for popclass was developed in @Perkins2024, used in @Fardeen2024
-and has been applied to classify microlensing events in @Kaczmarek2024 .
+and has been applied to classify microlensing events in @Kaczmarek2024.
 
 # Statement of need
 
@@ -80,9 +80,9 @@ follow-up observations such as space-based astrometry [e.g., @Sahu2022] or groun
 
 Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate
 lens mass-distance constraints using microlensing event light curve and additional auxiliary information
-(e.g., source proper motions, distances, color, or finite source effects). Using axillary information makes these
+(e.g., source proper motions, distances, color, or finite source effects). Using auxiliary information makes these
 current methods powerful but limits them to only be effective for events with the available auxiliary data. Moreover,
-no current software tools explicitly predict lens type and always assumes a fixed Galactic model. `popclass` fills the
+no current software tools explicitly predict lens type, and they always assume a fixed Galactic model. `popclass` fills the
 need for a flexible microlensing classification software package that can be broadly applied to classify all events
 from the Vera C. Rubin Observatory and  _Nancy Grace Roman Space Telescope_ and can be used with any Galactic model
 in the form of a simulation.
@@ -102,7 +102,7 @@ Using Bayes' theorem we can write,
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
 Assuming that our set of considered lens classes is complete, $p(\boldsymbol{d}| \mathcal{G})$ is a normalization factor chosen such that all lens class probabilities sum to unity. Using importance sampling [e.g., @Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
-drawn under some prior, $\pi(\theta)$, obtained from fittings some parameters set of microlensing signal parameters, $\theta$,
+drawn under some prior, $\pi(\theta)$, obtained from fitting some parameter set of microlensing signal parameters, $\theta$,
 
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
     \times \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})}$$.
