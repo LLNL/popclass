@@ -8,7 +8,7 @@ the Galaxy. popclass provides the bridge between Galactic simulation and lens cl
 an interface to common Bayesian inference libraries, and the ability for users to flexibly
 specify their own Galactic model and classification parameters.
 
-For more details on the project please including the installation, contributing, and the getting started guide see the [documentation](https://popclass.readthedocs.io).
+For more details on the project including the installation, contributing, and the getting started guide see the [documentation](https://popclass.readthedocs.io).
 
 ![image info](./docs/images/lens_class.gif)
 
