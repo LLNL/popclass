@@ -139,6 +139,7 @@ constitute or imply its endorsement, recommendation, or favoring by the United S
 Government or Lawrence Livermore National Security, LLC. The views and opinions of authors
 expressed herein do not necessarily state or reflect those of the United States Government
 or Lawrence Livermore National Security, LLC, and shall not be used for advertising or
-product endorsement purposes.
+product endorsement purposes. ZK is a Fellow of the International Max Planck Research School for Astronomy and Cosmic Physics at the University of Heidelberg (IMPRS-HD).
+
 
 # References
