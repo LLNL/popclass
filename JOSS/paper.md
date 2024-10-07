@@ -124,7 +124,7 @@ Example of popclass classifying a microlensing event with a given posterior dist
 `popclass` depends on numpy [@Harris2020], scipy [@Virtanen2020], asdf [@Greenfield2015], matplotlib [@Hunter2007], and scikit-learn [@sklearn_api].
   This work was performed under the auspices of the U.S.
 Department of Energy by Lawrence Livermore National
-Laboratory (LLNL) under Contract DE-AC52-07NA27344.
+Laboratory (LLNL) under Contract DE-AC52-07NA27344. The document number is LLNL-JRNL-870290 and the code number is LLNL-CODE-2000456.
 The theoretical foundation of this work was established
 under support from Lawrence Livermore National Laboratory’s
 Laboratory Directed Research and Development Program
