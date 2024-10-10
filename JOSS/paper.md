@@ -42,8 +42,6 @@ affiliations:
 date: 13 August 2017
 bibliography: paper.bib
 
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
 aas-doi:
 aas-journal:
 ---
@@ -52,31 +50,30 @@ aas-journal:
 
 `popclass` is a python package that provides a flexible, probabilistic framework for classifying
 the lens of a gravitational microlensing event. Gravitational microlensing occurs when a massive
-foreground object - the lens (e.g., a star, white dwarf or a black hole) passes in front of and
-deflects the light from a distant background star. This causes an apparent brightening, and shift
+foreground object (e.g., a star, white dwarf or a black hole) passes in front of and
+lenses the light from a distant background star. This causes an apparent brightening, and shift
 in position, of the background source. In most cases, characteristics of the microlensing signal
 do not contain enough information to definitively identity the lens type. However, different lens
-types (e.g., stars vs black holes) can lie in different but overlapping regions of the characteristics
-of the microlensing signal. For examples, black holes tend to be more massive than stars and
-therefore cause microlensing signals that are longer. Current Galactic model simulations allow
+types can lie in different but overlapping regions of the characteristics
+of the microlensing signal. For example, black holes tend to be more massive than stars and
+therefore cause microlensing signals that are longer. Current Galactic simulations allow
 the prediction of where different lens types lie in the observational space and can therefore be
- leveraged to classify an event [e.g., @Lam2020].
+leveraged to classify events [e.g., @Lam2020].
 
 `popclass` allows a user to match characteristics of a microlensing signal to a simulation of the
-Galaxy to calculate lens type probabilities for an event. The user can flexibly use constraints on
-any microlensing signal characteristics and specify their own Galactic model. `popclass` also
+Galaxy to calculate lens type probabilities for an event (see Figure 1). Constraints on
+any microlensing signal characteristics and any Galactic model can be used. `popclass`
 comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] for microlensing
-signal constraints, pre-loaded Galactic models, plotting functionality, and uncertainty
-quantification methods that can be included in the classification calculation. The probabilistic
-framework for popclass was developed in @Perkins2024, used in @Fardeen2024
-and has been applied to classify microlensing events in @Kaczmarek2024.
+signal constraints, pre-loaded Galactic models, plotting functionality, and classification uncertainty
+quantification methods. The probabilistic framework for popclass was developed in @Perkins2024, 
+used in @Fardeen2024 and has been applied to classifying events in @Kaczmarek2024.
 
 # Statement of need
 
 The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
-will trigger a deluge of tens-of-thousands of microlensing events per year [e.g., @Abrams2023;@Penny2019]. To maximize the science output of this event stream it is critical to identify events that have a high probability of being caused
-by interesting lens types such as an isolated black hole [@Sahu2022; @Lam2022], and then to allocate expensive
-follow-up observations such as space-based astrometry [e.g., @Sahu2022] or ground-based adaptive optics imaging [e.g., @Terry2022]  to confirm their nature.
+will detect tens-of-thousands of microlensing events per year [e.g., @Abrams2023;@Penny2019]. To maximize the science output of this event stream it is critical to identify events that have a high probability of being caused
+by a lens type such as a black hole [@Sahu2022; @Lam2022], and then to allocate expensive
+follow-up observations such as space-based astrometry [e.g., @Sahu2022] or ground-based adaptive optics imaging [e.g., @Terry2022] to confirm their nature.
 
 Current microlensing software packages such as `DarkLensCode` [@Howil2024] or `PyLiMASS` [@Bachelet2024] estimate
 lens mass-distance constraints using microlensing event light curve and additional auxiliary information
@@ -89,7 +86,7 @@ in the form of a simulation.
 
 # Method
 
-`popclass` relies on the general Bayesian classification framework detailed in [@Perkins2024]. Consider the data from a
+`popclass` relies on the Bayesian classification framework in [@Perkins2024]. Consider the data from a
 single microlensing event $\boldsymbol{d}$, and a model of the Galaxy $\mathcal{G}$. `popclass`
 calculates the probability that the lens of the events belongs to each lens class, $\text{class}_L$, where
 $\text{class}_L\in\text{classes}$ and, for example,
@@ -97,11 +94,11 @@ $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namel
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) \text{ for } \text{class}_L\in\text{classes}.$$
 
-Using Bayes' theorem we can write,
+Using Bayes' theorem,
 
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
-Assuming that our set of considered lens classes is complete, $p(\boldsymbol{d}| \mathcal{G})$ is a normalization factor chosen such that all lens class probabilities sum to unity. Using importance sampling [e.g., @Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
+Assuming that the set of considered lens classes is complete, $p(\boldsymbol{d}| \mathcal{G})$ is a normalization factor such that all lens class probabilities sum to unity. Using importance sampling [e.g., @Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
 drawn under some prior, $\pi(\theta)$, obtained from fitting some parameter set of microlensing signal parameters, $\theta$,
 
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
@@ -113,11 +110,7 @@ density estimation in `popclass` over $\theta$ with a simulated catalog of micro
 from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before
 any data is seen, which is just set by relative number of expected events predicted by the Galactic model $\mathcal{G}$.
 
-# Figures
-
 ![Left: posterior distribution of an event in log10(timescale)-log10(parallax) space, overlaid on 'star', 'white dwarf', 'neutron star' and 'black hole' contours. Right: bars showing probabilities of that event belonging to each of the lens populations.](lens_class.png)
-
-Example of popclass classifying a microlensing event with a given posterior distribution in $\log_{10} t_{\rm E}$ - $\log_{10} \pi_{\rm E}$ space. Left: solid contours represent the KDE of the simulated lens populations used to classify the event, while shaded contours represent an inferred event posterior distribution. Right: output lens classification from popclass, which is calculated by combining the inference data with the simulation.
 
 # Acknowledgements
 
@@ -132,21 +125,9 @@ under project 22-ERD-037. The software implementation
 for this project was funded under the LLNL
 Space Science Institute's Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
-Academic Engagement Office. This work was prepared as an account of
-work sponsored by an agency of the United States
-Government. Neither the United States Government nor Lawrence Livermore
-National Security,
-LLC, nor any of their employees makes any warranty,
-expressed or implied, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any
-information, apparatus, product, or process disclosed, or represents that its use would
-not infringe privately owned rights. Reference herein to any specific commercial product,
-process, or service by trade name, trademark, manufacturer, or otherwise does not necessarily
-constitute or imply its endorsement, recommendation, or favoring by the United States
-Government or Lawrence Livermore National Security, LLC. The views and opinions of authors
-expressed herein do not necessarily state or reflect those of the United States Government
-or Lawrence Livermore National Security, LLC, and shall not be used for advertising or
-product endorsement purposes. ZK acknowledges support from the 2024 LLNL Data Science Summer Institute
-and is a Fellow of the International Max Planck Research School for Astronomy and Cosmic Physics at the University of Heidelberg (IMPRS-HD).
-
+Academic Engagement Office. ZK acknowledges support from the 
+2024 LLNL Data Science Summer Institute and is a Fellow of 
+the International Max Planck Research School for Astronomy 
+and Cosmic Physics at the University of Heidelberg (IMPRS-HD).
 
 # References
