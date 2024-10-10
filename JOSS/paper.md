@@ -65,7 +65,7 @@ Galaxy to calculate lens type probabilities for an event (see Figure 1). Constra
 any microlensing signal characteristics and any Galactic model can be used. `popclass`
 comes with an interface to `ArviZ` [@arviz_2019] and `pymultinest` [@Buchner2016] for microlensing
 signal constraints, pre-loaded Galactic models, plotting functionality, and classification uncertainty
-quantification methods. The probabilistic framework for popclass was developed in @Perkins2024, 
+quantification methods. The probabilistic framework for popclass was developed in @Perkins2024,
 used in @Fardeen2024 and has been applied to classifying events in @Kaczmarek2024.
 
 # Statement of need
@@ -125,9 +125,9 @@ under project 22-ERD-037. The software implementation
 for this project was funded under the LLNL
 Space Science Institute's Institutional Scientific
 Capability Portfolio funds in partnership with LLNL’s
-Academic Engagement Office. ZK acknowledges support from the 
-2024 LLNL Data Science Summer Institute and is a Fellow of 
-the International Max Planck Research School for Astronomy 
+Academic Engagement Office. ZK acknowledges support from the
+2024 LLNL Data Science Summer Institute and is a Fellow of
+the International Max Planck Research School for Astronomy
 and Cosmic Physics at the University of Heidelberg (IMPRS-HD).
 
 # References
