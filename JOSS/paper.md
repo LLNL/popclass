@@ -99,12 +99,12 @@ Using Bayes' theorem,
 $$p(\text{class}_L| \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})p(\boldsymbol{d}| \text{class}_L, \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}.$$
 
 Assuming that the set of considered lens classes is complete, $p(\boldsymbol{d}| \mathcal{G})$ is a normalization factor such that all lens class probabilities sum to unity. Using importance sampling [e.g., @Hogg2010] with $S$ independent posterior samples $\theta_{c}\sim p(\theta|\boldsymbol{d})$
-drawn under some prior, $\pi(\theta)$, obtained from fitting some parameter set of microlensing signal parameters, $\theta$,
+drawn under some prior, $\pi(\theta)$, obtained from fitting some set of microlensing signal parameters, $\theta$,
 
 $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mathcal{G})}{p(\boldsymbol{d}| \mathcal{G})}
     \times \frac{1}{S} \sum _{c=0}^{S} \frac{p(\theta _c | \text{class}_L, \mathcal{G})}{\pi(\theta _{c})}$$.
 
-This allows us to leverage previously calculated posterior samples to perform lens classification for a single event in
+This allows the use of previously calculated posterior samples to perform lens classification for a single event in
 the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ is calculated using kernel
 density estimation in `popclass` over $\theta$ with a simulated catalog of microlensing events
 from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before
@@ -115,7 +115,7 @@ any data is seen, which is just set by relative number of expected events predic
 # Acknowledgements
 
 `popclass` depends on numpy [@Harris2020], scipy [@Virtanen2020], asdf [@Greenfield2015], matplotlib [@Hunter2007], and scikit-learn [@sklearn_api].
-  This work was performed under the auspices of the U.S.
+This work was performed under the auspices of the U.S.
 Department of Energy by Lawrence Livermore National
 Laboratory (LLNL) under Contract DE-AC52-07NA27344. The document number is LLNL-JRNL-870290 and the code number is LLNL-CODE-2000456.
 The theoretical foundation of this work was established
