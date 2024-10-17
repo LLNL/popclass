@@ -53,7 +53,7 @@ the lens of a gravitational microlensing event. Gravitational microlensing occur
 foreground object (e.g., a star, white dwarf or a black hole) passes in front of and
 lenses the light from a distant background star. This causes an apparent brightening, and shift
 in position, of the background source. In most cases, characteristics of the microlensing signal
-do not contain enough information to definitively identity the lens type. However, different lens
+do not contain enough information to definitively identify the lens type. However, different lens
 types can lie in different but overlapping regions of the characteristics
 of the microlensing signal. For example, black holes tend to be more massive than stars and
 therefore cause microlensing signals that are longer. Current Galactic simulations allow
@@ -70,8 +70,8 @@ used in @Fardeen2024 and has been applied to classifying events in @Kaczmarek202
 
 # Statement of need
 
-The advent of the _Vera C. Rubin Observatory_ [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
-will detect tens-of-thousands of microlensing events per year [e.g., @Abrams2023;@Penny2019]. To maximize the science output of this event stream it is critical to identify events that have a high probability of being caused
+The advent of the Vera C. Rubin Observatory [@Ivezic2019] and the _Nancy Grace Roman Space Telescope_ [@Spergel2015]
+will provide tens-of-thousands of microlensing events per year [e.g., @Abrams2023;@Penny2019]. To maximize the science output of this event stream it is critical to identify events that have a high probability of being caused
 by a lens type such as a black hole [@Sahu2022; @Lam2022], and then to allocate expensive
 follow-up observations such as space-based astrometry [e.g., @Sahu2022] or ground-based adaptive optics imaging [e.g., @Terry2022] to confirm their nature.
 
@@ -88,7 +88,7 @@ in the form of a simulation.
 
 `popclass` relies on the Bayesian classification framework in [@Perkins2024]. Consider the data from a
 single microlensing event $\boldsymbol{d}$, and a model of the Galaxy $\mathcal{G}$. `popclass`
-calculates the probability that the lens of the events belongs to each lens class, $\text{class}_L$, where
+calculates the probability that the lens of the event belongs to each lens class, $\text{class}_L$, where
 $\text{class}_L\in\text{classes}$ and, for example,
 $\text{classes} = \{\text{Star, Neutron Star, White Dwarf, Black Hole}\}$. Namely, `popclass` calculates
 
@@ -107,7 +107,7 @@ $$p(\text{class}_L | \boldsymbol{d}, \mathcal{G}) = \frac{p(\text{class}_L| \mat
 This allows the use of previously calculated posterior samples to perform lens classification for a single event in
 the context of a Galactic model. The term $p(\theta_c | \text{class}_ L, \mathcal{G})$ is calculated using kernel
 density estimation in `popclass` over $\theta$ with a simulated catalog of microlensing events
-from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that a event belongs to each class before
+from $\mathcal{G}$. $p(\text{class}_L | \mathcal{G})$ is the prior probability that an event belongs to each class before
 any data is seen, which is just set by relative number of expected events predicted by the Galactic model $\mathcal{G}$.
 
 ![Left: posterior distribution of an event in log10(timescale)-log10(parallax) space, overlaid on 'star', 'white dwarf', 'neutron star' and 'black hole' contours. Right: bars showing probabilities of that event belonging to each of the lens populations.](lens_class.png)
