@@ -10,6 +10,40 @@ the following papers and repositories.
 
 .. code:: console
 
+    @ARTICLE{2024arXiv241014076S,
+       author = {{Sallaberry}, Greg and {Kaczmarek}, Zofia and {McGill}, Peter and {Perkins}, Scott E. and {Dawson}, William A. and {Begbie}, Caitlin G.},
+       title = "{popclass: a python package for classifying microlensing events}",
+       journal = {arXiv e-prints},
+       keywords = {Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+       year = 2024,
+       month = oct,
+       eid = {arXiv:2410.14076},
+       pages = {arXiv:2410.14076},
+       archivePrefix = {arXiv},
+       eprint = {2410.14076},
+       primaryClass = {astro-ph.IM},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2024arXiv241014076S},
+       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+    }
+
+
+    @ARTICLE{2024arXiv241014098K,
+       author = {{Kaczmarek}, Zofia and {McGill}, Peter and {Perkins}, Scott E. and {Dawson}, William A. and {Huston}, Macy and {Ho}, Ming-Feng and {Abrams}, Natasha S. and {Lu}, Jessica R.},
+       title = "{On Finding Black Holes in Photometric Microlensing Surveys}",
+       journal = {arXiv e-prints},
+       keywords = {Astrophysics - Solar and Stellar Astrophysics, Astrophysics - Astrophysics of Galaxies, Astrophysics - High Energy Astrophysical Phenomena, Astrophysics - Instrumentation and Methods for Astrophysics},
+       year = 2024,
+       month = oct,
+       eid = {arXiv:2410.14098},
+       pages = {arXiv:2410.14098},
+       archivePrefix = {arXiv},
+       eprint = {2410.14098},
+       primaryClass = {astro-ph.SR},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2024arXiv241014098K},
+       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+    }
+
+
     @ARTICLE{2024ApJ...961..179P,
         author = {{Perkins}, Scott E. and {McGill}, Peter and {Dawson}, William and {Abrams}, Natasha S. and {Lam}, Casey Y. and {Ho}, Ming-Feng and {Lu}, Jessica R. and {Bird}, Simeon and {Pruett}, Kerianne and {Golovich}, Nathan and {Chapline}, George},
         title = "{Disentangling the Black Hole Mass Spectrum with Photometric Microlensing Surveys}",
@@ -28,6 +62,7 @@ the following papers and repositories.
         adsurl = {https://ui.adsabs.harvard.edu/abs/2024ApJ...961..179P},
         adsnote = {Provided by the SAO/NASA Astrophysics Data System}
     }
+
 
 Contributors
 ============
