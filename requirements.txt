@@ -2,7 +2,7 @@ numpy
 scipy
 --no-binary=h5py h5py
 pytest
-asdf
+asdf==4.0.0
 matplotlib
 scikit-learn
 sphinx
