@@ -72,7 +72,7 @@ class PopulationModel:
             PopulationModel populated with the data from the asdf file.
         """
 
-        with asdf.open(path, lazy_load=False, copy_arrays=True) as tree:
+        with asdf.open(path, lazy_load=False) as tree:
             population_samples = tree["class_data"]
             parameters = tree["parameters"]
             class_weights = tree["class_weights"]
