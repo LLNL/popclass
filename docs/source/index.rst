@@ -26,7 +26,7 @@ developed on `GitHub <https://github.com/LLNL/popclass>`_.
 
    If you are here to develop on popclass, please head over to the contributing guide.
 
-   If you have issues with the software or need support please open a `github issues <https://github.com/LLNL/popclass/issues>`_.
+   If you have issues with the software or need support please open a `github issue <https://github.com/LLNL/popclass/issues>`_.
 
 
 Contents
