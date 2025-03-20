@@ -40,7 +40,7 @@ def test_model_saving():
     output_fp = os.path.dirname(os.path.realpath(__file__)) + "/tmp.asdf"
     test_model.to_asdf(output_fp, "tmp")
 
-    with asdf.open(output_fp, lazy_load=False, copy_arrays=True) as tree:
+    with asdf.open(output_fp, lazy_load=False) as tree:
         assert validate_asdf_population_model(tree)
 
     os.remove(output_fp)

@@ -39,7 +39,7 @@ affiliations:
  - name: University of California, Berkeley, Astronomy Department, Berkeley, CA 94720, USA
    index: 3
 
-date: 13 August 2017
+date: 17 October 2024
 bibliography: paper.bib
 
 aas-doi:
