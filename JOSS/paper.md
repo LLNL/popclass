@@ -56,7 +56,7 @@ in position, of the background source. In most cases, characteristics of the mic
 do not contain enough information to definitively identify the lens type. Different lens
 types lie in different but overlapping regions of the characteristics
 of the microlensing signal. For example, black holes tend to be more massive than stars and
-therefore cause microlensing signals that are longer. Current Galactic simulations enable us to predict 
+therefore cause microlensing signals that are longer. Current Galactic simulations enable us to predict
 where different lens types lie in the observational space and can therefore be
 used to classify events [e.g., @Lam2020].
 
