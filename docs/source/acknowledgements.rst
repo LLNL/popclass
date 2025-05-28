@@ -10,16 +10,16 @@ the following papers and repositories.
 
 .. code:: console
 
-    @article{Sallaberry2025, 
-        doi = {10.21105/joss.07769}, 
-        url = {https://doi.org/10.21105/joss.07769}, 
-        year = {2025}, 
-        publisher = {The Open Journal}, 
-        volume = {10}, number = {109}, 
-        pages = {7769}, 
-        author = {Greg Sallaberry and Zofia Kaczmarek and Peter McGill and Scott E. Perkins and William A. Dawson and Caitlin G. Begbie}, 
+    @article{Sallaberry2025,
+        doi = {10.21105/joss.07769},
+        url = {https://doi.org/10.21105/joss.07769},
+        year = {2025},
+        publisher = {The Open Journal},
+        volume = {10}, number = {109},
+        pages = {7769},
+        author = {Greg Sallaberry and Zofia Kaczmarek and Peter McGill and Scott E. Perkins and William A. Dawson and Caitlin G. Begbie},
         title = {popclass: A Python Package for Classifying Microlensing Events}, journal = {Journal of Open Source Software}
-    } 
+    }
 
     @ARTICLE{2025ApJ...981..183K,
        author = {{Kaczmarek}, Zofia and {McGill}, Peter and {Perkins}, Scott E. and {Dawson}, William A. and {Huston}, Macy and {Ho}, Ming-Feng and {Abrams}, Natasha S. and {Lu}, Jessica R.},
