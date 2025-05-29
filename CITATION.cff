@@ -1,0 +1,61 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Sallaberry
+  given-names: Greg
+  orcid: "https://orcid.org/0009-0001-4859-5205"
+- family-names: Kaczmarek
+  given-names: Zofia
+  orcid: "https://orcid.org/0009-0007-4089-5012"
+- family-names: McGill
+  given-names: Peter
+  orcid: "https://orcid.org/0000-0002-1052-6749"
+- family-names: Perkins
+  given-names: Scott E.
+  orcid: "https://orcid.org/0000-0002-5910-3114"
+- family-names: Dawson
+  given-names: William A.
+  orcid: "https://orcid.org/0000-0003-0248-6123"
+- family-names: Begbie
+  given-names: Caitlin G.
+  orcid: "https://orcid.org/0009-0006-8866-4224"
+contact:
+- family-names: McGill
+  given-names: Peter
+  orcid: "https://orcid.org/0000-0002-1052-6749"
+doi: 10.5281/zenodo.15420667
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Sallaberry
+    given-names: Greg
+    orcid: "https://orcid.org/0009-0001-4859-5205"
+  - family-names: Kaczmarek
+    given-names: Zofia
+    orcid: "https://orcid.org/0009-0007-4089-5012"
+  - family-names: McGill
+    given-names: Peter
+    orcid: "https://orcid.org/0000-0002-1052-6749"
+  - family-names: Perkins
+    given-names: Scott E.
+    orcid: "https://orcid.org/0000-0002-5910-3114"
+  - family-names: Dawson
+    given-names: William A.
+    orcid: "https://orcid.org/0000-0003-0248-6123"
+  - family-names: Begbie
+    given-names: Caitlin G.
+    orcid: "https://orcid.org/0009-0006-8866-4224"
+  date-published: 2025-05-24
+  doi: 10.21105/joss.07769
+  issn: 2475-9066
+  issue: 109
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 7769
+  title: "popclass: A Python Package for Classifying Microlensing
+    Events"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.07769"
+  volume: 10
+title: "popclass: A Python Package for Classifying Microlensing Events"
