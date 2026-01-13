@@ -15,6 +15,10 @@ AVAILABLE_MODELS = [
     "popsycle_singles_raithel18",
     "popsycle_singles_spera15",
     "popsycle_singles_sukhboldn20",
+    "gbtds_nskick150",
+    "gbtds_nskick250",
+    "gbtds_nskick350",
+    "gbtds_nskick450",
 ]
 
 
