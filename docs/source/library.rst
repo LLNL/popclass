@@ -127,8 +127,8 @@ The Galaxia "v3" galactic model parameters that were used:
     bulge_sigma_phi 100
     bulge_sigma_z 100
     bulge_patternspeed 40.00
-    
-    
+
+
 gbtds_nskick
 ------------------------
 
@@ -141,7 +141,7 @@ and paper :cite:`Lam2020`.
 For these models, the field pattern and settings were adjusted to the planned *Roman* Galactic Bulge Time Domain Survey.
 
 The input parameters to the simulation were:
-  
+
 .. code::
 
     BH_kick_speed_mean: 100
@@ -177,4 +177,3 @@ For the Galaxia galactic model, the parameters consistent with PopSyCLE "v3" wer
     bulge_sigma_phi 100
     bulge_sigma_z 100
     bulge_patternspeed 40.00
-
