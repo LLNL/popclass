@@ -127,36 +127,39 @@ The Galaxia "v3" galactic model parameters that were used:
     bulge_sigma_phi 100
     bulge_sigma_z 100
     bulge_patternspeed 40.00
+    
+    
+gbtds_nskick
+------------------------
+
+This set of population models follows the naming pattern ``gbtds_nskick{v}`` for v in (150, 250, 350, 450).
+
+It was generated using the Population Synthesis for Compact-object Lensing Events
+or PopSyCLE. See the `code repository <https://github.com/jluastro/PopSyCLE/tree/main>`_
+and paper :cite:`Lam2020`.
+
+For these models, the field pattern and settings were adjusted to the planned *Roman* Galactic Bulge Time Domain Survey.
+
+The input parameters to the simulation were:
+  
+.. code::
+
+    BH_kick_speed_mean: 100
+    IFMR: Spera15
+    bin_edges_number: None
+    blend_rad: 0.09
+    filter_name: H
+    n_obs: 600
+    obs_time: 1825
+    photometric_system: ubv
+    radius_cut: 3
+    red_law: Damineli16
+    theta_frac: 2
+    multiplicity: None
+    binning: True
 
 
-  gbtds_nskick (150, 250, 350, 450)
-  ------------------------
-
-  This set of population models was generated using the Population Synthesis for Compact-object Lensing Events
-  or PopSyCLE. See the `code repository <https://github.com/jluastro/PopSyCLE/tree/main>`_
-  and paper :cite:`Lam2020`.
-
-  For these models, the field pattern and settings were adjusted to the planned _Roman_ Galactic Bulge Time Domain Survey.
-
-  The input parameters to the simulation were:
-
-  .. code::
-
-      BH_kick_speed_mean: 100
-      IFMR: Spera15
-      bin_edges_number: None
-      blend_rad: 0.09
-      filter_name: H
-      n_obs: 600
-      obs_time: 1825
-      photometric_system: ubv
-      radius_cut: 3
-      red_law: Damineli16
-      theta_frac: 2
-      multiplicity: None
-      binning: True
-
-We generated four models with varying `NS_kick_speed_mean` (150, 250, 350, 450).
+We generated four models with varying ``NS_kick_speed_mean`` (150, 250, 350, 450).
 The mean NS kick speed is indicated in the model name.
 
 For the Galaxia galactic model, the parameters consistent with PopSyCLE "v3" were used:
@@ -174,3 +177,4 @@ For the Galaxia galactic model, the parameters consistent with PopSyCLE "v3" wer
     bulge_sigma_phi 100
     bulge_sigma_z 100
     bulge_patternspeed 40.00
+
