@@ -1,7 +1,6 @@
 import os
 import sys
 
-
 project = "popclass"
 copyright = "2024, Lawrence Livermore National Laboratory | LLNL-SM-868436"
 author = "Lawrence Livermore National Laboratory"
